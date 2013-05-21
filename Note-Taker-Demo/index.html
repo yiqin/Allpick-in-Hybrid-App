@@ -14,33 +14,13 @@
         <link href="styles/main.css" rel="stylesheet" />
     </head>
     <body id="notesApp">
-	<section data-role="layout" data-id="default">
-    </section>
-    <div data-role="view" id="view-all-notes" data-layout="default" class="notes-view" data-model="app.viewModels.notes">
-        <header data-role="header">
-            <div data-role="navbar">
-                Notes
-            </div>
-        </header>
-    
-        <ul id="notes-listview" data-pull-to-refresh="true" data-style="inset" data-role="listview" data-template="noteTemplate"
-        data-bind="source: notes"></ul>
-        <p id="no-notes-span" hidden="hidden" class="no-items-msg">
-            <b>You do not have any notes yet.</b><br /><br />Tap on the plus sign to add one.
-        </p>
-    </div>
-
-	<!-- Notes ListView Template -->
-	<script type="text/x-kendo-template" id="noteTemplate">
-        <div data-role="touch" data-bind="events: { tap: noteSelected }">
-            <div class="user-info">
-                <h2>${User().DisplayName}</h2>
-                <time class="timeSpan">${CreatedAtFormatted()}</time>
-            </div>
-            <div class="user-note">
-                <a class="user-note-txt">${Title}</a>
-            </div>
+        <section data-role="layout" data-id="default">
+            
+        </section>
+        <div data-role="view" id="placeholder" data-layout="default" class="welcome-scrn form-view">
+            <h1 style="color:white;">
+                Where's the App?
+            </h1>
         </div>
-	</script>
     </body>
 </html>

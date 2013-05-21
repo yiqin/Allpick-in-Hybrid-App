@@ -47,22 +47,7 @@ var app = (function () {
     
     var mobileApp = new kendo.mobile.Application(document.body, { transition: 'slide', layout: 'mobile-tabstrip' });
     
-    // notes view model
-    var notesViewModel = (function () {
-        return {
-            notes: new kendo.data.DataSource({
-                data : [
-                    { Id: 1, Title: "Noteworthy", Text: "Don't screw this demo up!", User: function() { return { DisplayName: "Anonymous"}; }, CreatedAtFormatted: function() { return new Date(); } },
-                    { Id: 2, Title: "DemoApps",   Text: "…and demo data sources...", User: function() { return { DisplayName: "Anonymous"}; }, CreatedAtFormatted: function() { return new Date(); } }
-                ]
-            })
-        };
-    }());
-    
     return {
-        viewModels: {
-            notes: notesViewModel
-        }
+        viewModels: {}
     }
-
 }());
