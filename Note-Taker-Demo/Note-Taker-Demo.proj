@@ -32,6 +32,7 @@
     <Folder Include="App_Resources\Android\drawable-nodpi">
       <Platform>Android</Platform>
     </Folder>
+    <Folder Include="views" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="App_Resources\iOS\icon.png" />
@@ -64,17 +65,10 @@
     <Content Include="kendo\styles\images\KendoUI.ttf" />
     <Content Include="kendo\styles\images\KendoUI.woff" />
     <Content Include="kendo\styles\kendo.mobile.all.min.css" />
+    <Content Include="scripts\lib\moment.min.js" />
+    <Content Include="styles\images\app-bg.jpg" />
     <Content Include="scripts\app\main.js" />
     <Content Include="scripts\lib\everlive.all.min.js" />
-    <Content Include="styles\images\app-bg.jpg" />
-    <Content Include="styles\images\avatar.png" />
-    <Content Include="styles\images\border.png" />
-    <Content Include="styles\images\sprite.png" />
-    <Content Include="styles\main.css" />
-    <Content Include="views\activitiesView.html" />
-    <Content Include="views\activityView.html" />
-    <Content Include="views\addActivityView.html" />
-    <Content Include="views\signupView.html" />
     <Content Include="cordova.ios.js">
       <Platform>iOS</Platform>
       <TargetName>cordova.js</TargetName>
@@ -83,6 +77,8 @@
       <Platform>Android</Platform>
       <TargetName>cordova.js</TargetName>
     </Content>
+    <Content Include="styles\images\sprite.png" />
+    <Content Include="styles\main.css" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Telerik\ICE\Tools\Mobile\MobileTools.targets" />
 </Project>

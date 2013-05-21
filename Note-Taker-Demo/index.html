@@ -7,34 +7,40 @@
         <script src="kendo/js/jquery.min.js"></script>
         <script src="kendo/js/kendo.mobile.min.js"></script>
         <script src="scripts/lib/everlive.all.min.js"></script>
+        <script src="scripts/lib/moment.min.js"></script>
         <script src="scripts/app/main.js" type="text/javascript"></script>
 
         <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
         <link href="styles/main.css" rel="stylesheet" />
     </head>
-    <body id="friendsApp">
-        <section data-role="layout" data-id="default">
-            <!--View content will render here-->
-        </section>
-        <!--WELCOME VIEW -->
-        <div data-role="view" id="welcome" data-layout="default" class="welcome-scrn form-view" data-model="app.viewModels.login">
-            <h1><b>Everlive</b> sample application</h1>
-            <form id="login-form">
-                <ul data-role="listview" data-style="inset">
-                    <li><label for="loginUsername">Username</label> <input type="text" id="loginUsername" required validationMessage="Username is required!" /></li>
-                    <li><label for="loginPassword">Password</label> <input type="password" id="loginPassword" required validationMessage="Password is required!" /></li>
-                </ul>
-            </form>
-            <ol class="group-wrp">
-                <li>
-                    <span data-role="touch" data-bind="events: { tap: login }" style="display: inline-block">
-                        <a data-role="button" class="btn-login btn-big">Login</a>
-                    </span>
-                </li>
-                <li class="b-top"><a data-role="button" href="views/signupView.html" class="btn-signup btn-big">Sign up</a> </li>
-            </ol>
+    <body id="notesApp">
+	<section data-role="layout" data-id="default">
+    </section>
+    <div data-role="view" id="view-all-notes" data-layout="default" class="notes-view" data-model="app.viewModels.notes">
+        <header data-role="header">
+            <div data-role="navbar">
+                Notes
+            </div>
+        </header>
+    
+        <ul id="notes-listview" data-pull-to-refresh="true" data-style="inset" data-role="listview" data-template="noteTemplate"
+        data-bind="source: notes"></ul>
+        <p id="no-notes-span" hidden="hidden" class="no-items-msg">
+            <b>You do not have any notes yet.</b><br /><br />Tap on the plus sign to add one.
+        </p>
+    </div>
 
-            <div data-role="footer"><p>Powered by Icenium Everlive.</p></div>
+	<!-- Notes ListView Template -->
+	<script type="text/x-kendo-template" id="noteTemplate">
+        <div data-role="touch" data-bind="events: { tap: noteSelected }">
+            <div class="user-info">
+                <h2>${User().DisplayName}</h2>
+                <time class="timeSpan">${CreatedAtFormatted()}</time>
+            </div>
+            <div class="user-note">
+                <a class="user-note-txt">${Title}</a>
+            </div>
         </div>
+	</script>
     </body>
 </html>

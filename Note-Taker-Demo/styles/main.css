@@ -1,4 +1,4 @@
-#friendsApp.km-android .km-view
+#notesApp.km-android .km-view
 {
     -moz-box-orient:vertical;
     -webkit-box-orient:vertical;
@@ -7,32 +7,42 @@
     -ms-flex-direction:column;
     flex-direction:column;
 }
-#friendsApp.km-ios, #friendsApp.km-android, #friendsApp.km-ios .km-list > li
+#notesApp.km-ios, #notesApp.km-android, #notesApp.km-ios .km-list > li
 {
     font-weight: normal;    
 }
-#friendsApp.km-ios .km-listinset, #friendsApp.km-ios .km-listgroupinset .km-list
+#notesApp.km-ios .km-listinset, #notesApp.km-ios .km-listgroupinset .km-list
 {
     border: 0;
 }
-#friendsApp.km-ios, #friendsApp.km-ios .km-content, #friendsApp.km-android, #friendsApp.km-android .km-content
+#notesApp.km-ios, #notesApp.km-ios .km-content, #notesApp.km-android, #notesApp.km-android .km-content
 {
     background-image: url(images/app-bg.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-    background-color: #4b2113;
+    background-color: #160036;
 }
-#friendsApp.km-ios .form-view .km-listinset, #friendsApp.km-android .form-view .km-listinset
+#notesApp.km-ios .form-view .km-listinset, #notesApp.km-android .form-view .km-listinset
 {
     -webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);    
 }
-#friendsApp.km-android .km-listview-link::after, #friendsApp.km-android .km-listview-label::after
+#notesApp.km-android .km-listview-link::after, #notesApp.km-android .km-listview-label::after
 {
     display: block;
     border-color: rgba(255,255,255,.5);
-    
 }
+            
+.km-android #newNoteTitle
+{
+    color: black !important;                
+}
+            
+.km-android #newNote
+{
+   color: black !important;             
+}
+            
 .b-top
 {
     background: transparent url(images/border.png) repeat-x 0 0;
@@ -47,44 +57,44 @@
     background-color: transparent;    
 }
 /* Buttons */
-#friendsApp.km-android .km-leftitem
+#notesApp.km-android .km-leftitem
 {
     left: 0;
 }
-#friendsApp.km-android .km-rightitem
+#notesApp.km-android .km-rightitem
 {
     right: 0;
 }
-#friendsApp.km-ios .km-button, #friendsApp.km-android .km-button
+#notesApp.km-ios .km-button, #notesApp.km-android .km-button
 {
     background-color: #ff6c00;
 }
-#friendsApp.km-ios .km-button, #friendsApp.km-ios .km-back::before
+#notesApp.km-ios .km-button, #notesApp.km-ios .km-back::before
 {
     -webkit-box-shadow: none;  
     box-shadow: none; 
     border: 0;
 }
-#friendsApp.km-ios .km-back, #friendsApp.km-android .km-back
+#notesApp.km-ios .km-back, #notesApp.km-android .km-back
 {
     background-color: #a36a57;   
 }
-#friendsApp.km-ios .km-back
+#notesApp.km-ios .km-back
 {
     border-top: 0;
 }
-#friendsApp.km-ios .km-back::before
+#notesApp.km-ios .km-back::before
 {
     left: -0.34em;
     top: .18em;
     height: .92em;
     border-bottom-color: #6e5852;   
 }
-#friendsApp.km-android .km-button
+#notesApp.km-android .km-button
 {
     color: #fff;
 }
-#friendsApp.km-android .km-navbar .km-button
+#notesApp.km-android .km-navbar .km-button
 {
     height: 1.6em;
 }
@@ -98,7 +108,7 @@
 {
     min-width: 7em;
 }
-#friendsApp.km-ios .welcome-scrn .btn-signup, #friendsApp.km-android .welcome-scrn .btn-signup
+#notesApp.km-ios .welcome-scrn .btn-signup, #notesApp.km-android .welcome-scrn .btn-signup
 {
     background-color: #272727;
 }
@@ -131,19 +141,19 @@
     text-align: center;
 }
 /*App Header*/
-#friendsApp.km-ios .km-navbar
+#notesApp.km-ios .km-navbar
 {
     background-image: none;   
     background-color: rgba(0,0,0,0.2);
     border-bottom: 1px solid #a78675;
 }
-#friendsApp.km-ios .km-view-title
+#notesApp.km-ios .km-view-title
 {
     font-weight: normal;
     box-shadow: none;
     -webkit-box-shadow: none;
 }
-#friendsApp.km-android .km-view-title
+#notesApp.km-android .km-view-title
 {
     display: block;
     visibility: visible;
@@ -155,21 +165,21 @@
     border-bottom: 2px solid #fe8a3d;   
     line-height: 1.2;
 }
-.km-root #friendsApp.km-android .km-navbar
+.km-root #notesApp.km-android .km-navbar
 {
     padding-right: 0;   
     padding-left: 0;   
 }
-#friendsApp.km-android .km-navbar .km-icon
+#notesApp.km-android .km-navbar .km-icon
 {
     margin-left: 0;
     margin-right: 0;
 }
-#friendsApp.km-android .km-navbar
+#notesApp.km-android .km-navbar
 {
     background-color: #272727;    
 }
-#friendsApp.km-android .km-rightitem .km-button
+#notesApp.km-android .km-rightitem .km-button
 {
     background-color: #e45600;
     padding-left: 1.2rem;
@@ -182,18 +192,18 @@
     text-align: center;
     color: #999;    
 }
-#friendsApp.km-ios .welcome-scrn .km-footer
+#notesApp.km-ios .welcome-scrn .km-footer
 {
     background-color: rgba(0,0,0,0.2);
 }
-#friendsApp.km-android .welcome-scrn .km-footer
+#notesApp.km-android .welcome-scrn .km-footer
 {
     position: absolute;
     bottom: 0;
     background-color: #272727;
 }
 /* Forms */
-#friendsApp.km-android .form-view .km-list > li
+#notesApp.km-android .form-view .km-list > li
 {
     padding: 0;
 }
@@ -209,13 +219,13 @@
     
     font-size: 1.1rem;
 }
-#friendsApp.km-ios .form-view .km-listview label
+#notesApp.km-ios .form-view .km-listview label
 {
     background-color: #F4F4F4;
     border-right: 1px solid #e0dfdf;
     font-weight: bold;
 }
-#friendsApp.km-android .form-view .km-listview label
+#notesApp.km-android .form-view .km-listview label
 {
     background-color: #323232;
     border-right: 1px solid #404040;
@@ -224,7 +234,7 @@
 {
     height: 7rem;
 }
-#friendsApp.km-ios .form-view .km-listview input
+#notesApp.km-ios .form-view .km-listview input
 {
 }
 .km-list .txtarea-wrp
@@ -244,7 +254,7 @@ textarea
     font-size: 1.1rem;
     padding: .6em;
 }
-.share-view textarea
+.note-view textarea
 {
     width: 100%;
     height: 8rem;
@@ -260,7 +270,7 @@ textarea
     background: transparent;   
     overflow: auto;
 }
-#friendsApp .km-list textarea
+#notesApp .km-list textarea
 {
     margin-right: 0;
 }
@@ -268,11 +278,11 @@ textarea
 {
     width: 56%;
 }
-#friendsApp.km-ios .km-list input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="image"]):not([type="checkbox"]):not([type="radio"]):not(.k-input):not(.k-button), #friendsApp.km-ios .km-list select:not([multiple]), #friendsApp.km-ios .km-list .k-dropdown-wrap, #friendsApp.km-ios .km-list textarea
+#notesApp.km-ios .km-list input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="image"]):not([type="checkbox"]):not([type="radio"]):not(.k-input):not(.k-button), #notesApp.km-ios .km-list select:not([multiple]), #notesApp.km-ios .km-list .k-dropdown-wrap, #notesApp.km-ios .km-list textarea
 {
     color: #666;
 }
-#friendsApp.km-android .km-list input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="image"]):not([type="checkbox"]):not([type="radio"]):not(.k-input):not(.k-button), #friendsApp.km-android .km-list select:not([multiple]), #friendsApp.km-android .km-list .k-dropdown-wrap, #friendsApp.km-android textarea
+#notesApp.km-android .km-list input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="image"]):not([type="checkbox"]):not([type="radio"]):not(.k-input):not(.k-button), #notesApp.km-android .km-list select:not([multiple]), #notesApp.km-android .km-list .k-dropdown-wrap, #notesApp.km-android textarea
 {
     color: #ccc;
     background-image: none;
@@ -285,10 +295,22 @@ textarea
     padding: 0 1rem;
     color: #f00;
 }
-.share-form-wrp, .user-status-wrp, .take-avatar-wrp
+.note-form-wrp, .user-note-wrp, .take-avatar-wrp
 {
     margin: 1rem;   
 }
+
+.user-note label
+{
+    text-align: left;
+    margin-right: .5em;    
+}
+
+.user-note input[type='text']
+{
+    width:60%;   
+}
+
 /* List widget */
 .no-items-msg
 {
@@ -301,26 +323,26 @@ textarea
     font-size: 1.2rem;
     font-weight: normal;
 }
-#friendsApp.km-ios .km-listinset, #friendsApp.km-ios .km-listgroupinset .km-list,
-#friendsApp.km-ios .km-listinset > li:first-child, #friendsApp.km-ios .km-listgroupinset .km-list > li:first-child,
-#friendsApp.km-ios .km-listinset > li:last-child, #friendsApp.km-ios .km-listgroupinset .km-list > li:last-child
+#notesApp.km-ios .km-listinset, #notesApp.km-ios .km-listgroupinset .km-list,
+#notesApp.km-ios .km-listinset > li:first-child, #notesApp.km-ios .km-listgroupinset .km-list > li:first-child,
+#notesApp.km-ios .km-listinset > li:last-child, #notesApp.km-ios .km-listgroupinset .km-list > li:last-child
 {
     border-radius: 0;   
 }
-#friendsApp.km-ios .form-view .km-list > li
+#notesApp.km-ios .form-view .km-list > li
 {
     padding: 0;   
     background-color: #fff;
 }
-#friendsApp.km-ios .form-view .km-list > li
+#notesApp.km-ios .form-view .km-list > li
 {
     min-height: 2.3em;
 }
-#friendsApp.km-android .form-view .km-list
+#notesApp.km-android .form-view .km-list
 {
     background-color: #222;
 }
-#friendsApp.km-android .form-view .km-listinset
+#notesApp.km-android .form-view .km-listinset
 {
     margin-top: 1em;
 }
@@ -380,17 +402,17 @@ textarea
     margin-top: 0;
     padding-top: 0;
 }
-/* Activities */
-.activities-view .km-list
+/* Notes */
+.notes-view .km-list
 {
     margin: 1rem;
     background-color: transparent;
 }
-.activities-view .km-list.comments-list
+.notes-view .km-list.comments-list
 {
     margin-top: 0;   
 }
-#friendsApp .activities-view .km-list > li 
+#notesApp .notes-view .km-list > li 
 {
     margin-bottom: .2em;
     padding: 1rem 0;
@@ -399,23 +421,23 @@ textarea
     box-shadow: none;
     -webkit-box-shadow: none;
 }
-.activities-view .km-list.comments-list > li
+.notes-view .km-list.comments-list > li
 {
     padding-bottom: 1rem;
 }
-.activities-view .km-list > li:first-child
+.notes-view .km-list > li:first-child
 {
     padding-top: 0;
     background-image: none;
 }
-#friendsApp.km-ios .activities-view .km-list > li
+#notesApp.km-ios .notes-view .km-list > li
 {
     border: 0;
 }
-#friendsApp.km-android .activities-view .km-list > li
+#notesApp.km-android .notes-view .km-list > li
 {
 }
-.activities-view .km-list > li >img, .user-status-wrp img
+.notes-view .km-list > li >img, .user-note-wrp img
 {
     float: left;
 }
@@ -427,12 +449,12 @@ textarea
     background-color: #fff;
     font-size: 1rem;
 }
-.user-status-wrp .user-info, .share-form-wrp .user-info
+.user-note-wrp .user-info, .note-form-wrp .user-info
 {
-    padding: 0;
+    padding: 0 0 0 1rem;
     height: 5rem;
 }
-.user-status-wrp .user-info h2, .share-form-wrp .user-info h2
+.user-note-wrp .user-info h2, .note-form-wrp .user-info h2
 {
     padding-top: 1.7rem;
 }
@@ -460,7 +482,7 @@ textarea
     font-size: .8rem;
     color: #7f7f7f;
 }
-.user-share
+.user-note
 {
     padding: 1rem;
     background-color: #fff;
@@ -472,17 +494,17 @@ textarea
     -webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);   
 }
-.share-view .user-share
+.note-view .user-note
 {
     margin-bottom: 1rem;
     padding: 0 0 .5rem;
 }
-#friendsApp.km-android .activities-view .user-share-txt
+#notesApp.km-android .notes-view .user-note-txt
 {
     font-size: 1rem;
     color: #000 !important;
 }
-#friendsApp.km-ios .km-detail
+#notesApp.km-ios .km-detail
 {
     display: none;
 }
@@ -522,13 +544,21 @@ textarea
 {
     font-size: 1.5rem;   
 }
-.km-tablet .profile-view h2, .km-tablet .activities-view h3
+.km-tablet .profile-view h2, .km-tablet .notes-view h3
 {
     margin-left: 2rem;
     margin-right: 2rem;
     margin-bottom: -1rem;
     font-size: 1.5rem;
 }
+
+.notes-view #noteTitle
+{
+    margin-left: 0;
+    font-size: xx-large;
+    margin-top: 0;   
+}
+
 .km-tablet .km-ios .km-list.profile-about-txt > li, .km-tablet .km-android .km-list.profile-about-txt > li
 {
     padding: .5rem 1rem;
@@ -551,12 +581,12 @@ textarea
 {
     font-size: .95rem;    
 }
-.km-tablet .user-share
+.km-tablet .user-note
 {
     padding: 2rem;
     font-size: 1.4rem;
 }
-.km-tablet .share-view textarea
+.km-tablet .note-view textarea
 {
     padding: 0;
 }
@@ -564,12 +594,12 @@ textarea
 {
     font-size: 1.1rem;
 }
-.km-tablet .activities-view .km-list, .km-tablet .share-form-wrp, .km-tablet .user-status-wrp
+.km-tablet .notes-view .km-list, .km-tablet .note-form-wrp, .km-tablet .user-note-wrp
 {
     margin: 2rem;   
 } 
 /* Android*/
-.km-tablet .km-android .activities-view .user-share-txt
+.km-tablet .km-android .notes-view .user-note-txt
 {   
     font-size: 1.4rem;
 }
@@ -577,12 +607,12 @@ textarea
 {
     font-size: 3em;    
 } 
-.km-tablet  #friendsApp.km-android .km-navbar .km-button
+.km-tablet  #notesApp.km-android .km-navbar .km-button
 {
     height: 1.4em;
 }
 /* iPad */
-.km-tablet #friendsApp.km-ios .km-view-title
+.km-tablet #notesApp.km-ios .km-view-title
 {
     box-shadow: none;
     -webkit-box-shadow: none;
