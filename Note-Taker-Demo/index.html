@@ -15,12 +15,27 @@
     </head>
     <body id="notesApp">
         <section data-role="layout" data-id="default">
-            
+            <!--View content will render here-->
         </section>
-        <div data-role="view" id="placeholder" data-layout="default" class="welcome-scrn form-view">
-            <h1 style="color:white;">
-                Where's the App?
-            </h1>
+        <!--WELCOME VIEW -->
+        <div data-role="view" id="welcome" data-layout="default" class="welcome-scrn form-view" data-model="app.viewModels.login">
+            <h1><b>Note Taker</b></h1>
+            <form id="login-form">
+                <ul data-role="listview" data-style="inset">
+                    <li><label for="loginUsername">Username</label> <input type="text" id="loginUsername" required validationMessage="Username is required!" autocapitalize="off" /></li>
+                    <li><label for="loginPassword">Password</label> <input type="password" id="loginPassword" required validationMessage="Password is required!" /></li>
+                </ul>
+            </form>
+            <ol class="group-wrp">
+                <li>
+                    <span data-role="touch" data-bind="events: { tap: login }" style="display: inline-block">
+                        <a data-role="button" class="btn-login btn-big">Login</a>
+                    </span>
+                </li>
+                <li class="b-top"><a data-role="button" href="views/signupView.html" class="btn-signup btn-big">Sign up</a> </li>
+            </ol>
+
+            <div data-role="footer"><p>Powered by Icenium Everlive.</p></div>
         </div>
     </body>
 </html>

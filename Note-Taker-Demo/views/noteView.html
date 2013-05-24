@@ -1,0 +1,18 @@
+<!-- noteView.html -->
+<div data-role="view" id="single-note" data-layout="default" class="notes-view" data-show="app.viewModels.note.show">
+    <header data-role="header">
+        <div data-role="navbar">
+            Note
+            <a class="nav-button" data-align="left" data-role="backbutton">Back</a>
+        </div>
+    </header>
+
+    <div id="status-container" class="user-note-wrp" data-role="listview" data-style="inset">
+        <div class="user-note">
+            <h3 id="noteTitle" data-bind='text: Title'></h3>
+            <p>
+                <span id="noteText" data-bind="text: Text" class="user-note-txt"></span>
+            </p>
+        </div>
+    </div>
+</div>

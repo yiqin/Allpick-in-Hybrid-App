@@ -79,6 +79,10 @@
     </Content>
     <Content Include="styles\images\sprite.png" />
     <Content Include="styles\main.css" />
+    <Content Include="views\addNoteView.html" />
+    <Content Include="views\notesView.html" />
+    <Content Include="views\noteView.html" />
+    <Content Include="views\signupView.html" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Telerik\ICE\Tools\Mobile\MobileTools.targets" />
 </Project>

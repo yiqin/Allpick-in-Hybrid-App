@@ -1,0 +1,21 @@
+<!-- addNoteView.html -->
+<div data-role="view" id="note" data-layout="default" data-transition="overlay:down" class="note-view"
+    data-init="app.viewModels.addNote.init" data-show="app.viewModels.addNote.show" data-model="app.viewModels.addNote">
+    <header data-role="header">
+        <div data-role="navbar">
+            Note
+            <a class="nav-button" data-align="left" data-role="backbutton">Cancel</a>
+            <a class="nav-button" data-align="right" data-role="button" data-bind="click: saveNote">Save Note</a>
+        </div>
+    </header>
+    <div id="enterNote" class="note-form-wrp">
+        <div class="user-note">
+            <label for="newNoteTitle">Title:</label>
+            <input type="text" id="newNoteTitle" placeholder="Give Your Note a Title" required />
+        </div>
+        <div class="user-note">
+            <textarea id="newNote" placeholder="Enter Your Note Here" required validationMessage="Note text is required!"></textarea>
+            <div id="newNoteValidation" class="validation">Note text is required!</div>
+        </div>
+    </div>
+</div>
