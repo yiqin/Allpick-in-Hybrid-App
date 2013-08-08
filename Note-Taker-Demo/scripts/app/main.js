@@ -36,7 +36,7 @@ var app = (function () {
 
     var applicationSettings = {
         emptyGuid: '00000000-0000-0000-0000-000000000000',
-        apiKey: 'gz7JWORqkS4PDlps'
+        apiKey: 'B3HXTR1cpka5ETff'
     };
 
     // initialize Everlive SDK
@@ -44,7 +44,29 @@ var app = (function () {
         apiKey: applicationSettings.apiKey
     });
 
+    var facebook = new IdentityProvider({
+        name: "Facebook",
+        loginMethodName: "loginWithFacebook",
+        endpoint: "https://www.facebook.com/dialog/oauth",
+        response_type:"token",
+        client_id: "165834540266609",
+        redirect_uri:"https://www.facebook.com/connect/login_success.html",
+        access_type:"online",
+        scope:"email",
+        display: "touch"
+    });    
+    
+    
+    
     var AppHelper = {
+        resolveImageUrl: function (id) {
+            if (id) {
+                return el.Files.getDownloadUrl(id);
+            }
+            else {
+                return '';
+            }
+        },        
         resolveProfilePictureUrl: function (id) {
             if (id && id !== applicationSettings.emptyGuid) {
                 return el.Files.getDownloadUrl(id);
@@ -99,7 +121,7 @@ var app = (function () {
                 return usersModel.load();
             })
             .then(function () {
-                mobileApp.navigate('views/notesView.html');
+                mobileApp.navigate('views/building.html');
             })
             .then(null,
                   function (err) {
@@ -107,8 +129,50 @@ var app = (function () {
                   }
             );
         };
+        var loginWithoutName = function () {
+            var username = 'No Good Name';
+            var password = 123456;
+            //showAlert(username);
+            el.Users.login(username, password)
+            .then(function () {
+                return usersModel.load();
+            })
+            .then(function () {
+                mobileApp.navigate('views/building.html');
+            })
+            .then(null,
+                  function (err) {
+                      showError(err.message);
+                  }
+            );
+        };        
+        var loginWithFacebook = function() {
+            mobileApp.showLoading();
+            facebook.getAccessToken(function(token) {
+                el.Users.loginWithFacebook(token)
+                .then(function () {
+                    return usersModel.load();
+                })
+                .then(function () {
+                    mobileApp.hideLoading();
+                    mobileApp.navigate('views/notesView.html');
+                })
+                .then(null, function (err) {
+                    mobileApp.hideLoading();
+                    if (err.code = 214) {
+                        showError("The specified identity provider is not enabled in the backend portal.");
+                    }
+                    else {
+                        showError(err.message);
+                    }
+                });
+            })
+        }         
+        
         return {
-            login: login
+            login: login,
+            loginWithFacebook: loginWithFacebook,
+            loginWithoutName: loginWithoutName
         };
     }());
 
@@ -131,9 +195,7 @@ var app = (function () {
         var show = function () {
             dataSource = kendo.observable({
                 Username: '',
-                Password: '',
-                DisplayName: '',
-                Email: ''
+                Password: ''
             });
             kendo.bind($('#signup-form'), dataSource, kendo.mobile.ui);
         };
@@ -173,7 +235,7 @@ var app = (function () {
                     return e.Id === userId;
                 })[0];
                 return {
-                    DisplayName: user ? user.DisplayName : 'Anonymous',
+                    Username: user ? user.Username : 'Anonymous',
                 };
             }
         };
@@ -183,7 +245,7 @@ var app = (function () {
                 model: noteModel
             },
             transport: {
-                typeName: 'Notes'
+                typeName: 'Activities'
             },
             change: function (e) {
                 if (e.items && e.items.length > 0) {
@@ -232,6 +294,172 @@ var app = (function () {
         };
     }());
 
+    var listsModel = (function () {
+        var listModel = {
+            id: 'Id',
+            fields: {
+                Title: {
+                    field: 'Title',
+                    defaultValue: ''
+                },
+                Introduction: {
+                    field: 'Introduction',
+                    defaultValue: ''
+                },
+                FoodPhoto: {
+                    field: 'FoodPhoto',
+                    defaultValue: ''                   
+                },
+                CreatedAt: {
+                    field: 'CreatedAt',
+                    defaultValue: new Date()
+                },
+                UserId: {
+                    field: 'UserId',
+                    defaultValue: ''
+                },
+                OrderNumber: {
+                    field: 'OrderNumber',
+                    defaultValue: ''
+                },
+                OrderCount: {
+                    field: 'OrderCount',
+                    defaultValue: ''
+                }                 
+            },
+            
+            PictureUrl: function () {
+                return AppHelper.resolveImageUrl(this.get('FoodPhoto'));
+            },            
+            CreatedAtFormatted: function () {
+                return moment(this.get('CreatedAt')).calendar();
+            },
+            User: function () {
+                var userId = this.get('UserId');
+                var user = $.grep(usersModel.users(), function (e) {
+                    return e.Id === userId;
+                })[0];
+                return {
+                    Username: user ? user.Username : 'No Good Name.',
+                };
+            }
+        };
+        var listsDataSource = new kendo.data.DataSource({
+            type: 'everlive',
+            schema: {
+                model: listModel
+            },
+            transport: {
+                typeName: 'MenuList'
+            },
+            change: function (e) {
+                if (e.items && e.items.length > 0) {
+                    $('#no-notes-span').hide();
+                }
+                else {
+                    $('#no-notes-span').show();
+                }
+            },
+            sort: { field: 'CreatedAt', dir: 'desc' }
+        });
+        return {
+            lists: listsDataSource,
+            listModel: listModel
+        };
+    }());
+
+    // notes view model
+    var listsViewModel = (function () {
+        var listSelected = function (e) {
+            mobileApp.navigate('views/menuView.html?uid=' + e.data.uid);
+        };
+        var navigateHome = function () {
+            mobileApp.navigate('#welcome');
+        };
+        var logout = function () {
+            AppHelper.logout()
+            .then(navigateHome, function (err) {
+                showError(err.message);
+                navigateHome();
+            });
+        };
+        var addNumber = function () {
+            mobileApp.navigate('#welcome');
+        };        
+        return {
+            lists: listsModel.lists,
+            listSelected: listSelected,
+            logout: logout,
+            addNumber:addNumber
+        };
+
+    }());
+
+    // note details view model
+    var listViewModel = (function () {
+        return {
+            show: function (e) {
+                var list = listsModel.lists.getByUid(e.view.params.uid);
+                kendo.bind(e.view.element, list, kendo.mobile.ui);
+            }
+        };
+    }()); 
+    
+    var addOrderViewModel = (function () {
+        var $newNote;
+        var $newNoteTitle;
+        var validator;
+        var noteInProgress;
+        var number;
+        var addNumber = function () {
+            mobileApp.navigate('#welcome');
+        }
+        var init = function () {
+            notesModel.notes.bind('error', function(resp) {
+                var msg;
+                notesModel.notes.unbind('sync');
+                if(notesModel.notes.hasChanges()) {
+                    notesModel.notes.cancelChanges(noteInProgress);
+                }
+                try {
+                    msg = JSON.parse(resp.xhr.responseText).message;
+                } catch(ex) {
+                    msg = "An unknown error has occurred.";
+                }
+                navigator.notification.alert(msg, function() {}, "Error");
+            });
+            validator = $('#enterNote').kendoValidator().data("kendoValidator");
+            $newNote = $('#newNote');
+            $newNoteTitle = $('#newNoteTitle');
+        };
+        var show = function () {
+            $newNote.val('');
+            validator.hideMessages();
+        };
+        var syncAction = function () {
+            noteInProgress = undefined;
+            mobileApp.navigate('#:back');
+        };
+        var saveNote = function () {
+            if (validator.validate()) {
+                var notes = notesModel.notes;
+                noteInProgress = notes.add();
+                noteInProgress.Text = $newNote.val();
+                noteInProgress.Title = $newNoteTitle.val();
+                noteInProgress.UserId = usersModel.currentUser.get('data').Id;
+                notes.one('sync', syncAction);
+                notes.sync();
+            }
+        };
+        return {
+            init: init,
+            show: show,
+            me: usersModel.currentUser,
+            saveNote: saveNote,
+            addNumber: addNumber
+        };
+    }());     
+    
     // add note view model
     var addNoteViewModel = (function () {
         var $newNote;
@@ -289,7 +517,10 @@ var app = (function () {
             signup: signupViewModel,
             notes: notesViewModel,
             note: noteViewModel,
-            addNote: addNoteViewModel
+            lists: listsViewModel,
+            list: listViewModel,
+            addNote: addNoteViewModel,
+            addOrder:addOrderViewModel
         }
     };
 }());

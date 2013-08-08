@@ -1,0 +1,40 @@
+<!-- notesView.html -->
+<div data-role="view" id="view-all-lists" data-layout="default" class="notes-view" data-model="app.viewModels.lists">
+    <header data-role="header">
+        <div data-role="navbar">
+            Order List
+            <a class="nav-button" data-align="left" data-role="backbutton" href="views/building.html">Back</a>
+            <a class="nav-button" data-align="right" data-role="button" href="views/addNoteView.html">Your Cart</a>
+        </div>
+    </header>
+
+    <ul id="lists-listview" data-pull-to-refresh="true" data-style="inset" data-role="listview" data-template="listTemplate"
+        data-bind="source: lists"></ul>
+    <p id="no-lists-span" hidden="hidden" class="no-items-msg">
+        <b>You do not have any notes yet.</b><br /><br />Tap on the plus sign to add one.
+    </p>
+</div>
+
+<!-- Notes ListView Template -->
+<script type="text/x-kendo-template" id="listTemplate">
+	<div>
+    <a class="b-top1" data-role="button" data-bind="click: addNumber">Add to Cart</a>
+	</div>
+    <p>
+    ${OrderCount}
+</p>
+    
+    <div data-role="touch" data-bind="events: { tap: listSelected }">
+        <div class="no-items-msg">
+        	
+            <table>
+            <tr>
+            <td><img data-bind="attr:{src: PictureUrl}" width="100" /></td>
+            <td>${Title}</td>
+            
+            </tr>
+            </table>
+
+		</div>
+    </div>
+</script>

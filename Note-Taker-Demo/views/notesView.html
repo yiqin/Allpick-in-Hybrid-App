@@ -2,9 +2,9 @@
 <div data-role="view" id="view-all-notes" data-layout="default" class="notes-view" data-model="app.viewModels.notes">
     <header data-role="header">
         <div data-role="navbar">
-            Notes
+            Order List
             <a class="nav-button" data-align="left" data-role="backbutton" data-click="app.viewModels.notes.logout">Log out</a>
-            <a class="nav-button" data-align="right" data-role="button" data-icon="add" href="views/addNoteView.html"></a>
+            <a class="nav-button" data-align="right" data-role="button" href="views/addNoteView.html">Order now!</a>
         </div>
     </header>
 
@@ -18,11 +18,11 @@
 <!-- Notes ListView Template -->
 <script type="text/x-kendo-template" id="noteTemplate">
     <div data-role="touch" data-bind="events: { tap: noteSelected }">
-        <div class="user-info">
-            <h2>${User().DisplayName}</h2>
+        <div class="no-items-msg">
+            <h2>${User().Username}</h2>
             <time class="timeSpan">${CreatedAtFormatted()}</time>
         </div>
-        <div class="user-note">
+        <div class="no-items-msg">
             <a class="user-note-txt">${Title}</a>
         </div>
     </div>

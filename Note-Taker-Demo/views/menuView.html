@@ -1,18 +1,18 @@
 <!-- noteView.html -->
-<div data-role="view" id="single-note" data-layout="default" class="notes-view" data-show="app.viewModels.note.show">
+<div data-role="view" id="single-list" data-layout="default" class="notes-view" data-show="app.viewModels.list.show">
     <header data-role="header">
         <div data-role="navbar">
-            Your note
+            <span id="listTitle" data-bind='text: Title'></span>
             <a class="nav-button" data-align="left" data-role="backbutton">Back</a>
         </div>
     </header>
 
     <div id="status-container" class="user-note-wrp" data-role="listview" data-style="inset">
         <div class="user-note">
-            <h3 id="noteTitle" data-bind='text: Title'></h3>
             <p>
-                <span id="noteText" data-bind="text: Text" class="user-note-txt"></span>
+                <img data-align="left" id="Picture" data-bind="attr:{src: PictureUrl}" width="250" />
             </p>
+             <h4 id="listTextIntro" data-bind='text: Introduction' class="user-note1"></h4>
         </div>
     </div>
 </div>
