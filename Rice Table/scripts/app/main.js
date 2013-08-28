@@ -58,7 +58,28 @@ var app = (function () {
             cartNum[orderArrayNum-1] = 1;
         }
     }
-	
+
+    var deleteclickOrder = function(orderName) {
+        var orderFlag = new Boolean(true);
+        var orderArrayNum = 1;
+        for (var i=0; i<100; i++) {
+            if (cartNum[i] > 0) {
+                orderArrayNum++;
+            }
+        }
+        for (var i=0; i<100; i++) {
+            if (orderName == cartName[i]){
+                if (cartNum[i] > 0) {
+                    cartNum[i]--;
+                    orderFlag = false;                    
+                }
+
+            }
+        }
+
+    }    
+    
+    
     var makeOrder = function() {
         cartSum = "";
         for (var i=0; i<100; i++) {
@@ -67,7 +88,7 @@ var app = (function () {
             }
         }
     }
-
+    
 
     
     
@@ -99,6 +120,8 @@ var app = (function () {
             }
         }, 'Exit', 'Ok,Cancel');
     };
+    
+    
     var onDeviceReady = function() {
         //Handle document events
         document.addEventListener("backbutton", onBackKeyDown, false);
@@ -598,32 +621,48 @@ var app = (function () {
         };
         var potter = function () {
             
-            var r = confirm("You choose Physics Building.");
-            if (r==true) {
+        navigator.notification.confirm('Physics Building.', function (confirmed) {
+            if (confirmed === true || confirmed === 1) {
                 pickPlace = "Physics Building.";
                 mobileApp.navigate('views/menu.html');
             }
+        }, 'Pickup location:', 'Ok,Cancel');  
+            
+            
+            
+            //var r = confirm("You choose Physics Building.");
+            //if (r==true) {
+            //    pickPlace = "Physics Building.";
+            //    mobileApp.navigate('views/menu.html');
+            //}
             
         };
         var hawkins = function () {
-            var r = confirm("You choose Hawkins.");
-            if (r==true) {
+            
+        navigator.notification.confirm('Physics Building.', function (confirmed) {
+            if (confirmed === true || confirmed === 1) {
                 pickPlace = "Hawkins.";
-                mobileApp.navigate('views/menu.html');                
+                mobileApp.navigate('views/menu.html');   
             }
+        }, 'Pickup location:', 'Ok,Cancel');              
+            
+            
+            //var r = confirm("You choose Hawkins.");
+            //if (r==true) {
+            //    pickPlace = "Hawkins.";
+            //    mobileApp.navigate('views/menu.html');                
+            //}
         };        
         
         var saveNote = function () {
             var r;
                 makeOrder();
-                // after that, sync.              
-                r = confirm(statement1+cartSum+statement3+pickPlace);
-          
-            
-            
-            
-            
-            if (r == true) {
+                // after that, sync.  
+        navigator.notification.confirm(statement1+cartSum+statement3+pickPlace, function (confirmed) {
+            if (confirmed === true || confirmed === 1) {
+
+                
+{
                 var notes = notesModel.notes;
                 noteInProgress = notes.add();
                 // noteInProgress.Text = $newNote.val();
@@ -681,8 +720,9 @@ var app = (function () {
                 //showAlert(count);
                 sum = statement1+cartSum+statement2+count+statement3+pickPlace;
                 
-                document.getElementById("myHeader").innerHTML=sum;
-                
+                document.getElementById("myHeader0").innerHTML=statement2+count;
+                document.getElementById("myHeader").innerHTML=statement1+cartSum;
+                document.getElementById("myHeader2").innerHTML=statement3+pickPlace;
                 
                 creatTime = usersModel.currentUser.get('data').CreatedAt;
                 saveCreateTime(sum);
@@ -691,8 +731,25 @@ var app = (function () {
                 notes.one('sync', syncAction);
                 notes.sync();
                 initOrder();
+            }                
+                
+                
+                
+                
+                
+                
+                
+                
             }
+        }, 'You cart:', 'Ok,Cancel');   
+
+
+
             
+               // r = confirm(statement1+cartSum+statement3+pickPlace);
+          
+            
+   
             
             
         };
@@ -711,16 +768,38 @@ var app = (function () {
             // get the list data !
             var $dataItem = e.data;
             // $globalTest =  $('#OrderCountID');
-            var r = confirm("Add to your order")
+			globalTest = $dataItem.Title;
+            
+            var r = true;//confirm("Add"+" "+globalTest)
             if (r==true) {
-             	globalTest = $dataItem.Title;
-            	clickOrder(globalTest);               
+             	
+            	clickOrder(globalTest);   
+                makeOrder();
+            	document.getElementById("myHeader").innerHTML=statement1+cartSum;
+                document.getElementById("myHeader2").innerHTML=statement3+pickPlace;
             }
 
             //showAlert(creatTime);
             //mobileApp.navigate('#welcome');
         };
-        
+        var deleteNumber = function (e) {
+            // get the list data !
+            var $dataItem = e.data;
+            // $globalTest =  $('#OrderCountID');
+			globalTest = $dataItem.Title;
+            
+            var r = true;//confirm("Delete"+" "+globalTest)
+            if (r==true) {
+             	
+            	deleteclickOrder(globalTest);   
+                makeOrder();
+            	document.getElementById("myHeader").innerHTML=statement1+cartSum;
+                document.getElementById("myHeader2").innerHTML=statement3+pickPlace;
+            }
+
+            //showAlert(creatTime);
+            //mobileApp.navigate('#welcome');
+        };        
         
         
         
@@ -741,6 +820,8 @@ var app = (function () {
             lists: listsModel.lists,
             listSelected: listSelected,
             addNumber:addNumber,
+            
+            deleteNumber:deleteNumber,
             
             
         };

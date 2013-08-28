@@ -7,9 +7,17 @@
             <a class="btn-login-fb" data-align="right" data-role="button" data-bind="click: saveNote">Place the order</a>
         </div>
     </header>
- 	<h2 id="myHeader">
-        Step 2: Click what you want. When you finish your order, click the "Place the order" button.
-    </h2>
+    <div>
+        <h3 id="myHeader0">
+            Step 2: When you finish your order, click the "Place the order" button.
+        </h3>    
+        <h3 id="myHeader">
+             Click what you want.
+        </h3>
+        <h3 id="myHeader2">
+             
+        </h3>        
+    </div>
 
     
     <ul id="lists-listview" data-pull-to-refresh="true" data-style="inset" data-role="listview" data-template="listTemplate"
@@ -20,16 +28,25 @@
 <!-- Notes ListView Template -->
 <!-- type="text/x-kendo-template" This is important !-->
 <script type="text/x-kendo-template" id="listTemplate">
-	<div>
-    <a id="OrderCountID" class="btn-login-fb" data-role="button" data-bind="click: addNumber">Order one</a>
-	</div>
+
     
     <div >
     <!-- <div data-role="touch" data-bind="events: { tap: listSelected }"> -->
         <div class="no-items-msg">
         	
             <table>
+            
             <tr>
+            <td>
+                <a id="OrderCountID" class="btn-login-fb" data-role="button" data-bind="click: addNumber">Add +</a>
+			</td>
+            <td>
+                <a id="OrderCountID" class="btn-b-top" data-role="button" data-bind="click: deleteNumber">Delete -</a>
+			</td>
+			</tr>
+            
+            <tr>
+            
             <td><img data-bind="attr:{src: PictureUrl}" width="150" /></td>
             <td><h4>${Title}</h4></td>
             
