@@ -1,0 +1,54 @@
+<!-- addNoteView.html 
+<div data-role="view" id="note" data-layout="default" data-transition="overlay:down" class="note-view"
+    data-init="app.viewModels.addNote.init" data-show="app.viewModels.addNote.show" data-model="app.viewModels.addNote">
+    <header data-role="header">
+        <div data-role="navbar">
+            Note
+            <a class="nav-button" data-align="left" data-role="backbutton">Cancel</a>
+            <a class="nav-button" data-align="right" data-role="button" data-bind="click: saveNote">Save</a>
+        </div>
+    </header>
+    <div id="enterNote" class="note-form-wrp">
+        <div class="user-note">
+            <label for="newNoteTitle">Title:</label>
+            <input type="text" id="newNoteTitle" placeholder="Which One Do You Like Today ?" required />
+        </div>
+        <div class="user-note">
+            <textarea id="newNote" placeholder="Enter Your Comment Here"></textarea>
+            <div id="newNoteValidation" class="validation">Note text is required!</div>
+        </div>
+    </div>
+</div>
+
+-->
+
+        <!--WELCOME VIEW -->
+        <div data-role="view" id="note" data-layout="default" class="welcome-scrn form-view" data-init="app.viewModels.addNote.init" data-model="app.viewModels.addNote">
+            
+        <header data-role="header">
+            <div data-role="navbar">
+                Welcome to Rice Table.
+                <a class="nav-button" data-align="left" data-role="backbutton">Back</a>
+            </div>
+        </header>
+       
+            
+            <ol class="group-wrp1">             
+                <li class="b-top">
+                    <h2 id="myHeader">You haven't make any order yet.</h2>
+                    
+                    <h2>Step 1: Please select the pickup location.</h2>
+                    <a data-role="button" data-bind="click: potter" class="btn-signup btn-big">Physics Building</a> 
+                    <a data-role="button" data-bind="click: hawkins" class="btn-signup btn-big">Hawkins</a> 
+<!--
+                        <h2>Step 2: Go to the Menu.</h2>
+                        <a data-role="button" class="btn-login btn-big" href="views/menu.html">Menu</a> 
+-->
+                </li>
+                
+                
+                
+                
+            </ol>
+            
+        </div>

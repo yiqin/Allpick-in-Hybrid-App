@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta charset="utf-8" />
+        <script src="cordova.js"></script>
+        <script src="kendo/js/jquery.min.js"></script>
+        <script src="kendo/js/kendo.mobile.min.js"></script>
+        <!--<script src="scripts/lib/everlive.all.min.js"></script>-->
+        <script src="scripts/lib/everlive.all.min1.js"></script>
+        <script src="scripts/lib/moment.min.js"></script>
+        <script src="scripts/app/identity-provider.js"></script>        
+        <script src="scripts/app/main.js" type="text/javascript"></script>
+
+        <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
+        <link href="styles/main.css" rel="stylesheet" />
+    </head>
+    
+    <body id="listsApp">
+        
+        
+        <section data-role="layout" data-id="default">
+            <!--View content will render here-->
+        </section>
+        <!--WELCOME VIEW -->
+        <div data-role="view" id="building" data-layout="default" class="welcome-scrn form-view" data-model="app.viewModels.login">
+            
+        <header data-role="header">
+            <div data-role="navbar">
+                Welcome
+                <a class="nav-button" data-align="left" data-role="backbutton" href="#welcome">Logout</a>
+            </div>
+        </header>
+            <ol class="group-wrp1">
+
+                <li class="b-top"><a data-role="button" href="views/menu.html" class="btn-login btn-big">Lunch Menu</a> </li>
+                                
+                <li class="b-top"><a data-role="button" href="views/yourOrder.html" class="btn-login-fb btn-big">Your Order</a> </li>
+            </ol>
+            
+        </div>
+    </body>
+</html>
