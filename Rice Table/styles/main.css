@@ -441,6 +441,23 @@ textarea
 .welcome-scrn .group-wrp1 li:first-child
 {
     margin-top: 0em;
+    padding-top: 0.5em;
+}
+.welcome-scrn .group-wrp2
+{
+    margin: 1.5em 2em 0;
+    padding: 0;
+    list-style-type: none;
+    text-align: left;
+}
+.welcome-scrn .group-wrp2 li
+{
+    margin: 1.5em 0 0;
+    padding: 1.5em 0 0;    
+}
+.welcome-scrn .group-wrp2 li:first-child
+{
+    margin-top: 0em;
     padding-top: 1.5em;
 }
 /* Notes */

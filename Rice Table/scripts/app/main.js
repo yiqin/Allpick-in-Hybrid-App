@@ -3,9 +3,10 @@ var app = (function () {
     var sum = "bad new";
 
     
-    var creatTime = "11";    
+    var creatTime = "11"; 
     
-    var statement1 = " Here is your order: "
+    var statement0 = " Step 2: When you finish your order, click the button - Place the order.";
+    var statement1 = " Here is your order: ";
     var statement2 = " Your order number is: ";
     var statement3 = " Pickup place: ";
     // global var
@@ -624,7 +625,9 @@ var app = (function () {
         navigator.notification.confirm('Physics Building.', function (confirmed) {
             if (confirmed === true || confirmed === 1) {
                 pickPlace = "Physics Building.";
+                
                 mobileApp.navigate('views/menu.html');
+                
             }
         }, 'Pickup location:', 'Ok,Cancel');  
             
@@ -642,7 +645,9 @@ var app = (function () {
         navigator.notification.confirm('Physics Building.', function (confirmed) {
             if (confirmed === true || confirmed === 1) {
                 pickPlace = "Hawkins.";
+                
                 mobileApp.navigate('views/menu.html');   
+                
             }
         }, 'Pickup location:', 'Ok,Cancel');              
             
@@ -718,9 +723,9 @@ var app = (function () {
                 
 
                 //showAlert(count);
-                sum = statement1+cartSum+statement2+count+statement3+pickPlace;
+                sum = statement2+count+statement1+cartSum+statement3+pickPlace;
                 
-                document.getElementById("myHeader0").innerHTML=statement2+count;
+                //document.getElementById("myHeader0").innerHTML=statement2+count;
                 document.getElementById("myHeader").innerHTML=statement1+cartSum;
                 document.getElementById("myHeader2").innerHTML=statement3+pickPlace;
                 
@@ -731,6 +736,14 @@ var app = (function () {
                 notes.one('sync', syncAction);
                 notes.sync();
                 initOrder();
+    			mobileApp.navigate('views/addNoteView.html');
+    			document.getElementById("yourOrderLocal1").innerHTML= statement2+count;
+    			document.getElementById("yourOrderLocal2").innerHTML= statement1+cartSum;
+    			document.getElementById("yourOrderLocal3").innerHTML= statement3+pickPlace;
+    
+    
+                document.getElementById("myHeader").innerHTML="Click what you want.";
+                document.getElementById("myHeader2").innerHTML="";    
             }                
                 
                 
@@ -775,6 +788,7 @@ var app = (function () {
              	
             	clickOrder(globalTest);   
                 makeOrder();
+                
             	document.getElementById("myHeader").innerHTML=statement1+cartSum;
                 document.getElementById("myHeader2").innerHTML=statement3+pickPlace;
             }
@@ -793,6 +807,7 @@ var app = (function () {
              	
             	deleteclickOrder(globalTest);   
                 makeOrder();
+                //document.getElementById("myHeader0").innerHTML= statement0;
             	document.getElementById("myHeader").innerHTML=statement1+cartSum;
                 document.getElementById("myHeader2").innerHTML=statement3+pickPlace;
             }
