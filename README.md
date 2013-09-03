@@ -1,5 +1,9 @@
 RiceTableFinal
 ==============
+Update 09/03/2013
+Clean index.html.
+
+
 Update 08/28/2013
 
 This project has full functions. Ignore previous one.
