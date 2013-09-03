@@ -3,7 +3,7 @@
   <PropertyGroup>
     <ProjectGuid>6b2bfae5-b952-4b4c-b2ae-de04ab4f6345</ProjectGuid>
     <ProjectTypeGuids>{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}</ProjectTypeGuids>
-    <AppIdentifier>com.telerik.RiceTableFinal</AppIdentifier>
+    <AppIdentifier>com.telerik.RT</AppIdentifier>
     <ProjectName>Rice Table</ProjectName>
     <IsRunnable>true</IsRunnable>
     <TemplateAppName>Cordova270</TemplateAppName>
@@ -12,7 +12,8 @@
     <iOSStatusBarStyle>Default</iOSStatusBarStyle>
     <AndroidHardwareAcceleration>false</AndroidHardwareAcceleration>
     <iOSDisplayName>Rice Table</iOSDisplayName>
-    <iOSDeviceFamily>1;2</iOSDeviceFamily>
+    <iOSDeviceFamily>
+    </iOSDeviceFamily>
     <iOSBackgroundMode>
     </iOSBackgroundMode>
   </PropertyGroup>
