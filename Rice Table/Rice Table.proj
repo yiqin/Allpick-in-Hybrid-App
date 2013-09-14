@@ -16,6 +16,8 @@
     </iOSDeviceFamily>
     <iOSBackgroundMode>
     </iOSBackgroundMode>
+    <BundleVersion>1.1</BundleVersion>
+    <AndroidVersionCode>2</AndroidVersionCode>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Telerik\ICE\Tools\Mobile\MobileTools.targets" />
 </Project>
