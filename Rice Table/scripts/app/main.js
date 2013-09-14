@@ -139,20 +139,7 @@ var app = (function () {
     var el = new Everlive({
         apiKey: applicationSettings.apiKey
     });
-
-    var facebook = new IdentityProvider({
-        name: "Facebook",
-        loginMethodName: "loginWithFacebook",
-        endpoint: "https://www.facebook.com/dialog/oauth",
-        response_type:"token",
-        client_id: "165834540266609",
-        redirect_uri:"https://www.facebook.com/connect/login_success.html",
-        access_type:"online",
-        scope:"email",
-        display: "touch"
-    });    
-    
-    
+ 
     
     var AppHelper = {
         resolveImageUrl: function (id) {
@@ -241,33 +228,10 @@ var app = (function () {
                       showError(err.message);
                   }
             );
-        };        
-        var loginWithFacebook = function() {
-            mobileApp.showLoading();
-            facebook.getAccessToken(function(token) {
-                el.Users.loginWithFacebook(token)
-                .then(function () {
-                    return usersModel.load();
-                })
-                .then(function () {
-                    mobileApp.hideLoading();
-                    mobileApp.navigate('views/notesView.html');
-                })
-                .then(null, function (err) {
-                    mobileApp.hideLoading();
-                    if (err.code = 214) {
-                        showError("The specified identity provider is not enabled in the backend portal.");
-                    }
-                    else {
-                        showError(err.message);
-                    }
-                });
-            })
-        }         
+        };                 
         
         return {
             login: login,
-            loginWithFacebook: loginWithFacebook,
             loginWithoutName: loginWithoutName
         };
     }());
@@ -633,16 +597,10 @@ var app = (function () {
             
             
             
-            //var r = confirm("You choose Physics Building.");
-            //if (r==true) {
-            //    pickPlace = "Physics Building.";
-            //    mobileApp.navigate('views/menu.html');
-            //}
-            
         };
         var hawkins = function () {
             
-        navigator.notification.confirm('Physics Building.', function (confirmed) {
+        navigator.notification.confirm('Hawkins.', function (confirmed) {
             if (confirmed === true || confirmed === 1) {
                 pickPlace = "Hawkins.";
                 
@@ -651,12 +609,6 @@ var app = (function () {
             }
         }, 'Pickup location:', 'Ok,Cancel');              
             
-            
-            //var r = confirm("You choose Hawkins.");
-            //if (r==true) {
-            //    pickPlace = "Hawkins.";
-            //    mobileApp.navigate('views/menu.html');                
-            //}
         };        
         
         var saveNote = function () {
@@ -667,7 +619,7 @@ var app = (function () {
             if (confirmed === true || confirmed === 1) {
 
                 
-{
+			{
                 var notes = notesModel.notes;
                 noteInProgress = notes.add();
                 // noteInProgress.Text = $newNote.val();
@@ -686,7 +638,6 @@ var app = (function () {
 
                 
                 var count;
-                //Ajax request using jQuery         
                 //Ajax request using jQuery         
                 $.ajax({
                     
@@ -745,12 +696,6 @@ var app = (function () {
                 document.getElementById("myHeader").innerHTML="Click what you want.";
                 document.getElementById("myHeader2").innerHTML="";    
             }                
-                
-                
-                
-                
-                
-                
                 
                 
             }
