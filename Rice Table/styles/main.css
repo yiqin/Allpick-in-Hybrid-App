@@ -20,12 +20,10 @@
     background-image: url(images/app-bg.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-    background-color: #160036;
 }
 #notesApp.km-ios .form-view .km-listinset, #notesApp.km-android .form-view .km-listinset
 {
-    -webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);    
+  
 }
 #notesApp.km-android .km-listview-link::after, #notesApp.km-android .km-listview-label::after
 {
@@ -45,7 +43,6 @@
             
 .b-top
 {
-    background: transparent url(images/border.png) repeat-x 0 0;
 }
 .b-top1
 {
@@ -69,12 +66,9 @@
 }
 .b-bottom
 {
-    background: transparent url(images/border.png) repeat-x 0 100%;
 }
 .b-top, .b-bottom
 {
-    background-repeat: repeat-x;
-    background-color: transparent;    
 }
 /* Buttons */
 #notesApp.km-android .km-leftitem
@@ -94,6 +88,7 @@
     -webkit-box-shadow: none;  
     box-shadow: none; 
     border: 0;
+
 }
 #notesApp.km-ios .km-back, #notesApp.km-android .km-back
 {
@@ -141,11 +136,6 @@
     position: absolute;
     top: .6em;
     
-    /* background-image: url(images/sprite.png);*/
-    background-repeat: no-repeat;
-    background-size: 3em auto;
-    background-color: transparent;
-    background-position: -100px -100px;
 }
 .btn-login::before
 {
