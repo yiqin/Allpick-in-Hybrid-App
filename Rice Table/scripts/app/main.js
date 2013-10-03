@@ -213,6 +213,7 @@ var app = (function () {
             );
         };
         var loginWithoutName = function () {
+            mobileApp.showLoading();
             var username = 'No Good Name';
             var password = 123456;
             //showAlert(username);
@@ -221,10 +222,12 @@ var app = (function () {
                 return usersModel.load();
             })
             .then(function () {
+                mobileApp.hideLoading();
                 mobileApp.navigate('views/addNoteView.html');
             })
             .then(null,
                   function (err) {
+                      mobileApp.hideLoading();
                       showError(err.message);
                   }
             );
