@@ -26,25 +26,30 @@
         <div data-role="view" id="note" data-layout="default" class="welcome-scrn form-view" data-init="app.viewModels.addNote.init" data-model="app.viewModels.addNote">
             
         <header data-role="header">
-            <div data-role="navbar">
+
+        </header>
+            
+                        <div data-role="navbar" class="navbar navbar-fixed-bottom">
                 Welcome
                 <a class="btn-login-fb" data-align="left" data-role="backbutton">Back</a>
             </div>
-        </header>
+            
+            
+            
                 <div>
-                    <h2 id ="yourOrderLocal1">
+                    <h2 id ="yourOrderLocal1"  STYLE="color: #000">
                         You haven't make any order yet.
                         
                     </h2>
-                    <h2 id ="yourOrderLocal2">
+                    <h2 id ="yourOrderLocal2" STYLE="color: #000">
                         
                         
                     </h2>
-                    <h2 id ="yourOrderLocal3">
+                    <h2 id ="yourOrderLocal3" STYLE="color: #000">
                         
                         
                     </h2>      
-            
+            <h2 STYLE="color: #000">Step 1: Please select the pickup location.</h2>
             </div>
             
             
@@ -52,28 +57,26 @@
                 <li class="b-top">
                     
  
-            <p>
-                <img src="styles/images/sprite.png", width="260">
-            </p>
-                                        <h2>Step 1: Please select the pickup location.</h2>
+
+                                        
                                 <p>
-                    <a data-role="button" data-bind="click: potter" class="btn-login-fb btn-big">Physics Building</a> 
+                    <a data-role="button is-primary" data-bind="click: potter" class="button is-primary" STYLE="font-size : 14pt; color: #fff">Physics Building</a> 
                     </p>
                     <p>
-                    <a data-role="button" data-bind="click: hawkins" class="btn-login-fb btn-big">Hawkins</a> 
+                    <a data-role="button is-primary" data-bind="click: hawkins" class="button is-primary" STYLE="font-size : 14pt; color: #fff">Hawkins</a> 
                         </p>
 
-<!--
-						<h2>Step 2: Go to the Menu.</h2>
-                        <a data-role="button" class="btn-login btn-big" href="views/menu.html">Menu</a> 
--->
-                    <h2>Piciup time: Physics 12:15pm, Hawkins 12:00 pm</h2>
+
                     
-                </li>
-                
-                
-                
-                
+                    
+                </li>            
             </ol>
+            
+            <div>
+                <h2 STYLE="color: #000">Piciup time: Physics 12:15pm, Hawkins 12:00 pm</h2>
+                
+                
+            </div>
+
             
         </div>

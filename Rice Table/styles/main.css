@@ -48,10 +48,6 @@
 {
     background-color:#605998 !important;
 }
-.b-top2
-{
-    background-color:#165396 !important;
-}
 .btn-login::before
 {
     background-position: 0 -3em;    
@@ -103,7 +99,6 @@
     left: -0.34em;
     top: .18em;
     height: .92em;
-    border-bottom-color: #6e5852;   
 }
 #notesApp.km-android .km-button
 {
@@ -129,7 +124,7 @@
 }
 .btn-login::before, .btn-signup::before
 {
-    display: block;
+
     content: " ";
     width: 1em;
     height: 1em;
