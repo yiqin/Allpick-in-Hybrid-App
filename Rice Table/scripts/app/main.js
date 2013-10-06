@@ -374,6 +374,10 @@ var app = (function () {
                     field: 'Title',
                     defaultValue: ''
                 },
+                Title: {
+                    field: 'TitleEnglish',
+                    defaultValue: ''
+                },                
                 Introduction: {
                     field: 'Introduction',
                     defaultValue: ''
