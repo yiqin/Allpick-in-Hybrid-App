@@ -621,6 +621,8 @@ var app = (function () {
         var saveNote = function () {
             var r;
                 makeOrder();
+            if (cartSum.length > 1) {
+
                 // after that, sync.  
         navigator.notification.confirm(statement1+cartSum+statement3+pickPlace, function (confirmed) {
             if (confirmed === true || confirmed === 1) {
@@ -707,15 +709,16 @@ var app = (function () {
                 
             }
         }, 'You cart:', 'Ok,Cancel');   
+                
 
 
+                
 
-            
-               // r = confirm(statement1+cartSum+statement3+pickPlace);
-          
-            
-   
-            
+            } // if statement
+            else {
+                showAlert("Your cart is empty. Please make an order.");
+            }
+
             
         };
         
