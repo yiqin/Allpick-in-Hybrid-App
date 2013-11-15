@@ -1,0 +1,18 @@
+<div data-role="view" id="share" data-layout="default" data-transition="overlay:down" class="notes-view"
+    data-init="app.viewModels.addActivity.init" data-show="app.viewModels.addActivity.show" data-model="app.viewModels.addActivity">
+    <header data-role="header">
+        <div data-role="navbar">
+            Comment
+            <a class="nav-button" data-align="left" data-role="backbutton">Cancel</a>
+            <a class="nav-button" data-align="right" data-role="button" data-bind="click: saveActivity">Post</a>
+        </div>
+    </header>
+    <div id="enterStatus" class="share-form-wrp">
+        <div class="user-share-txt" align="center" >
+            <h3 STYLE="color: #000">
+            <textarea rows="10" cols="29" id="newStatus" placeholder="What's on your mind? We need your advice." required validationMessage="Comment text is required!"></textarea>
+            <div id="newCommentValidation" class="validation">Comment text is required!</div>
+            </h3>
+        </div>
+    </div>
+</div>

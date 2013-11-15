@@ -525,6 +525,20 @@ textarea
     font-size: .8rem;
     color: #7f7f7f;
 }
+.user-share
+{
+    padding: 1rem;
+    background-color: #fff;
+    clear: both;
+    color: #000 !important;
+    font-size: 2rem;
+    line-height: 1.4;
+    
+    -webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);   
+}
+
+
 .user-note
 {
     padding: 0rem;

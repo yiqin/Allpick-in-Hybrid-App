@@ -12,6 +12,7 @@ var app = (function () {
     // global var
     var globalTest;
     var cartSum;
+    var previousOrderHistory;
     var cartNumber = 0;
 
     var cartName = new Array(100);
@@ -36,7 +37,6 @@ var app = (function () {
             cartName[i] = 0;
             cartNum[i] = 0;
         }
-        //cartSum = "Here is your order: ";
     }
     
     
@@ -158,6 +158,13 @@ var app = (function () {
                 return 'styles/images/avatar.png';
             }
         },
+        formatDate: function (dateString) {
+            var date = new Date(dateString);
+            var year = date.getFullYear().toString();
+            var month = date.getMonth().toString();
+            var day = date.getDate().toString();
+            return month + '/' + day + '/' + year;
+        },
         logout: function () {
             return el.Users.logout();
         }
@@ -224,6 +231,7 @@ var app = (function () {
             .then(function () {
                 mobileApp.hideLoading();
                 mobileApp.navigate('views/addNoteView.html');
+                previousOrderHistory = usersModel.currentUser.get('data').OrderHistory;
             })
             .then(null,
                   function (err) {
@@ -232,10 +240,15 @@ var app = (function () {
                   }
             );
         };                 
+		
+        var moveToSignUpPage = function () {
+            mobileApp.navigate('views/signupView.html');
+        };
         
         return {
             login: login,
-            loginWithoutName: loginWithoutName
+            loginWithoutName: loginWithoutName,
+            moveToSignUpPage: moveToSignUpPage
         };
     }());
 
@@ -447,10 +460,7 @@ var app = (function () {
     // notes view model
     var listsViewModel = (function () {
         
-
-        
-        
-        
+  
         var listSelected = function (e) {
             mobileApp.navigate('views/menuView.html?uid=' + e.data.uid);
         };
@@ -560,6 +570,8 @@ var app = (function () {
         var $newNoteTitle;
         var test;
         
+        var currentUserInfo;
+        
         test = "hello world";
         
         var validator;
@@ -616,6 +628,11 @@ var app = (function () {
             }
         }, 'Pickup location:', 'Ok,Cancel');              
             
+        };
+        
+        // Just move to activitiesView.html
+        var movetoFeedback = function () {                
+                mobileApp.navigate('views/activitiesView.html');                     
         };        
         
         var saveNote = function () {
@@ -644,7 +661,7 @@ var app = (function () {
                 // menu can be add together.
                 noteInProgress.Title = $newNoteTitle.val();
                 noteInProgress.UserId = usersModel.currentUser.get('data').Id;
-
+				
                 
                 var count;
                 //Ajax request using jQuery         
@@ -693,9 +710,30 @@ var app = (function () {
                 saveCreateTime(sum);
                 noteInProgress.Num = count;
                 //showAlert("create time "+creatTime);
+                
+
+                
+                
+                
+      
+                
+                //showAlert(previousOrderHistory);
+           		previousOrderHistory = previousOrderHistory+'#'+cartSum +'#'+count;
+       
+                // Add Order history into users
+                // I don't think it works.
+                //Everlive.$.Users.updateSingle({ Id: noteInProgress.UserId, 'OrderHistory': previousOrderHistory });               
+                
+                
                 notes.one('sync', syncAction);
                 notes.sync();
-                initOrder();
+                
+                
+
+ 
+                
+                
+                
     			mobileApp.navigate('views/addNoteView.html');
     			document.getElementById("yourOrderLocal1").innerHTML= statement2+count;
     			document.getElementById("yourOrderLocal2").innerHTML= statement1+cartSum;
@@ -704,6 +742,9 @@ var app = (function () {
     
                 document.getElementById("myHeader").innerHTML="Click what you want.";
                 document.getElementById("myHeader2").innerHTML="";    
+                
+                initOrder();
+                
             }                
                 
                 
@@ -786,6 +827,7 @@ var app = (function () {
             saveNote: saveNote,
             potter: potter,
             hawkins: hawkins,
+            movetoFeedback: movetoFeedback,
             
             lists: listsModel.lists,
             listSelected: listSelected,
@@ -797,7 +839,134 @@ var app = (function () {
         };
     }());
     
+    
 
+
+//////////////
+    // Update: 11/14/2013
+/////////////    
+	// prepare the datasource of comments
+    var activitiesModel = (function () {
+        var activityModel = {
+            id: 'Id',
+            fields: {
+                Text: {
+                    field: 'Text',
+                    defaultValue: ''
+                },
+                CreatedAt: {
+                    field: 'CreatedAt',
+                    defaultValue: new Date()
+                },
+                Picture: {
+                    fields: 'Picture',
+                    defaultValue: ''
+                },
+                UserId: {
+                    field: 'UserId',
+                    defaultValue: ''
+                },
+                Likes: {
+                    field: 'Likes',
+                    defaultValue: []
+                }
+            },
+            CreatedAtFormatted: function () {
+                return AppHelper.formatDate(this.get('CreatedAt'));
+            },
+            PictureUrl: function () {
+                return AppHelper.resolvePictureUrl(this.get('Picture'));
+            },
+            User: function () {
+                var userId = this.get('UserId');
+                var user = $.grep(usersModel.users(), function (e) {
+                    return e.Id === userId;
+                })[0];
+                return {
+                    Username: user ? user.Username : 'No Good Name.',
+                };
+            }
+        };
+        var activitiesDataSource = new kendo.data.DataSource({
+            type: 'everlive',
+            schema: {
+                model: activityModel
+            },
+            transport: {
+                // required by Everlive
+                typeName: 'Feedback'
+            },
+            change: function (e) {
+                if (e.items && e.items.length > 0) {
+                    $('#no-activities-span').hide();
+                }
+                else {
+                    $('#no-activities-span').show();
+                }
+            },
+            sort: { field: 'CreatedAt', dir: 'desc' }
+        });
+        return {
+            activities: activitiesDataSource
+        };
+    }());    
+
+    
+    // view some comments model
+    var activitiesViewModel = (function () {
+        var activitySelected = function (e) {
+            mobileApp.navigate('views/activityView.html?uid=' + e.data.uid);
+        };
+        var navigateHome = function () {
+            mobileApp.navigate('#welcome');
+        };
+        var logout = function () {
+            AppHelper.logout()
+            .then(navigateHome, function (err) {
+                showError(err.message);
+                navigateHome();
+            });
+        };
+        return {
+            activities: activitiesModel.activities,
+            activitySelected: activitySelected,
+            logout: logout
+        };
+    }());    
+    
+    // add operation some comments model    
+    var addActivityViewModel = (function () {
+        var $newStatus;
+        var validator;
+        var init = function () {
+            validator = $('#enterStatus').kendoValidator().data("kendoValidator");
+            $newStatus = $('#newStatus');
+        };
+        var show = function () {
+            $newStatus.val('');
+            validator.hideMessages();
+        };
+        var saveActivity = function () {
+            if (validator.validate()) {
+                var activities = activitiesModel.activities;
+                var activity = activities.add();
+                activity.Text = $newStatus.val();
+                activity.UserId = usersModel.currentUser.get('data').Id;
+                activities.one('sync', function () {
+                    mobileApp.navigate('#:back');
+                });
+                activities.sync();
+            }
+        };
+        return {
+            init: init,
+            show: show,
+            me: usersModel.currentUser,
+            saveActivity: saveActivity
+        };
+    }());    
+    
+    
     
     
     return {
@@ -812,7 +981,9 @@ var app = (function () {
             lists: listsViewModel,
             list: listViewModel,
             addNote: addNoteViewModel,
-            addOrder:addOrderViewModel
+            addOrder:addOrderViewModel,
+            activities: activitiesViewModel,
+            addActivity: addActivityViewModel            
         }
     };
 }());
