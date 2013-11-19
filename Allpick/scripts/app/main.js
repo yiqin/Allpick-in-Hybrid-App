@@ -871,9 +871,12 @@ var app = (function () {
                     defaultValue: []
                 }
             },
-            CreatedAtFormatted: function () {
+            CreatedAtFormatted1: function () {
                 return AppHelper.formatDate(this.get('CreatedAt'));
             },
+            CreatedAtFormatted2: function () {
+                return moment(this.get('CreatedAt')).calendar();
+            },            
             PictureUrl: function () {
                 return AppHelper.resolvePictureUrl(this.get('Picture'));
             },

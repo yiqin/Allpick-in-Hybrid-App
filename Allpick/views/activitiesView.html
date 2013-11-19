@@ -6,22 +6,27 @@
             <a class="nav-button" data-align="right" data-role="button" data-icon="add" href="views/addActivityView.html"></a>
         </div>
     </header>
-
+    <div >
+        <h3>Tap on the plus sign and share what's on your mind.</h3>
+    </div>
     <ul id="activities-listview" data-pull-to-refresh="true" data-style="inset" data-role="listview" data-template="activityTemplate"
         data-bind="source: activities"></ul>
-    <p id="no-activities-span" hidden="hidden" class="no-items-msg">
-        <b>You have no posts yet.</b><br /><br />Tap on the plus sign and share what's on your mind.
-    </p>
+
 </div>
 
 <!-- Activities ListView Template -->
 <script type="text/x-kendo-template" id="activityTemplate">
 
         <div >
-        	<time class="timeSpan">${CreatedAtFormatted()}</time>
+        	<time class="timeSpan">${CreatedAtFormatted2()}</time>
         </div>
         <div >
-            <a class="user-share-txt">${Text}</a>
+        	<time class="timeSpan">${CreatedAtFormatted1()}</time>
+        </div>
+        <hr>
+        
+        <div >
+            <b class="user-share-txt">${Text}</b>
         </div>        
 
 </script>
