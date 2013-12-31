@@ -15,7 +15,10 @@
 
         <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
         <link href="styles/main.css" rel="stylesheet" />
+        <!--button: no fixed width-->
         <link href="styles/buttons.css" rel="stylesheet" />
+        <!--button1: fixed width-->
+        <link href="styles/buttonsFixedWidth.css" rel="stylesheet" />
     </head>
     
     <body id="notesApp">
@@ -38,18 +41,18 @@
                     
                     
                     <span data-role="touch" data-bind="events: { tap: login }" style="display: inline-block">
-                        <a class="button is-secondary"  STYLE="font-size : 20pt; color: #fff">Login</a>
+                        <a class="buttonFixedWidth is-primary"  STYLE="font-size : 20pt; color: #fff">Login</a>
                     </span>
                     <span data-role="touch" data-bind="events: { tap: loginWithFacebook }" style="display: inline-block">
-                        <a class="button is-secondary"  STYLE="font-size : 20pt; color: #fff">Facebook</a>
+                        <a class="buttonFixedWidth is-secondary"  STYLE="font-size : 20pt; color: #fff">Facebook</a>
                     </span>
 
                     <span data-role="touch" data-bind="events: { tap: loginWithoutName }" style="display: inline-block">
-                        <button class="button is-secondary" STYLE="font-size : 20pt; color: #fff" >Great Wall</button>
+                        <a class="buttonFixedWidth is-warning" STYLE="font-size : 20pt; color: #fff" >Great Wall</a>
                     </span>                    
 
                     <span data-role="touch" data-bind="events: { tap: moveToSignUpPage }" style="display: inline-block">
-                        <a class="button is-secondary" STYLE="font-size : 20pt; color: #fff">Sign Up</a>
+                        <a class="buttonFixedWidth is-danger" STYLE="font-size : 20pt; color: #fff">Sign Up</a>
                     </span>                    
                 </li>                
             </ol>
