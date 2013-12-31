@@ -38,12 +38,19 @@
         <div class="no-items-msg">
             <table>
                 <tr>
+                    <!--  has-icon has-text <i class="icon-check"></i> 
+                    <i class="icon-cross"></i> !-->
                 <td>
-                    <a id="OrderCountID" class="button is-primary has-icon has-text" data-bind="click: addNumber"><i class="icon-check"></i>Add</a>
+                    <span data-role="touch" data-bind="events: { tap: addNumber }">
+                        <a id="OrderCountID" class="button is-primary" >Add</a>
+                    </span>
                 </td>
                 <td>
-                    <a id="OrderCountID" class="button is-primary has-icon has-text" data-bind="click: deleteNumber"><i class="icon-cross"></i>Delete</a>
+                    <span data-role="touch" data-bind="events: { tap: deleteNumber }">
+                        <a id="OrderCountID" class="button is-secondary" >Delete</a>
+                    </span>
                 </td>
+                
                 </tr>
                 
                 <tr>     
