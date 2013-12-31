@@ -10,6 +10,8 @@
         <script src="scripts/lib/moment.min.js"></script>
         <script src="scripts/app/identity-provider.js"></script>        
         <script src="scripts/app/main.js" type="text/javascript"></script>
+        
+        <script src="scripts/jquery.scrollz.min.js"></script>
 
         <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
         <link href="styles/main.css" rel="stylesheet" />
@@ -27,31 +29,32 @@
             <ol class="group-wrp">
                 <li>
                 </li>
-                <li>
-                </li>
             <p>
-                <img src="styles/images/sprite.png", width="260">
+                <img src="styles/images/sprite.png", width="200">
             </p>
-                
+                <li><label for="loginUsername">Username</label> <input type="text" id="loginUsername" required validationMessage="Username is required!" /></li>
+                <li><label for="loginPassword">Password</label> <input type="password" id="loginPassword" required validationMessage="Password is required!" /></li>
                 <li>
+                    
+                    
+                    <span data-role="touch" data-bind="events: { tap: login }" style="display: inline-block">
+                        <a class="button is-secondary"  STYLE="font-size : 20pt; color: #fff">Login</a>
+                    </span>
+                    <span data-role="touch" data-bind="events: { tap: loginWithFacebook }" style="display: inline-block">
+                        <a class="button is-secondary"  STYLE="font-size : 20pt; color: #fff">Facebook</a>
+                    </span>
+
                     <span data-role="touch" data-bind="events: { tap: loginWithoutName }" style="display: inline-block">
-                        <a class="button is-primary" STYLE="font-size : 25pt; color: #fff">Great Wall</a>
+                        <button class="button is-secondary" STYLE="font-size : 20pt; color: #fff" >Great Wall</button>
                     </span>                    
-                </li>
-                
-                
-                <!--
-                <li>
+
                     <span data-role="touch" data-bind="events: { tap: moveToSignUpPage }" style="display: inline-block">
-                        <a class="button is-primary" STYLE="font-size : 25pt; color: #fff">Sign Up</a>
+                        <a class="button is-secondary" STYLE="font-size : 20pt; color: #fff">Sign Up</a>
                     </span>                    
                 </li>                
-                -->
-                
             </ol>
-            
-            
 
+            
         </div>
     </body>
 </html>

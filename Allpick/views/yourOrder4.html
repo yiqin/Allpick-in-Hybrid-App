@@ -1,0 +1,134 @@
+<html>
+    <head>
+        <title></title>
+        <meta charset="utf-8" />
+        <script src="cordova.js"></script>
+        <script src="kendo/js/jquery.min.js"></script>
+        <script src="kendo/js/kendo.mobile.min.js"></script>
+        <script src="scripts/lib/everlive.all.min.js"></script>
+        <script src="scripts/lib/moment.min.js"></script>
+        <script src="scripts/app/identity-provider.js"></script>        
+        <script src="scripts/app/main.js" type="text/javascript"></script>
+        
+        <script src="scripts/jquery.scrollz.min.js"></script>
+
+        <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
+        <link href="styles/main.css" rel="stylesheet" />
+        <link href="styles/buttons.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div id="index" data-role="page" data-theme="a">
+                <!-- Header -->
+                <div data-role="navbar" class="navbar navbar-fixed-bottom">
+                        <!-- Header content here. -->
+                    hello
+                    <a data-role="button" href="views/addNoteView.html" class="btn-login-fb" data-align="left">Back</a>
+                </div>
+
+                <!-- Content : data-scrollz supports 'simple' or 'pull'. Content is automatically resized to  the window height between header and footer. -->
+                <div id="content" data-role="content" data-scrollz="simple">
+                        <!-- Scrollable content here. -->
+                    <div data-source="dataSource" data-role="listview" data-template="template">
+                        
+                    </div>
+                    
+                </div>
+
+                <!-- Footer -->
+                <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+                        <!-- Footer content here. -->
+                </div>
+        </div>
+        
+        
+        
+<script id="template" type="text/x-kendo-template">
+    #: Date #
+    #: Text #
+    #: Num #
+</script>
+
+<script>
+jQuery(function($) {
+
+  // Enable scrollz
+  $('#content').scrollz({
+    pull: true
+  });
+
+  // Bind pulled event
+  $('#content').bind('pulled', function() {
+
+    // Process pull action here
+
+    // Hide pull header when done
+    $('#scrollz2').scrollz('hidePullHeader');
+  });
+});
+</script>       
+        
+<script>
+    
+        var orderListModel = {
+            id: 'Id',
+            fields: {
+                Text: {
+                    field: 'Text',
+                    defaultValue: ''
+                },
+                CreatedAt: {
+                    field: 'CreatedAt',
+                    defaultValue: new Date()
+                },
+                UserId: {
+                    field: 'UserId',
+                    defaultValue: ''
+                },
+                Num: {
+                    field: 'Num',
+                    defaultValue: []
+                },
+            },
+        
+            User: function () {
+                var userId = this.get('UserId');
+                var user = $.grep(usersModel.users(), function (e) {
+                    return e.Id === userId;
+                })[0];
+                return {
+                    Username: user ? user.Username : 'No Good Name',
+                };
+            }
+        };
+    
+var dataSource = new kendo.data.DataSource({
+  type: 'everlive',
+  transport: {
+    read: {
+      url: "https://api.everlive.com/v1/B3HXTR1cpka5ETff/Activities"
+    }
+  },
+  schema: {
+    model: orderListModel,
+  },
+  filter: { 
+      field: 'currentUser', 
+      operator: 'eq', 
+      value: $('#loginUsername').val()
+  },
+  sort: {
+    field: "CreatedAt",
+    dir: "desc"
+  },
+  serverFiltering:true,
+  serverPaging: false,
+  serverSorting: true,
+    //pageSize: 15,
+});
+</script>
+        
+        
+        
+        
+    </body>
+</html>

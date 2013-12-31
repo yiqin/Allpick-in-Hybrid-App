@@ -1,8 +1,8 @@
 var app = (function () {
+
+    var currentUserName = '123';
     
     var sum = "bad new";
-
-    
     var creatTime = "11"; 
     
     var statement0 = " Step 2: When you finish your order, click the button - Place the order.";
@@ -17,11 +17,7 @@ var app = (function () {
 
     var cartName = new Array(100);
     var cartNum = new Array(100);
-    //cart[0][0] = "Beef Beef";
-    //cart[0][1] = 5;
-    //for (var i=0; i<100; i++) {
-    //   cart[i][1] = 0;
-    //}
+
     
     var pickPlace;
     
@@ -30,8 +26,7 @@ var app = (function () {
         temp = sum;
         return temp;
     }
-    
-    
+
     var initOrder = function() {
         for (var i=0; i<100; i++) {
             cartName[i] = 0;
@@ -90,11 +85,21 @@ var app = (function () {
         }
     }
     
-
+    var updateDate = function() {
+        var today = new Date();
+        var yyyy = today.getFullYear().toString();
+		var mm = (today.getMonth()+1).toString(); //January is 0!
+         if (mm.length ==1) {
+            mm = 0+mm;
+        }         
+		var dd = today.getDate().toString();
+        if (dd.length ==1) {
+            dd = 0+dd;
+        }
+        // yyy+"-"+mm+""+dd didn't work.
+        return yyyy+" "+mm+"-"+dd;
+    }
     
-    
-    'use strict';
-
     // global error handling
     var showAlert = function(message, title, callback) {
         navigator.notification.alert(message, callback || function () {
@@ -103,6 +108,7 @@ var app = (function () {
     var showError = function(message) {
         showAlert(message, 'Error occured');
     };
+    
     window.addEventListener('error', function (e) {
         e.preventDefault();
         var message = e.message + "' from " + e.filename + ":" + e.lineno;
@@ -126,6 +132,10 @@ var app = (function () {
     var onDeviceReady = function() {
         //Handle document events
         document.addEventListener("backbutton", onBackKeyDown, false);
+        if (device.platform == 'iOS' && device.version >= '7.0') {
+        		document.body.style.marginTop = "20px";
+        }        
+        
     };
 
     document.addEventListener("deviceready", onDeviceReady, false);
@@ -139,7 +149,18 @@ var app = (function () {
     var el = new Everlive({
         apiKey: applicationSettings.apiKey
     });
- 
+    
+    var facebook = new IdentityProvider({
+        name: "Facebook",
+        loginMethodName: "loginWithFacebook",
+        endpoint: "https://www.facebook.com/dialog/oauth",
+        response_type:"token",
+        client_id: "622842524411586",
+        redirect_uri:"https://www.facebook.com/connect/login_success.html",
+        access_type:"online",
+        scope:"email",
+        display: "touch"
+    }); 
     
     var AppHelper = {
         resolveImageUrl: function (id) {
@@ -161,9 +182,23 @@ var app = (function () {
         formatDate: function (dateString) {
             var date = new Date(dateString);
             var year = date.getFullYear().toString();
-            var month = date.getMonth().toString();
+            var month = (date.getMonth()+1).toString();
+            if (month.length ==1) {
+                month = 0+month;
+            }            
             var day = date.getDate().toString();
-            return month + '/' + day + '/' + year;
+            if (day.length ==1) {
+                day = 0+day;
+            }              
+            var hour = date.getHours().toString();
+            if (hour.length ==1) {
+                hour = 0+hour;
+            }
+            var minute = date.getMinutes().toString();
+            if (minute.length ==1) {
+                minute = 0+minute;
+            }            
+            return year+'-'+month+'-'+day+' '+hour+':'+minute;
         },
         logout: function () {
             return el.Users.logout();
@@ -203,18 +238,21 @@ var app = (function () {
 
     var loginViewModel = (function () {
         var login = function () {
+            mobileApp.showLoading();
             var username = $('#loginUsername').val();
             var password = $('#loginPassword').val();
-
+			currentUserName = username;
             el.Users.login(username, password)
             .then(function () {
                 return usersModel.load();
             })
             .then(function () {
+                mobileApp.hideLoading();
                 mobileApp.navigate('views/addNoteView.html');
             })
             .then(null,
                   function (err) {
+                      mobileApp.hideLoading();
                       showError(err.message);
                   }
             );
@@ -223,6 +261,7 @@ var app = (function () {
             mobileApp.showLoading();
             var username = 'No Good Name';
             var password = 123456;
+            currentUserName = username;
             //showAlert(username);
             el.Users.login(username, password)
             .then(function () {
@@ -240,15 +279,39 @@ var app = (function () {
                   }
             );
         };                 
-		
+        var loginWithFacebook = function() {
+            mobileApp.showLoading();
+            facebook.getAccessToken(function(token) {
+                el.Users.loginWithFacebook(token)
+                .then(function () {
+                    return usersModel.load();
+                })
+                .then(function () {
+                    mobileApp.hideLoading();
+                    mobileApp.navigate('views/activitiesView.html');
+                })
+                .then(null, function (err) {
+                    mobileApp.hideLoading();
+                    if (err.code = 214) {
+                        showError("The specified identity provider is not enabled in the backend portal.");
+                    }
+                    else {
+                        showError(err.message);
+                    }
+                });
+            })
+        };		
+        
         var moveToSignUpPage = function () {
             mobileApp.navigate('views/signupView.html');
         };
         
+        
         return {
             login: login,
             loginWithoutName: loginWithoutName,
-            moveToSignUpPage: moveToSignUpPage
+            moveToSignUpPage: moveToSignUpPage,
+            loginWithFacebook: loginWithFacebook,
         };
     }());
 
@@ -339,7 +402,7 @@ var app = (function () {
                     $('#no-notes-span').show();
                 }
             },
-            sort: { field: 'CreatedAt', dir: 'desc' }
+            sort: { field: 'CreatedAt', dir: 'desc' },
         });
         return {
             notes: notesDataSource
@@ -365,7 +428,7 @@ var app = (function () {
             notes: notesModel.notes,
             noteSelected: noteSelected,
             logout: logout,
-            noteSum:sum
+            noteSum:sum,
         };
     }());
 
@@ -449,7 +512,8 @@ var app = (function () {
                     $('#no-notes-span').show();
                 }
             },
-            sort: { field: 'CreatedAt', dir: 'desc' }
+            // sorting
+            sort: { field: 'CreatedAt', dir: 'desc' },
         });
         return {
             lists: listsDataSource,
@@ -477,18 +541,12 @@ var app = (function () {
         var addNumber = function (e) {
             // get the list data !
             var $dataItem = e.data;
-            // $globalTest =  $('#OrderCountID');
             globalTest = $dataItem.Title;
             clickOrder(globalTest);
             showAlert("Order successful");
-            //showAlert(creatTime);
-            //mobileApp.navigate('#welcome');
         };
 
- 
-        
-        
-        
+
         return {
             lists: listsModel.lists,
             listSelected: listSelected,
@@ -631,141 +689,128 @@ var app = (function () {
         };
         
         // Just move to activitiesView.html
+        // This is feedback page.
         var movetoFeedback = function () {                
                 mobileApp.navigate('views/activitiesView.html');                     
         };        
+        // Just move to youOder.html
+        var movetoOrder = function () {                
+                mobileApp.navigate('views/yourOrder.html');                     
+        }; 
         
         var saveNote = function () {
             var r;
-                makeOrder();
-            if (cartSum.length > 1) {
+            makeOrder();
+            // get current time.
+            var today = new Date();
+            currentTime = today.getHours();
+            
+            if (cartSum.length > 1 && currentTime <= 23) {
 
                 // after that, sync.  
-        navigator.notification.confirm(statement1+cartSum+statement3+pickPlace, function (confirmed) {
-            if (confirmed === true || confirmed === 1) {
-
-                
-			{
-                var notes = notesModel.notes;
-                noteInProgress = notes.add();
-                // noteInProgress.Text = $newNote.val();
-                // assing string here.
-                //noteInProgress.Text = test+test;
-                makeOrder();
-                noteInProgress.Text = cartSum;
-                noteInProgress.Pickup = pickPlace;
-                //showAlert(cartSum);
-                
-                //noteInProgress.Text = globalTest;
-                
-                // menu can be add together.
-                noteInProgress.Title = $newNoteTitle.val();
-                noteInProgress.UserId = usersModel.currentUser.get('data').Id;
-				
-                
-                var count;
-                //Ajax request using jQuery         
-                $.ajax({
-                    
-                    async:false,
-                    url: 'https://api.everlive.com/v1/B3HXTR1cpka5ETff/Activities/_count',
-                    type: "GET",
-                    //headers: {"Authorization" : "Yiqin ${AccessToken}"},
-                    success: function(data){
-                        //showAlert(JSON.stringify(data));
-                        cartNumber = JSON.stringify(data);
-                        var length = cartNumber.length;
+                navigator.notification.confirm(statement1+cartSum+statement3+pickPlace, function (confirmed) {
+                    if (confirmed === true || confirmed === 1) {
+        
                         
-                        switch(length){
-                            case 12:
-                                count = cartNumber[10];
-                                break;
-                            case 13:
-                                count = cartNumber[10]+cartNumber[11];
-                                break;
-                            case 14:
-                                count = cartNumber[10]+cartNumber[11]+cartNumber[12];
-                                break;    
-                        }
-                        //showAlert(length);
-                        //r = confirm(statement1+cartSum+statement2+count+statement3+pickPlace);
-                        //creatTime = statement1+cartSum+statement2+count+statement3+pickPlace;
-                    },
-                    error: function(error){
-                        showAlert("it is bad");
-                    },
-
-                });                  
-                
-                
-
-                //showAlert(count);
-                sum = statement2+count+statement1+cartSum+statement3+pickPlace;
-                
-                //document.getElementById("myHeader0").innerHTML=statement2+count;
-                document.getElementById("myHeader").innerHTML=statement1+cartSum;
-                document.getElementById("myHeader2").innerHTML=statement3+pickPlace;
-                
-                creatTime = usersModel.currentUser.get('data').CreatedAt;
-                saveCreateTime(sum);
-                noteInProgress.Num = count;
-                //showAlert("create time "+creatTime);
-                
-
-                
-                
-                
-      
-                
-                //showAlert(previousOrderHistory);
-           		previousOrderHistory = previousOrderHistory+'#'+cartSum +'#'+count;
-       
-                // Add Order history into users
-                // I don't think it works.
-                //Everlive.$.Users.updateSingle({ Id: noteInProgress.UserId, 'OrderHistory': previousOrderHistory });               
-                
-                
-                notes.one('sync', syncAction);
-                notes.sync();
-                
-                
-
- 
-                
-                
-                
-    			mobileApp.navigate('views/addNoteView.html');
-    			document.getElementById("yourOrderLocal1").innerHTML= statement2+count;
-    			document.getElementById("yourOrderLocal2").innerHTML= statement1+cartSum;
-    			document.getElementById("yourOrderLocal3").innerHTML= statement3+pickPlace;
-    
-    
-                document.getElementById("myHeader").innerHTML="Click what you want.";
-                document.getElementById("myHeader2").innerHTML="";    
-                
-                initOrder();
-                
-            }                
-                
-                
+                    {
+                        var notes = notesModel.notes;
+                        noteInProgress = notes.add();
+                        // add
+                        makeOrder();
+                        noteInProgress.Text = cartSum;
+                        noteInProgress.Pickup = pickPlace;
+                        noteInProgress.UserId = usersModel.currentUser.get('data').Id;
+                        noteInProgress.Date = updateDate();
+                        noteInProgress.currentUser = currentUserName;
+                        
+                        // not sure about the definition of "Title"
+                        noteInProgress.Title = $newNoteTitle.val();
+        
+                        
+                        var count;
+                        var todayDate = updateDate();
+                        
+                        // Count plus filtering
+                        var filter = {
+                            "Date" : todayDate
+                        };                
+                        // Ajax request using jQuery 
+                        // javascrip SDK didn't work.
+                        $.ajax({               
+                            async:false,
+                            url: 'https://api.everlive.com/v1/B3HXTR1cpka5ETff/Activities/_count',
+                            type: "GET",
+                            headers: {"Authorization" : "Bearer your-access-token-here", "X-Everlive-Filter" : JSON.stringify(filter) },
+                            success: function(data){
+                               cartNumber = JSON.stringify(data);
+                                var length = cartNumber.length;
+                                switch(length){
+                                    case 12:
+                                        count = cartNumber[10];
+                                        break;
+                                    case 13:
+                                        count = cartNumber[10]+cartNumber[11];
+                                        break;
+                                    case 14:
+                                        count = cartNumber[10]+cartNumber[11]+cartNumber[12];
+                                        break;    
+                                }
+                            },
+                            error: function(error){
+                                showAlert("it is bad");
+                            },
+                        });                  
+                        
+        
+                        //showAlert(count);
+                        sum = statement2+count+statement1+cartSum+statement3+pickPlace;
+                        document.getElementById("myHeader").innerHTML=statement1+cartSum;
+                        document.getElementById("myHeader2").innerHTML=statement3+pickPlace;
+                        
+                        creatTime = usersModel.currentUser.get('data').CreatedAt;
+                        saveCreateTime(sum);
+                        noteInProgress.Num = count;
+                        //showAlert("create time "+creatTime);
+                       
+                        //showAlert(previousOrderHistory);
+                        previousOrderHistory = previousOrderHistory+'#'+cartSum +'#'+count;
+               
+                        // Add Order history into users
+                        // I don't think it works.
+                        //Everlive.$.Users.updateSingle({ Id: noteInProgress.UserId, 'OrderHistory': previousOrderHistory });               
+                        
+                        notes.one('sync', syncAction);
+                        notes.sync();
+                        
+                        
+                        mobileApp.navigate('views/addNoteView.html');
+                        document.getElementById("yourOrderLocal1").innerHTML= statement2+count;
+                        document.getElementById("yourOrderLocal2").innerHTML= statement1+cartSum;
+                        document.getElementById("yourOrderLocal3").innerHTML= statement3+pickPlace;
+            
+            
+                        document.getElementById("myHeader").innerHTML="Click what you want.";
+                        document.getElementById("myHeader2").innerHTML="";    
+                        
+                        initOrder();
+                        
+                    }                
+                        
+                        
+                    }
+                }, 'You cart:', 'Ok,Cancel');   
+                        
+                    } // if statement
+            else if ((cartSum.length > 1 && currentTime > 23)||(cartSum.length <= 1 && currentTime > 23))  {
+                showAlert("Please order between 00:00 - 11:00");
             }
-        }, 'You cart:', 'Ok,Cancel');   
-                
-
-
-                
-
-            } // if statement
             else {
                 showAlert("Your cart is empty. Please make an order.");
-            }
-
-            
+            }      
         };
         
 ////////////////////////////////        
-        
-        
+   
         var listSelected = function (e) {
             mobileApp.navigate('views/menuView.html?uid=' + e.data.uid);
         };
@@ -813,11 +858,7 @@ var app = (function () {
         };        
         
         
-        
-        
-        
-        
-        
+               
 //////////////////////////////////        
         
         return {
@@ -828,6 +869,7 @@ var app = (function () {
             potter: potter,
             hawkins: hawkins,
             movetoFeedback: movetoFeedback,
+            movetoOrder: movetoOrder,
             
             lists: listsModel.lists,
             listSelected: listSelected,
@@ -841,7 +883,10 @@ var app = (function () {
     
     
 
-
+    
+    
+    
+//////////////
 //////////////
     // Update: 11/14/2013
 /////////////    
@@ -873,10 +918,7 @@ var app = (function () {
             },
             CreatedAtFormatted1: function () {
                 return AppHelper.formatDate(this.get('CreatedAt'));
-            },
-            CreatedAtFormatted2: function () {
-                return moment(this.get('CreatedAt')).calendar();
-            },            
+            },           
             PictureUrl: function () {
                 return AppHelper.resolvePictureUrl(this.get('Picture'));
             },
@@ -907,7 +949,7 @@ var app = (function () {
                     $('#no-activities-span').show();
                 }
             },
-            sort: { field: 'CreatedAt', dir: 'desc' }
+            sort: { field: 'CreatedAt', dir: 'desc' },
         });
         return {
             activities: activitiesDataSource
@@ -969,9 +1011,90 @@ var app = (function () {
         };
     }());    
     
+//////////////
+//////////////
+    // Update: 12/29/2013
+/////////////    
+	// prepare the datasource of orders
+    var orderListsModel = (function () {
+        var orderListModel = {
+            id: 'Id',
+            fields: {
+                Text: {
+                    field: 'Text',
+                    defaultValue: ''
+                },
+                CreatedAt: {
+                    field: 'CreatedAt',
+                    defaultValue: new Date()
+                },
+                UserId: {
+                    field: 'UserId',
+                    defaultValue: ''
+                },
+                Num: {
+                    field: 'Num',
+                    defaultValue: []
+                },
+            },
+            CreatedAtFormatted2: function () {
+                return AppHelper.formatDate(this.get('CreatedAt'));
+            },           
+            User: function () {
+                var userId = this.get('UserId');
+                var user = $.grep(usersModel.users(), function (e) {
+                    return e.Id === userId;
+                })[0];
+                return {
+                    Username: user ? user.Username : '123',
+                };
+            }
+        };
+        var orderListsDataSource = new kendo.data.DataSource({
+                  type: 'everlive',
+                  transport: {
+                    read: {
+                      url: "https://api.everlive.com/v1/B3HXTR1cpka5ETff/Activities"
+                    }
+                  },
+                  schema: {
+                    model: orderListModel,
+                  },
+                  filter: { 
+                      field: 'currentUser', 
+                      operator: 'eq', 
+                      value: $('#loginUsername').val()
+                  },
+                  sort: {
+                    field: "CreatedAt",
+                    dir: "desc"
+                  },
+                  
+                  serverPaging: true,
+                  serverSorting: true,
+                  pageSize: 10
+                });
+
+        
+        return {
+            orderLists: orderListsDataSource
+        };
+    }());    
+
+    
+    // view some comments model
+    var orderListsViewModel = (function () {
+        var orderListSelected = function (e) {
+            mobileApp.navigate('views/activityView.html?uid=' + e.data.uid);
+        };
+        return {
+            orderLists: orderListsModel.orderLists,
+        };
+    }()); 
     
     
     
+/////////////    
     return {
         sum:sum,
         creatTime: creatTime,
@@ -986,7 +1109,8 @@ var app = (function () {
             addNote: addNoteViewModel,
             addOrder:addOrderViewModel,
             activities: activitiesViewModel,
-            addActivity: addActivityViewModel            
+            addActivity: addActivityViewModel,
+            orderLists: orderListsViewModel,            
         }
     };
 }());

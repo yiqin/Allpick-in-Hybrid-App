@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+
+<div data-role="view"  data-init="viewInit">
+     <header data-role="header">
+       <!-- for ios navbar is here. -->     
+         <div data-role="navbar" class="navbar navbar-fixed-bottom">
+           Order List
+             <a data-role="button" href="views/addNoteView.html" class="btn-login-fb" data-align="left">Back</a>
+             <a class="nav-button" data-align="right" data-role="backbutton" >Log out</a>
+        </div> 
+         
+    <div>
+        <h3 id="myHeader0" STYLE="color: #000">
+            If you login in with anonymous, it shows nothing.
+        </h3>             
+    </div>  
+         
+     </header>
+
+     <ul id="remoteListView" data-source="dataSource" data-role="listview" data-template="template" data-endless-scroll="true" ></ul>
+</div>
+
+<script id="template" type="text/x-kendo-template">
+    #: Date #
+    #: Text #
+    #: Num #
+</script>
+
+<script>
+        var orderListModel = {
+            id: 'Id',
+            fields: {
+                Text: {
+                    field: 'Text',
+                    defaultValue: ''
+                },
+                CreatedAt: {
+                    field: 'CreatedAt',
+                    defaultValue: new Date()
+                },
+                UserId: {
+                    field: 'UserId',
+                    defaultValue: ''
+                },
+                Num: {
+                    field: 'Num',
+                    defaultValue: []
+                },
+            },
+        
+            User: function () {
+                var userId = this.get('UserId');
+                var user = $.grep(usersModel.users(), function (e) {
+                    return e.Id === userId;
+                })[0];
+                return {
+                    Username: user ? user.Username : 'No Good Name',
+                };
+            }
+        };
+    
+var dataSource = new kendo.data.DataSource({
+  autoSync: true,
+  type: 'everlive',
+  transport: {
+    read: {
+      url: "https://api.everlive.com/v1/B3HXTR1cpka5ETff/Activities"
+    }
+  },
+  schema: {
+    model: orderListModel,
+  },
+    
+  filter: { 
+      field: 'currentUser', 
+      operator: 'eq', 
+      value: $('#loginUsername').val()
+  },
+  sort: {
+    field: "CreatedAt",
+    dir: "desc"
+  },
+  serverFiltering:true,
+  serverPaging: true,
+  serverSorting: true,
+  pageSize: 15,
+});
+    
+dataSource.read();
+    // Here we couln't name app.
+    //var app1 = new kendo.mobile.Application(document.body, { transition: 'overlay', layout: 'mobile-tabstrip' });  
+ 
+</script>    

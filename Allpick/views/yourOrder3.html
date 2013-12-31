@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link href="styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="styles/kendo.default.min.css" rel="stylesheet" />
+    <link href="styles/kendo.mobile.all.min.css" rel="stylesheet" />
+    <script src="kendo/js/jquery.min.js"></script>
+    <script src="kendo/js/kendo.mobile.min.js"></script>
+    <script src="cordova.js/cordova.android.js"></script>
+    <script src="cordova.js/cordova.ios.js"></script>
+</head>
+<body>
+    <div data-role="view" data-init="mobileListViewPullWithEndless" data-title="Pull to refresh">
+    <header data-role="header">
+        <div data-role="navbar">
+            <span data-role="view-title"></span>
+				<a data-role="button" href="views/addNoteView.html" class="btn-login-fb" data-align="left">Back</a>
+        </div>
+    </header>
+    <ul id="pull-with-endless-listview"></ul>
+</div>
+
+
+
+<script type="text/x-kendo-tmpl" id="pull-with-endless-template">
+    #: Date #
+    #: Text #
+    #: Num #
+</script>
+
+<script>
+    
+    function mobileListViewPullWithEndless(e) {
+        
+        var orderListModel = {
+            id: 'Id',
+            fields: {
+                Text: {
+                    field: 'Text',
+                    defaultValue: ''
+                },
+                CreatedAt: {
+                    field: 'CreatedAt',
+                    defaultValue: new Date()
+                },
+                UserId: {
+                    field: 'UserId',
+                    defaultValue: ''
+                },
+                Num: {
+                    field: 'Num',
+                    defaultValue: []
+                },
+                currentUser: {
+                    field: 'currentUser ',
+                    defaultValue: []
+                }
+            },
+        
+            User: function () {
+                var userId = this.get('UserId');
+                var user = $.grep(usersModel.users(), function (e) {
+                    return e.Id === userId;
+                })[0];
+                return {
+                    Username: user ? user.Username : 'No Good Name',
+                };
+            }
+        };        
+        
+        var dataSource = new kendo.data.DataSource({
+            type: 'everlive',
+            transport: {
+                read: {
+                    url: "https://api.everlive.com/v1/B3HXTR1cpka5ETff/Activities",
+                    dataType: "json"
+                }
+            },
+              schema: {
+                model: orderListModel,
+              },
+            
+              serverFiltering:true,
+              serverPaging: true,
+              serverSorting: true,
+              pageSize: 15,    
+            
+              filter: { 
+                  field: 'currentUser', 
+                  operator: 'eq', 
+                  value: $('#loginUsername').val()
+              },
+              sort: {
+                  field: "CreatedAt",
+                  dir: "asc"
+              },
+              
+
+        });
+
+        $("#pull-with-endless-listview").kendoMobileListView({
+            dataSource: dataSource,
+            template: $("#pull-with-endless-template").text(),
+            pullToRefresh: true,
+            endlessScroll: true
+        });
+
+
+    }
+
+
+
+</script>
+
+<style scoped>
+    .product-item {
+        font-size: 1.2;
+    }
+    .product-item h3 {
+        float: left;
+        margin: 0;
+        height: 1.3em;
+        overflow: hidden;
+    }
+    .product-item p {
+        float: right;
+        margin: 0;
+        padding: .3em 0 0;
+    }
+    .pullImage {
+        width: 64px;
+        height: 64px;
+        border-radius: 3px;
+        float: left;
+        margin-right: 10px;
+    }
+    .addNew {
+        display: block;
+        text-align: center;
+        margin: 0 3em;
+        padding: .5em;
+        font-size: 1.2em;
+    }
+    #pull-with-endless-listview li:not(.km-load-more)
+    {
+        padding: 2em;
+    }
+    .km-tablet #pull-with-endless-listview li:not(.km-load-more)
+    {
+        padding: 2em;
+    }
+</style>
+
+
+
+</body>
+</html>
