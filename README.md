@@ -1,6 +1,10 @@
 RiceTableFinal
 ==============
-Update 10/14/1013
+Update 12/31/2013
+Add order history, login in.
+Update button.
+
+Update 10/14/2013
 Add activitiesView.html, addActivityView.html for comments. Users can leave comments.
 
 Update 10/14/2013 
