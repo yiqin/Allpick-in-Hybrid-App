@@ -149,7 +149,7 @@
 #notesApp.km-ios .km-navbar
 {
     background-image: none;   
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(0,0,0,1);
     border-bottom: 1px solid #a78675;
 }
 #notesApp.km-ios .km-view-title
