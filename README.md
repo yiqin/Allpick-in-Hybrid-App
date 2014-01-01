@@ -1,5 +1,10 @@
 RiceTableFinal
 ==============
+Update 01/01/2014
+Add local storage.
+document.getElementById("yourOrderLocal1").innerHTML = result.value; 
+getElementById didn't work very well.
+
 Update 12/31/2013
 Add order history, login in.
 Update button.
