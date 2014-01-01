@@ -96,8 +96,23 @@ var app = (function () {
         if (dd.length ==1) {
             dd = 0+dd;
         }
+        
+        var hour = today.getHours().toString();
+        if (hour.length ==1) {
+            hour = 0+hour;
+        }
+        var minute = today.getMinutes().toString();
+        if (minute.length ==1) {
+            minute = 0+minute;
+        }           
+        
         // yyy+"-"+mm+""+dd didn't work.
-        return yyyy+" "+mm+"-"+dd;
+        return {
+            Date: yyyy+" "+mm+"-"+dd,
+            Hours: hour+":"+minute
+        }
+        
+        
     }
 
 	var getLocalStorage = function() {
@@ -196,6 +211,7 @@ var app = (function () {
                 return 'styles/images/avatar.png';
             }
         },
+        // "formateDate" is quite similar to the "updateDate" function.
         formatDate: function (dateString) {
             var date = new Date(dateString);
             var year = date.getFullYear().toString();
@@ -675,7 +691,7 @@ var app = (function () {
             validator = $('#enterNote').kendoValidator().data("kendoValidator");
             $newNote = $('#newNote');
             $newNoteTitle = $('#newNoteTitle');
-           
+            
         };
         var show = function () {
             $newNote.val('');
@@ -744,15 +760,15 @@ var app = (function () {
                         noteInProgress.Text = cartSum;
                         noteInProgress.Pickup = pickPlace;
                         noteInProgress.UserId = usersModel.currentUser.get('data').Id;
-                        noteInProgress.Date = updateDate();
                         noteInProgress.currentUser = currentUserName;
-                        
+                        noteInProgress.Date = updateDate().Date;
+                        noteInProgress.Hours = updateDate().Hours;
                         // not sure about the definition of "Title"
                         noteInProgress.Title = $newNoteTitle.val();
         
                         
                         var count;
-                        var todayDate = updateDate();
+                        var todayDate = updateDate().Date;
                         
                         // Count plus filtering
                         var filter = {
@@ -794,7 +810,7 @@ var app = (function () {
 						// save "sum" into local storage.
                         // "sum" contains order information.
 						// showAlert(sum);
-                        localStorage.setItem(currentUserName,sum);
+                        // localStorage.setItem(currentUserName,sum);
                         
                         
                         creatTime = usersModel.currentUser.get('data').CreatedAt;
@@ -809,19 +825,23 @@ var app = (function () {
                         // I don't think it works.
                         //Everlive.$.Users.updateSingle({ Id: noteInProgress.UserId, 'OrderHistory': previousOrderHistory });               
                         
-                        notes.one('sync', syncAction);
+                        notes.one('sync', function() {
+                            mobileApp.navigate('views/addNoteView.html');
+                        });
                         notes.sync();
                         
                         
-                        mobileApp.navigate('views/addNoteView.html');
+                      
+                        
+                        //document.getElementById("yourOrderLocal1").innerHTML= sum;
                         document.getElementById("yourOrderLocal1").innerHTML= statement2+count;
                         document.getElementById("yourOrderLocal2").innerHTML= statement1+cartSum;
                         document.getElementById("yourOrderLocal3").innerHTML= statement3+pickPlace;
                         
-            			showAlert(currentUserName);
+            			// showAlert(currentUserName);
                         
                         // call the function to get local storage.
-						getLocalStorage();
+						// getLocalStorage();
 						
                         
                         document.getElementById("myHeader").innerHTML="Click what you want.";

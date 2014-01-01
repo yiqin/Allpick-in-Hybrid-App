@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<div data-role="view"  data-init="viewInit">
+<div data-role="view">
      <header data-role="header">
        <!-- for ios navbar is here. -->     
          <div data-role="navbar" class="navbar navbar-fixed-bottom">
@@ -17,10 +17,11 @@
          
      </header>
 
-     <ul id="remoteListView" data-source="dataSource" data-role="listview" data-template="template" data-pull-to-refresh="true" ></ul>
+     <ul id="remoteListView" data-style="inset" data-source="dataSource" 
+         data-role="listview" data-template="yourOrderTemplate" data-pull-to-refresh="true" ></ul>
 </div>
 
-<script id="template" type="text/x-kendo-template">
+<script id="yourOrderTemplate" type="text/x-kendo-template">
     #: Date #
     #: Text #
     #: Num #
@@ -83,10 +84,10 @@ var dataSource = new kendo.data.DataSource({
   serverFiltering:true,
   serverPaging: true,
   serverSorting: true,
-  pageSize: 15,
+  pageSize: 10,
 });
     
-dataSource.read();
+
     // Here we couln't name app.
     //var app1 = new kendo.mobile.Application(document.body, { transition: 'overlay', layout: 'mobile-tabstrip' });  
  
