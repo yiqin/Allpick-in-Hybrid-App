@@ -99,6 +99,23 @@ var app = (function () {
         // yyy+"-"+mm+""+dd didn't work.
         return yyyy+" "+mm+"-"+dd;
     }
+
+	var getLocalStorage = function() {
+        var getRemoveVariableNameInput = currentUserName,
+        result = document.getElementById("yourOrderLocal1");
+        if (localStorage.getItem(getRemoveVariableNameInput.value) != undefined) {
+            result.value = localStorage.getItem(getRemoveVariableNameInput);
+        }
+        else {
+            showAlert("No such record!");
+            result.value = "No such record!"
+        }
+        showAlert("Get local storage successfully !");
+        // innerHTML is not a good method. HTML must show first. Otherwise it fails to find the id.
+        document.getElementById("yourOrderLocal1").innerHTML = result.value;    
+    }
+
+
     
     // global error handling
     var showAlert = function(message, title, callback) {
@@ -242,6 +259,8 @@ var app = (function () {
             var username = $('#loginUsername').val();
             var password = $('#loginPassword').val();
 			currentUserName = username;
+            // This didn't work. The id must be defined first.
+            // getLocalStorage();
             el.Users.login(username, password)
             .then(function () {
                 return usersModel.load();
@@ -249,6 +268,8 @@ var app = (function () {
             .then(function () {
                 mobileApp.hideLoading();
                 mobileApp.navigate('views/addNoteView.html');
+                
+                
             })
             .then(null,
                   function (err) {
@@ -306,12 +327,16 @@ var app = (function () {
             mobileApp.navigate('views/signupView.html');
         };
         
+        var moveTolocalstorageTest = function () {
+            mobileApp.navigate('views/localstorageTest.html');
+        }
         
         return {
             login: login,
             loginWithoutName: loginWithoutName,
             moveToSignUpPage: moveToSignUpPage,
             loginWithFacebook: loginWithFacebook,
+            moveTolocalstorageTest: moveTolocalstorageTest,
         };
     }());
 
@@ -523,8 +548,7 @@ var app = (function () {
 
     // notes view model
     var listsViewModel = (function () {
-        
-  
+
         var listSelected = function (e) {
             mobileApp.navigate('views/menuView.html?uid=' + e.data.uid);
         };
@@ -766,6 +790,12 @@ var app = (function () {
                         sum = statement2+count+statement1+cartSum+statement3+pickPlace;
                         document.getElementById("myHeader").innerHTML=statement1+cartSum;
                         document.getElementById("myHeader2").innerHTML=statement3+pickPlace;
+
+						// save "sum" into local storage.
+                        // "sum" contains order information.
+						// showAlert(sum);
+                        localStorage.setItem(currentUserName,sum);
+                        
                         
                         creatTime = usersModel.currentUser.get('data').CreatedAt;
                         saveCreateTime(sum);
@@ -787,8 +817,13 @@ var app = (function () {
                         document.getElementById("yourOrderLocal1").innerHTML= statement2+count;
                         document.getElementById("yourOrderLocal2").innerHTML= statement1+cartSum;
                         document.getElementById("yourOrderLocal3").innerHTML= statement3+pickPlace;
-            
-            
+                        
+            			showAlert(currentUserName);
+                        
+                        // call the function to get local storage.
+						getLocalStorage();
+						
+                        
                         document.getElementById("myHeader").innerHTML="Click what you want.";
                         document.getElementById("myHeader2").innerHTML="";    
                         

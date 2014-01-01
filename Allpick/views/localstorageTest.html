@@ -1,0 +1,31 @@
+
+<body>
+<div data-role="view" data-layout="default" class="notes-view" data-model="app.viewModels.addNote">    
+		<header class="header">
+			<h1>Local Storage Sample</h1>
+		</header>
+		<div class="content">
+            <div class="input-area ch50">
+                 <div class="desc">Insert Variable</div>
+                 <input id="variableNameInput" class="inputBox" type="text" placeholder="Enter the variable name" />
+                 <input id="valueInput" class="inputBox" type="number" placeholder="Enter the variable value" />
+				 <button class="button dh" id="insertVariable">Insert Record</button>
+                 <button class="button dh" id="clearLocalStorage">Clear Local Storage</button>
+			</div>
+            <div class="input-area ch50">
+                <div class="desc">Search or remove variable</div>
+                <input id="getRemoveVariableNameInput" class="inputBox" type="text" placeholder="Enter name to search for a variable" />
+                <input id="result" class="inputBox" readonly="readonly" placeholder="Result">
+				<button class="button dh" id="searchVariable">Search</button>
+				<button class="button dh" id="removeVariable">Remove</button>
+			</div>
+		</div>
+		<footer class="footer">
+			<div>Cordova API Samples</div>
+		</footer>
+
+</div>    
+    
+</body>
+
+
