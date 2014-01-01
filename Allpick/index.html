@@ -30,18 +30,27 @@
         <!--WELCOME VIEW -->
         <div data-role="view" id="welcome" data-layout="default" class="welcome-scrn form-view" data-model="app.viewModels.login">
             
-
+		<!-- all pick log -->
             <ol class="group-wrp">
                 <li>
                 </li>
             <p>
                 <img src="styles/images/sprite.png", width="200">
             </p>
-                <li><label for="loginUsername">Username</label> <input type="text" id="loginUsername" required validationMessage="Username is required!" /></li>
-                <li><label for="loginPassword">Password</label> <input type="password" id="loginPassword" required validationMessage="Password is required!" /></li>
-                <li>
-                    
-                    
+                
+         <!-- login form -->       
+                <form class="form-view">
+                        <li>
+                            <label for="loginUsername">Username</label> 
+                        	<input type="text" id="loginUsername" required validationMessage="Username is required!" />
+                        </li>
+                        <li>
+                            <label for="loginPassword">Password</label> 
+                        	<input type="password" id="loginPassword" required validationMessage="Password is required!" />
+                        </li>
+                </form>
+                
+                <li>    
                     <span data-role="touch" data-bind="events: { tap: login }">
                         <a class="buttonFixedWidth is-primary"  STYLE="color: #fff">Login</a>
                     </span>
@@ -56,11 +65,6 @@
                     <span data-role="touch" data-bind="events: { tap: moveToSignUpPage }">
                         <a class="buttonFixedWidth is-danger" STYLE="color: #fff">Sign Up</a>
                     </span> 
-                    
-
-                    
-                    
-                    
                     
                 </li>                
             </ol>
