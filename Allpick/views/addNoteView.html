@@ -4,7 +4,7 @@
 <header data-role="header">
      <div data-role="navbar" class="navbar navbar-fixed-bottom">
         Welcome
-        <a class="btn-login-fb" data-align="left" data-role="button" href="index.html">Back</a>
+        <a data-role="touch" class="button is-default" data-align="left" href="index.html" style="text-decoration: none">Back</a>
     </div>
 </header> 
 
@@ -16,14 +16,16 @@
     </div>
     
     
-    <ol class="group-wrp1">             
-        <li class="b-top">
- 
-            <p>
+    <ol class="group-wrp">             
+        <li>
+            <span>
             <a data-bind="click: potter" class="buttonFixedWidth is-primary" STYLE="color: #fff">Physics Building</a> 
+            </span>
+        </li>
+        <li>
+            <span>        
             <a data-bind="click: hawkins" class="buttonFixedWidth is-secondary" STYLE="color: #fff">Hawkins</a> 
-                </p>
-   
+            </span>
         </li>            
     </ol>
     
@@ -31,12 +33,16 @@
         <h2 STYLE="color: #000">Piciup time: Physics 12:15pm, Hawkins 12:00 pm</h2> 
     </div>
           
-    <ol class="group-wrp1">             
-        <li class="b-top">            
-            <p>
+    <ol class="group-wrp">             
+        <li>
+            <span>
             <a data-bind="click: movetoOrder" class="buttonFixedWidth is-warning" STYLE="color: #fff">Order History</a> 
+            </span>
+        </li>
+        <li>
+            <span>                  
             <a data-bind="click: movetoFeedback" class="buttonFixedWidth is-danger" STYLE="color: #fff">Getting in Touch</a> 
-            </p>
+            </span>
         </li>            
     </ol>
     

@@ -31,7 +31,8 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   /* define width */  
-  width: 10em;
+  width: 14em;
+  
 }
 .buttonFixedWidth:hover,
 .buttonFixedWidth:focus {
@@ -78,9 +79,7 @@
   border-color: #91d2ea;
 }
 .buttonFixedWidth.is-secondary {
-    /* change width */
-      width: 10em; 
-    
+
   background-color: #967adc;
   border-color: #967adc;
 }

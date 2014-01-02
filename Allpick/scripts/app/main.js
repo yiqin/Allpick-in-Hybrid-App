@@ -130,7 +130,64 @@ var app = (function () {
         document.getElementById("yourOrderLocal1").innerHTML = result.value;    
     }
 
+function localStorageApp() {
+}
 
+localStorageApp.prototype = {
+	run:function() {
+		var that = this;
+		document.getElementById("insertVariable").addEventListener("click", function() {
+			that._insertVariable.apply(that, arguments);
+		});
+		document.getElementById("searchVariable").addEventListener("click", function() {
+			that._getVariable.apply(that, arguments);
+		});
+		document.getElementById("clearLocalStorage").addEventListener("click", function() {
+			that._clearLocalStorage.apply(that, arguments);
+		});
+		document.getElementById("removeVariable").addEventListener("click", function() {
+			that._removeVariable.apply(that, arguments);
+		});
+	},
+    
+    
+	_insertVariable:function() {
+		var variableNameInput = document.getElementById("variableNameInput"),
+		valueInput = document.getElementById("valueInput");
+        
+		localStorage.setItem(variableNameInput.value, valueInput.value);
+		variableNameInput.value = "";
+		valueInput.value = "";
+	},
+    
+	_getVariable:function() {
+		var getRemoveVariableNameInput = document.getElementById("getRemoveVariableNameInput"),
+		result = document.getElementById("result");
+		if (localStorage.getItem(getRemoveVariableNameInput.value) != undefined) {
+			result.value = localStorage.getItem(getRemoveVariableNameInput.value);
+		}
+		else {
+			result.value = "No such record!"
+		}
+	},
+    
+	_removeVariable:function() {
+		var searchRemoveNameInput = document.getElementById("getRemoveVariableNameInput"),
+		result = document.getElementById("result");
+		if (localStorage.getItem(searchRemoveNameInput.value) != undefined) {
+			localStorage.removeItem(searchRemoveNameInput.value);
+			result.value = "Deleted";
+		}
+		else {
+			result.value = "No such record!";
+		}
+	},
+    
+	_clearLocalStorage:function() {
+		localStorage.clear();
+	}
+}
+    
     
     // global error handling
     var showAlert = function(message, title, callback) {
@@ -162,12 +219,15 @@ var app = (function () {
     
     
     var onDeviceReady = function() {
+
         //Handle document events
         document.addEventListener("backbutton", onBackKeyDown, false);
         if (device.platform == 'iOS' && device.version >= '7.0') {
         		document.body.style.marginTop = "20px";
         }        
-        
+        // call local storage.
+        // localStorageApp = new localStorageApp();
+        // localStorageApp.run();        
     };
 
     document.addEventListener("deviceready", onDeviceReady, false);
@@ -347,12 +407,17 @@ var app = (function () {
             mobileApp.navigate('views/localstorageTest.html');
         }
         
+        var opensafari = function () {
+			window.open("http://theallpick.com", "_system");          
+        }
+        
         return {
             login: login,
             loginWithoutName: loginWithoutName,
             moveToSignUpPage: moveToSignUpPage,
             loginWithFacebook: loginWithFacebook,
             moveTolocalstorageTest: moveTolocalstorageTest,
+            opensafari: opensafari,
         };
     }());
 
@@ -652,12 +717,13 @@ var app = (function () {
                 notes.sync();
             }
         };
+
         return {
             init: init,
             show: show,
             me: usersModel.currentUser,
             saveNote: saveNote,
-            addNumber: addNumber
+            addNumber: addNumber,
         };
     }());     
     
@@ -910,6 +976,9 @@ var app = (function () {
 
             //showAlert(creatTime);
             //mobileApp.navigate('#welcome');
+        };
+        var moveBack = function () {
+            mobileApp.navigate('#:back');
         };        
         
         
@@ -931,6 +1000,8 @@ var app = (function () {
             addNumber:addNumber,
             
             deleteNumber:deleteNumber,
+            
+            moveBack:moveBack,
             
             
         };

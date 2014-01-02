@@ -5,8 +5,8 @@
    <!-- for ios navbar is here. -->     
      <div data-role="navbar" class="navbar navbar-fixed-bottom">
        Menu
-        <a class="btn-login-fb" data-align="left" data-role="backbutton">Back</a>
-        <a class="btn-login-fb" data-align="right" data-role="button" data-bind="click: saveNote">Place order</a>
+         <a class="button is-default" data-align="left" data-role="touch" data-bind="events: { tap: moveBack } ">Back</a>
+         <a class="button is-default" data-align="right" data-role="touch" data-bind="events: { tap: saveNote }">Order</a>
     </div>   
         
     <div>
@@ -42,12 +42,12 @@
                     <i class="icon-cross"></i> !-->
                 <td>
                     <span data-role="touch" data-bind="events: { tap: addNumber }">
-                        <a id="OrderCountID" class="button is-danger" >Add</a>
+                        <a class="button is-danger">Add</a>
                     </span>
                 </td>
                 <td>
                     <span data-role="touch" data-bind="events: { tap: deleteNumber }">
-                        <a id="OrderCountID" class="button is-warning" >Delete</a>
+                        <a class="button is-warning">Delete</a>
                     </span>
                 </td>
                 

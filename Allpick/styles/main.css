@@ -397,14 +397,14 @@ textarea
 .welcome-scrn .group-wrp
 {
     margin: 1.5em 2em 0;
-    padding: 0;
+    padding: 0em;
     list-style-type: none;
     text-align: center;
 }
 .welcome-scrn .group-wrp li
 {
-    margin: 1.5em 0 0;
-    padding: 1.5em 0 0;    
+    margin: 0.75em 0 0;
+    padding: 0em 0 0;    
 }
 .welcome-scrn .group-wrp li:first-child
 {

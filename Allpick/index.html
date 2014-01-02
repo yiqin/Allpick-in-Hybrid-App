@@ -26,50 +26,85 @@
     <body id="notesApp">
         <section data-role="layout" data-id="default">
             <!--View content will render here-->
-        </section>
+        </section>      
         <!--WELCOME VIEW -->
         <div data-role="view" id="welcome" data-layout="default" class="welcome-scrn form-view" data-model="app.viewModels.login">
             
-		<!-- all pick log -->
-            <ol class="group-wrp">
-                <li>
-                </li>
+		<!-- all pick logo -->
+        <ol class="group-wrp">
             <p>
-                <img src="styles/images/sprite.png", width="200">
-            </p>
-                
+                <img src="styles/images/sprite.png" width="200" align="middle">
+            </p>            
+        </ol>    
          <!-- login form -->       
-                <form class="form-view">
+                <form id="login-form">
+                    <ul data-role="listview" data-style="inset">
                         <li>
-                            <label for="loginUsername">Username</label> 
-                        	<input type="text" id="loginUsername" required validationMessage="Username is required!" />
+                            <label for="loginUsername">Username</label>
+                        	<input type="text" id="loginUsername" required validationMessage="Username is required!"/>
                         </li>
                         <li>
-                            <label for="loginPassword">Password</label> 
+                            <label for="loginPassword">Password</label>
                         	<input type="password" id="loginPassword" required validationMessage="Password is required!" />
                         </li>
-                </form>
-                
+                    </ul>
+                </form>            
+            
+            <ol class="group-wrp">
                 <li>    
                     <span data-role="touch" data-bind="events: { tap: login }">
                         <a class="buttonFixedWidth is-primary"  STYLE="color: #fff">Login</a>
                     </span>
+                </li>
+                    <!--
                     <span data-role="touch" data-bind="events: { tap: loginWithFacebook }">
                         <a class="buttonFixedWidth is-secondary"  STYLE="color: #fff">Facebook</a>
                     </span>
-
-                    <span data-role="touch" data-bind="events: { tap: loginWithoutName }">
-                        <a class="buttonFixedWidth is-warning" STYLE="color: #fff" >Great Wall</a>
-                    </span>                    
-
+					--> 
+                <li>
+                    <span data-role="touch" data-bind="events: { tap: loginWithoutName }" >
+                        <a class="buttonFixedWidth is-secondary" STYLE="color: #fff" >Great Wall</a>
+                    </span>
+                </li>
+                <li>
+                    <span data-role="touch" data-bind="events: { tap: opensafari }">
+                        <a class="buttonFixedWidth is-warning" STYLE="color: #fff" >Ichiba</a>
+                    </span>
+                </li>
+                <li>
                     <span data-role="touch" data-bind="events: { tap: moveToSignUpPage }">
                         <a class="buttonFixedWidth is-danger" STYLE="color: #fff">Sign Up</a>
                     </span> 
+                </li>    
+		<!-- local storage -->
+<!--
+            <div class="input-area ch50">
+                 <div class="desc">Insert Variable</div>
+                 <input id="variableNameInput" class="inputBox" type="text" placeholder="Enter the variable name" />
+                 <input id="valueInput" class="inputBox" type="number" placeholder="Enter the variable value" />
+				 <button class="button dh" id="insertVariable">Insert Record</button>
+                 <button class="button dh" id="clearLocalStorage">Clear Local Storage</button>
+			</div>
+            <div class="input-area ch50">
+                <div class="desc">Search or remove variable</div>
+                <input id="getRemoveVariableNameInput" class="inputBox" type="text" placeholder="Enter name to search for a variable" />
+                <input id="result" class="inputBox" readonly="readonly" placeholder="Result">
+				<button class="button dh" id="searchVariable">Search</button>
+				<button class="button dh" id="removeVariable">Remove</button>
+			</div>
+-->
                     
                 </li>                
             </ol>
 
             
         </div>
+
+
+        
+  
+        
+        
+        
     </body>
 </html>
