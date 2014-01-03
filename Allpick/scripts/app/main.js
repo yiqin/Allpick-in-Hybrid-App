@@ -133,63 +133,7 @@ var app = (function () {
     }
 
 /////////////////////
-function localStorageApp() {
-}
 
-localStorageApp.prototype = {
-	run:function() {
-		var that = this;
-		document.getElementById("insertVariable").addEventListener("click", function() {
-			that._insertVariable.apply(that, arguments);
-		});
-		document.getElementById("searchVariable").addEventListener("click", function() {
-			that._getVariable.apply(that, arguments);
-		});
-		document.getElementById("clearLocalStorage").addEventListener("click", function() {
-			that._clearLocalStorage.apply(that, arguments);
-		});
-		document.getElementById("removeVariable").addEventListener("click", function() {
-			that._removeVariable.apply(that, arguments);
-		});
-	},
-    
-    
-	_insertVariable:function() {
-		var variableNameInput = document.getElementById("variableNameInput"),
-		valueInput = document.getElementById("valueInput");
-        
-		localStorage.setItem(variableNameInput.value, valueInput.value);
-		variableNameInput.value = "";
-		valueInput.value = "";
-	},
-    
-	_getVariable:function() {
-		var getRemoveVariableNameInput = document.getElementById("getRemoveVariableNameInput"),
-		result = document.getElementById("result");
-		if (localStorage.getItem(getRemoveVariableNameInput.value) != undefined) {
-			result.value = localStorage.getItem(getRemoveVariableNameInput.value);
-		}
-		else {
-			result.value = "No such record!"
-		}
-	},
-    
-	_removeVariable:function() {
-		var searchRemoveNameInput = document.getElementById("getRemoveVariableNameInput"),
-		result = document.getElementById("result");
-		if (localStorage.getItem(searchRemoveNameInput.value) != undefined) {
-			localStorage.removeItem(searchRemoveNameInput.value);
-			result.value = "Deleted";
-		}
-		else {
-			result.value = "No such record!";
-		}
-	},
-    
-	_clearLocalStorage:function() {
-		localStorage.clear();
-	}
-}
 /////////////////////    
     
     // global error handling
@@ -227,11 +171,55 @@ localStorageApp.prototype = {
         document.addEventListener("backbutton", onBackKeyDown, false);
         if (device.platform == 'iOS' && device.version >= '7.0') {
         		document.body.style.marginTop = "20px";
-        }        
-        // call local storage.
-        // localStorageApp = new localStorageApp();
-        // localStorageApp.run();        
-    };
+        } 
+        
+        
+        if( window.plugins.AdMob ) {
+            var adIdiOS = 'ca-app-pub-1198168277804687/1437413255';
+            var adIdAndroid = 'ca-app-pub-1198168277804687/9857160451';
+            var adId = (navigator.userAgent.indexOf('Android') >=0) ? adIdAndroid : adIdiOS;
+            
+        	var am = window.plugins.AdMob;
+        	am.createBannerView( 
+        		{
+        		'publisherId' : adId,
+				'adSize' : am.AD_SIZE.BANNER,
+				'bannerAtTop' : true
+        		}, 
+        		function() {
+        			am.requestAd({
+					'isTesting' : true,
+					'extras' : {
+						'color_bg' : 'AAAAFF',
+						'color_bg_top' : 'FFFFFF',
+						'color_border' : 'FFFFFF',
+						'color_link' : '000080',
+						'color_text' : '808080',
+						'color_url' : '008000'
+					}}, 
+					function() {}, 
+					function() {
+						alert('Error requesting Ad');
+					});
+				}, 
+				function() {
+					alert('Error create Ad Banner');
+				}
+			);
+        } else {
+        	alert( 'AdMob plugin not loaded.' );
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+
 
     document.addEventListener("deviceready", onDeviceReady, false);
 
