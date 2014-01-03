@@ -1,13 +1,16 @@
 var app = (function () {
 
+    var IchibanAddress = 'No address now';
+    var IchibanPhone = '0000';
+    
     var currentUserName = '123';
     
     var sum = "bad new";
     var creatTime = "11"; 
     
-    var statement0 = " Step 2: When you finish your order, click the button - Place the order.";
+    // var statement0 = " Step 2: When you finish your order, click the button - Place the order.";
     var statement1 = " Here is your order: ";
-    var statement2 = " Your order number is: ";
+    // var statement2 = " Your order number is: ";
     var statement3 = " Pickup place: ";
     // global var
     var globalTest;
@@ -18,7 +21,6 @@ var app = (function () {
     var cartName = new Array(100);
     var cartNum = new Array(100);
 
-    
     var pickPlace;
     
     var saveCreateTime = function() {
@@ -111,12 +113,12 @@ var app = (function () {
             Date: yyyy+" "+mm+"-"+dd,
             Hours: hour+":"+minute
         }
-        
-        
+     
     }
-
-	var getLocalStorage = function() {
-        var getRemoveVariableNameInput = currentUserName,
+    
+/////////////////////
+	var getLocalStorage = function(e) {
+        var getRemoveVariableNameInput = e,
         result = document.getElementById("yourOrderLocal1");
         if (localStorage.getItem(getRemoveVariableNameInput.value) != undefined) {
             result.value = localStorage.getItem(getRemoveVariableNameInput);
@@ -130,6 +132,7 @@ var app = (function () {
         document.getElementById("yourOrderLocal1").innerHTML = result.value;    
     }
 
+/////////////////////
 function localStorageApp() {
 }
 
@@ -187,7 +190,7 @@ localStorageApp.prototype = {
 		localStorage.clear();
 	}
 }
-    
+/////////////////////    
     
     // global error handling
     var showAlert = function(message, title, callback) {
@@ -411,6 +414,10 @@ localStorageApp.prototype = {
 			window.open("http://theallpick.com", "_system");          
         }
         
+        var movetToichibanAddress = function () {
+            mobileApp.navigate('views/ichibanAddress.html');
+        }
+        
         return {
             login: login,
             loginWithoutName: loginWithoutName,
@@ -418,6 +425,7 @@ localStorageApp.prototype = {
             loginWithFacebook: loginWithFacebook,
             moveTolocalstorageTest: moveTolocalstorageTest,
             opensafari: opensafari,
+            movetToichibanAddress: movetToichibanAddress,
         };
     }());
 
@@ -869,7 +877,7 @@ localStorageApp.prototype = {
                         
         
                         //showAlert(count);
-                        sum = statement2+count+statement1+cartSum+statement3+pickPlace;
+                        sum = "Your order number is: "+count+", "+cartSum+" Pickup place: "+pickPlace;
                         document.getElementById("myHeader").innerHTML=statement1+cartSum;
                         document.getElementById("myHeader2").innerHTML=statement3+pickPlace;
 
@@ -895,14 +903,11 @@ localStorageApp.prototype = {
                             mobileApp.navigate('views/addNoteView.html');
                         });
                         notes.sync();
-                        
-                        
-                      
-                        
-                        //document.getElementById("yourOrderLocal1").innerHTML= sum;
-                        document.getElementById("yourOrderLocal1").innerHTML= statement2+count;
-                        document.getElementById("yourOrderLocal2").innerHTML= statement1+cartSum;
-                        document.getElementById("yourOrderLocal3").innerHTML= statement3+pickPlace;
+                                
+                        document.getElementById("yourOrderLocal1").innerHTML= sum;
+                        //document.getElementById("yourOrderLocal1").innerHTML= statement2+count;
+                        //document.getElementById("yourOrderLocal2").innerHTML= statement1+cartSum;
+                        //document.getElementById("yourOrderLocal3").innerHTML= statement3+pickPlace;
                         
             			// showAlert(currentUserName);
                         
@@ -1217,7 +1222,59 @@ localStorageApp.prototype = {
             orderLists: orderListsModel.orderLists,
         };
     }()); 
-    
+
+
+
+/////////////
+    //    Update: 01/02/2014
+	//    for ichiban
+/////////////    
+    var IchibanAddressViewModel = (function () {
+        var getAddress = function () {
+       		// showAlert(IchibanAddress); 
+        	// showAlert(IchibanPhone);
+            // Address
+			IchibanAddress = localStorage.getItem("allpickAddress");
+            if (IchibanAddress != undefined) {
+                document.getElementById("yourAddress").innerHTML=IchibanAddress;
+            }
+            else {
+                // showAlert("Please enter your address below.");
+                document.getElementById("yourAddress").innerHTML = "Please enter your address below."
+            }
+            // Phone
+			IchibanPhone = localStorage.getItem("allpickPhone");
+            if (IchibanPhone != undefined) {
+                document.getElementById("yourPhone").innerHTML=IchibanPhone;
+            }
+            else {
+                // showAlert("000-000-0000");
+                document.getElementById("yourPhone").innerHTML = "000-000-0000"
+            }            
+        };        
+
+        var submit = function () {
+            //showAlert($('#submitIchibanAddress').val());
+            localStorage.setItem("allpickAddress",$('#submitIchibanAddress').val());
+            document.getElementById("yourAddress").innerHTML = $('#submitIchibanAddress').val();
+            IchibanAddress = $('#submitIchibanAddress').val();
+            
+            localStorage.setItem("allpickPhone",$('#submitIchibanPhone').val());
+            document.getElementById("yourPhone").innerHTML = $('#submitIchibanPhone').val();
+            IchibanPhone = $('#submitIchibanAddress').val();
+            
+            window.scrollTo(0, 0);
+            window.scrollTo(0, 0);
+            showAlert('submit successfully');
+        };
+        
+        
+        return {
+            getAddress: getAddress,
+            submit: submit
+
+        };        
+    }());
     
     
 /////////////    
@@ -1236,7 +1293,8 @@ localStorageApp.prototype = {
             addOrder:addOrderViewModel,
             activities: activitiesViewModel,
             addActivity: addActivityViewModel,
-            orderLists: orderListsViewModel,            
+            orderLists: orderListsViewModel,
+            IchibanAddress: IchibanAddressViewModel,            
         }
     };
 }());

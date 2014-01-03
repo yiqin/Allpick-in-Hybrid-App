@@ -1,5 +1,7 @@
 <!--WELCOME VIEW -->
-<div data-role="view" id="note" data-layout="default" class="welcome-scrn form-view" data-init="app.viewModels.addNote.init" data-model="app.viewModels.addNote">
+<!-- data-init is a necessary. -->
+<div data-role="view" id="note" data-layout="default" class="welcome-scrn form-view"
+     data-init="app.viewModels.addNote.init" data-model="app.viewModels.addNote">
     
 <header data-role="header">
      <div data-role="navbar" class="navbar navbar-fixed-bottom">
@@ -9,11 +11,9 @@
 </header> 
 
         <div>
-            <h2 id ="yourOrderLocal1"  STYLE="color: #000"></h2>
-            <h2 id ="yourOrderLocal2" STYLE="color: #000"></h2>
-            <h2 id ="yourOrderLocal3" STYLE="color: #000"></h2>      
-    <h2 STYLE="color: #000">Step 1: Please select the pickup location.</h2>
-    </div>
+            <h2 id ="yourOrderLocal1"  STYLE="color: #000"></h2>     
+    		<h2 STYLE="color: #000">Step 1: Please select the pickup location.</h2>
+    	</div>
     
     
     <ol class="group-wrp">             
@@ -24,7 +24,7 @@
         </li>
         <li>
             <span>        
-            <a data-bind="click: hawkins" class="buttonFixedWidth is-secondary" STYLE="color: #fff">Hawkins</a> 
+            <a data-bind="click: hawkins" class="buttonFixedWidth is-success" STYLE="color: #fff">Hawkins</a> 
             </span>
         </li>            
     </ol>
