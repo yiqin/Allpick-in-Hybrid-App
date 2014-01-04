@@ -1,4 +1,4 @@
-<div data-role="view" id="view-all-activities" data-layout="default" class="activities-view" data-model="app.viewModels.activities">
+<div data-role="view" id="view-all-activities" data-layout="default" class="notes-view" data-model="app.viewModels.activities">
     <header data-role="header">
         <div data-role="navbar">
             Comments
@@ -7,7 +7,7 @@
         </div>
     </header>
     <div >
-        <h3>Tap on the plus sign and share what's on your mind.</h3>
+        <h3 STYLE="color: #000">Tap on the plus sign and share what's on your mind.</h3>
     </div>
     <ul id="activities-listview" data-pull-to-refresh="true" data-style="inset" data-role="listview" data-template="activityTemplate"
         data-bind="source: activities"></ul>
@@ -16,17 +16,24 @@
 
 <!-- Activities ListView Template -->
 <script type="text/x-kendo-template" id="activityTemplate">
-
+<!--Different platforms -->
+<!--iOS -->
         <div >
         	<time class="timeSpan">${CreatedAtFormatted1()}</time>
         </div>
-        <hr>
-        
+   
         <div >
             <b class="user-share-txt">${Text}</b>
+        </div>  
+        <hr>
+        
+<!-- Android -->
+<!--        
+        <div class="no-items-msg">               
+                <h5><time class="timeSpan">${CreatedAtFormatted1()}</time></h5>                                 
+                <h5>${Text}</h5>                
         </div>
-
-
+-->  
 
 
 </script>

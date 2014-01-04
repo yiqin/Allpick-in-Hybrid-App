@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<div data-role="view">
+<div class="notes-view" data-role="view">
      <header data-role="header">
        <!-- for ios navbar is here. -->     
          <div data-role="navbar" class="navbar navbar-fixed-bottom">
@@ -21,8 +21,19 @@
 </div>
 
 <script id="yourOrderTemplate" type="text/x-kendo-template">
-<p>  #: Date # #: Hours # </p>
-<p>    #: Text #   Order Number:  #: Num # </p>
+<!--iOS -->
+    <p >  #: Date # #: Hours # </>
+    <p>    #: Text #   Order Number:  #: Num # </p>   
+    <hr>
+    
+<!--Android -->
+<!--
+        <div class="no-items-msg">                
+                <h5>${Date}${Hours}</h5>                                
+                <h5>${Text}Order Number: ${Num}</h5>                
+        </div>
+--> 
+
 </script>
 
 <script>
@@ -59,7 +70,7 @@
         };
     
 var dataSource = new kendo.data.DataSource({
-  autoSync: true,
+  autoSync: false,
   type: 'everlive',
   transport: {
     read: {
@@ -73,7 +84,7 @@ var dataSource = new kendo.data.DataSource({
   filter: { 
       field: 'currentUser', 
       operator: 'eq', 
-      value: $('#loginUsername').val()
+      value: window.device.uuid,
   },
   sort: {
     field: "CreatedAt",

@@ -168,12 +168,24 @@ var app = (function () {
     
     
     var onDeviceReady = function() {
-
+        
+        
         //Handle document events
         document.addEventListener("backbutton", onBackKeyDown, false);
-        if (device.platform == 'iOS' && device.version >= '7.0') {
-        		document.body.style.marginTop = "20px";
-        } 
+        // Status Bar Style
+        // Hide.
+        // 20px
+        // if (device.platform == 'iOS' && device.version >= '7.0') {
+        // 		document.body.style.marginTop = "20px";
+        // } 
+
+
+        var deviceName = window.device.name;
+        var deviceId = window.device.uuid;
+        var deviceOs = window.device.platform;
+        var deviceOsVersion = window.device.version;
+        
+        // showAlert(deviceId); 
         
         
         if( window.plugins.AdMob && turnOnAdd == 0 ) {
@@ -819,7 +831,10 @@ var app = (function () {
                         noteInProgress.Text = cartSum;
                         noteInProgress.Pickup = pickPlace;
                         noteInProgress.UserId = usersModel.currentUser.get('data').Id;
-                        noteInProgress.currentUser = currentUserName;
+                        
+                        // noteInProgress.currentUser = currentUserName;
+                        noteInProgress.currentUser = window.device.uuid;
+                        
                         noteInProgress.Date = updateDate().Date;
                         noteInProgress.Hours = updateDate().Hours;
                         // not sure about the definition of "Title"
