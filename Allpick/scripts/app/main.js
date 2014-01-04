@@ -3,6 +3,8 @@ var app = (function () {
     var IchibanAddress = 'No address now';
     var IchibanPhone = '0000';
     
+    var turnOnAdd = 0;
+    
     var currentUserName = '123';
     
     var sum = "bad new";
@@ -174,7 +176,8 @@ var app = (function () {
         } 
         
         
-        if( window.plugins.AdMob ) {
+        if( window.plugins.AdMob && turnOnAdd == 0 ) {
+            turnOnAdd = 1;
             var adIdiOS = 'ca-app-pub-1198168277804687/1437413255';
             var adIdAndroid = 'ca-app-pub-1198168277804687/9857160451';
             var adId = (navigator.userAgent.indexOf('Android') >=0) ? adIdAndroid : adIdiOS;
@@ -209,13 +212,6 @@ var app = (function () {
         } else {
         	alert( 'AdMob plugin not loaded.' );
         }
-        
-        
-        
-        
-        
-        
-        
         
         
     }
@@ -320,7 +316,7 @@ var app = (function () {
         };
     }());
 
-    var loginViewModel = (function () {
+    var loginViewModel = (function () {        
         var login = function () {
             mobileApp.showLoading();
             var username = $('#loginUsername').val();
