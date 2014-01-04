@@ -803,7 +803,8 @@ var app = (function () {
             var today = new Date();
             currentTime = today.getHours();
             
-            if (cartSum.length > 1 && currentTime <= 23) {
+            // 10: the server close at 11:00
+            if (cartSum.length > 1 && currentTime <= 10) {
 
                 // after that, sync.  
                 navigator.notification.confirm(statement1+cartSum+statement3+pickPlace, function (confirmed) {
