@@ -854,7 +854,7 @@ var app = (function () {
                             async:false,
                             url: 'https://api.everlive.com/v1/B3HXTR1cpka5ETff/Activities/_count',
                             type: "GET",
-                            headers: {"Authorization" : "Bearer your-access-token-here", "X-Everlive-Filter" : JSON.stringify(filter) },
+                            headers: {"Authorization" : "0QJ0Hrc7POtaGodFTwqOO86Tzn2vPNIF", "X-Everlive-Filter" : JSON.stringify(filter) },
                             success: function(data){
                                cartNumber = JSON.stringify(data);
                                 var length = cartNumber.length;
@@ -874,8 +874,8 @@ var app = (function () {
                                 showAlert("it is bad");
                             },
                         });                  
-                        
-        
+
+    
                         //showAlert(count);
                         sum = "Your order number is: "+count+", "+cartSum+" Pickup place: "+pickPlace;
                         document.getElementById("myHeader").innerHTML=statement1+cartSum;
