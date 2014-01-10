@@ -1,10 +1,10 @@
 var app = (function () {
 
+    // Global valurable
+    // Some valurables are not used.
     var IchibanAddress = 'No address now';
     var IchibanPhone = '0000';
-    
-    var turnOnAdd = 0;
-    
+        
     var currentUserName = '123';
     
     var sum = "bad new";
@@ -14,7 +14,7 @@ var app = (function () {
     var statement1 = " Here is your order: ";
     // var statement2 = " Your order number is: ";
     var statement3 = " Pickup place: ";
-    // global var
+    
     var globalTest;
     var cartSum;
     var previousOrderHistory;
@@ -38,7 +38,7 @@ var app = (function () {
         }
     }
     
-    
+    // When the user click add button, "clickOrder" function is executed.
     var clickOrder = function(orderName) {
         var orderFlag = new Boolean(true);
         var orderArrayNum = 1;
@@ -59,6 +59,7 @@ var app = (function () {
         }
     }
 
+    // When the user click delete button, "deleteclickOrder" function is executed.
     var deleteclickOrder = function(orderName) {
         var orderFlag = new Boolean(true);
         var orderArrayNum = 1;
@@ -79,7 +80,7 @@ var app = (function () {
 
     }    
     
-    
+    // Get the order list - (string type).
     var makeOrder = function() {
         cartSum = "";
         for (var i=0; i<100; i++) {
@@ -89,10 +90,12 @@ var app = (function () {
         }
     }
     
+    // Date function. Get date.
+    // return two valuables. Date, Hours.
     var updateDate = function() {
         var today = new Date();
         var yyyy = today.getFullYear().toString();
-		var mm = (today.getMonth()+1).toString(); //January is 0!
+		var mm = (today.getMonth()+1).toString(); //January is 0.
          if (mm.length ==1) {
             mm = 0+mm;
         }         
@@ -119,6 +122,7 @@ var app = (function () {
     }
     
 /////////////////////
+    // I think this function is not used. (01/09/2014)
 	var getLocalStorage = function(e) {
         var getRemoveVariableNameInput = e,
         result = document.getElementById("yourOrderLocal1");
@@ -137,7 +141,7 @@ var app = (function () {
 /////////////////////
 
 /////////////////////    
-    
+    // showAlert, showError, window.addEventListener, onBackKeyDown are default functions from sample code.
     // global error handling
     var showAlert = function(message, title, callback) {
         navigator.notification.alert(message, callback || function () {
@@ -165,21 +169,21 @@ var app = (function () {
             }
         }, 'Exit', 'Ok,Cancel');
     };
+///////////////////// 
     
-    
-    var onDeviceReady = function() {
-        
-        
+    // When the app is initialized, onDeviceReady is executed for only one time.
+    var onDeviceReady = function() {   
         //Handle document events
         document.addEventListener("backbutton", onBackKeyDown, false);
+        
         // Status Bar Style
-        // Hide.
+        // Set the status bar to "Hide". No need to set 20px now.
         // 20px
         // if (device.platform == 'iOS' && device.version >= '7.0') {
         // 		document.body.style.marginTop = "20px";
         // } 
 
-
+		// Get device ID. This is the unique number for device. It's used in identifying the user.
         var deviceName = window.device.name;
         var deviceId = window.device.uuid;
         var deviceOs = window.device.platform;
@@ -187,9 +191,10 @@ var app = (function () {
         
         // showAlert(deviceId); 
         
-        
-        if( window.plugins.AdMob && turnOnAdd == 0 ) {
-            turnOnAdd = 1;
+        // initialize banner ads from AdMob
+        // https://github.com/yiqin/cordova-plugin-admob.git
+        // AdMob doesn't work in Simulation. Only work in device.
+        if( window.plugins.AdMob ) {
             var adIdiOS = 'ca-app-pub-1198168277804687/1437413255';
             var adIdAndroid = 'ca-app-pub-1198168277804687/9857160451';
             var adId = (navigator.userAgent.indexOf('Android') >=0) ? adIdAndroid : adIdiOS;
@@ -224,13 +229,11 @@ var app = (function () {
         } else {
         	alert( 'AdMob plugin not loaded.' );
         }
-        
-        
+ 
     }
 
-
     document.addEventListener("deviceready", onDeviceReady, false);
-
+   
     var applicationSettings = {
         emptyGuid: '00000000-0000-0000-0000-000000000000',
         apiKey: 'B3HXTR1cpka5ETff'
@@ -241,6 +244,8 @@ var app = (function () {
         apiKey: applicationSettings.apiKey
     });
     
+    // facebook login.
+    // Not used here.
     var facebook = new IdentityProvider({
         name: "Facebook",
         loginMethodName: "loginWithFacebook",
@@ -253,6 +258,8 @@ var app = (function () {
         display: "touch"
     }); 
     
+    // AppHelper
+    // contains logout. logout function is not used here.
     var AppHelper = {
         resolveImageUrl: function (id) {
             if (id) {
@@ -271,6 +278,7 @@ var app = (function () {
             }
         },
         // "formateDate" is quite similar to the "updateDate" function.
+        // Default function.
         formatDate: function (dateString) {
             var date = new Date(dateString);
             var year = date.getFullYear().toString();
@@ -328,6 +336,12 @@ var app = (function () {
         };
     }());
 
+    // loginViewModel --> login 
+    // data-model="app.viewModels.login"
+    // data-model load functions from loginViewModel
+    // deviceID is used here. We don't have login page. So username is not used here.
+    // Basically we only use mobileApp.navigate('views/addNoteView.html');
+    // move to addNoteView.html.(second page)
     var loginViewModel = (function () {        
         var login = function () {
             mobileApp.showLoading();
@@ -342,9 +356,7 @@ var app = (function () {
             })
             .then(function () {
                 mobileApp.hideLoading();
-                mobileApp.navigate('views/addNoteView.html');
-                
-                
+                mobileApp.navigate('views/addNoteView.html');                
             })
             .then(null,
                   function (err) {
@@ -353,6 +365,8 @@ var app = (function () {
                   }
             );
         };
+        
+        // If user loginWithoutName, then username is assigned "No Good Name".
         var loginWithoutName = function () {
             mobileApp.showLoading();
             var username = 'No Good Name';
@@ -398,6 +412,7 @@ var app = (function () {
             })
         };		
         
+        // navigation function. Move to different pages.
         var moveToSignUpPage = function () {
             mobileApp.navigate('views/signupView.html');
         };
@@ -425,6 +440,11 @@ var app = (function () {
         };
     }());
 
+    // singnupViewModel --> signup
+    // data-model="app.viewModels.signup"
+    // No used here.
+    // not sure about data-show. (01/07/2014)
+    // data-show="app.viewModels.signup.show"
     var signupViewModel = (function () {
         var dataSource;
         var signup = function () {
@@ -454,6 +474,27 @@ var app = (function () {
         };
     }());
 
+//////////////////////////
+    ////// Activities: for Great Wall
+    ////// Back-End
+    ////// Get DataSource
+//////////////////////////
+    // Activities Datasource is for saving orders.
+    // We don't use Activities Datasource in Front-End.
+    //
+    // Before fetching and creating items in Activities, we need to initialize it.
+    // All are inclued in notesModel. Note that it is not named with ViewModel.
+    // I directly copy the code from the sample code. So noteModel --> Activities.
+    //
+    // Two step:
+    // (1). noteModel
+    //      Initialize object types. fields are cooresponsed to contents in items in Activities.
+    // (2). notesDataSource
+    //      Get the data from Everlive with filtering, sorting, paging.
+    //
+    // Only return notes: notesDataSource
+    // This function is not directly called. In "notesViewModel", this function is called thought "notes: notesModel.notes,"
+    // A little tricky there.
     var notesModel = (function () {
         var noteModel = {
             id: 'Id',
@@ -496,11 +537,13 @@ var app = (function () {
                 };
             }
         };
+        // kendo data DataSource
         var notesDataSource = new kendo.data.DataSource({
             type: 'everlive',
             schema: {
                 model: noteModel
             },
+            // For different Types, just change typeName.
             transport: {
                 typeName: 'Activities'
             },
@@ -512,6 +555,7 @@ var app = (function () {
                     $('#no-notes-span').show();
                 }
             },
+            // sorting according to the create time.
             sort: { field: 'CreatedAt', dir: 'desc' },
         });
         return {
@@ -519,7 +563,12 @@ var app = (function () {
         };
     }());
 
-    // notes view model
+    // ViewModel for Activities
+    // Display Activities in a list.
+    // This is Font-End function
+    // not used here.
+    // The way to call Types Activitis.
+    // notes(in html) --> notesViewModel --> notes --> notesModel.notes
     var notesViewModel = (function () {
         var noteSelected = function (e) {
             mobileApp.navigate('views/noteView.html?uid=' + e.data.uid);
@@ -527,6 +576,7 @@ var app = (function () {
         var navigateHome = function () {
             mobileApp.navigate('#welcome');
         };
+        // No logout perfermance here.
         var logout = function () {
             AppHelper.logout()
             .then(navigateHome, function (err) {
@@ -542,7 +592,8 @@ var app = (function () {
         };
     }());
 
-    // note details view model
+    // ViewModel for a specified item in Activities.
+    // not used here.
     var noteViewModel = (function () {
         return {
             show: function (e) {
@@ -551,7 +602,14 @@ var app = (function () {
             }
         };
     }());
+    
 
+//////////////////////////
+    ////// Activities: for Great Wall Menu
+    ////// Back-End
+    ////// Get DataSource    
+//////////////////////////    
+    
     var listsModel = (function () {
         var listModel = {
             id: 'Id',
@@ -633,7 +691,6 @@ var app = (function () {
 
     // notes view model
     var listsViewModel = (function () {
-
         var listSelected = function (e) {
             mobileApp.navigate('views/menuView.html?uid=' + e.data.uid);
         };
@@ -647,6 +704,7 @@ var app = (function () {
                 navigateHome();
             });
         };
+        // Check this function.
         var addNumber = function (e) {
             // get the list data !
             var $dataItem = e.data;
@@ -675,61 +733,7 @@ var app = (function () {
         };
     }()); 
     
-    var addOrderViewModel = (function () {
-        var $newNote;
-        var $newNoteTitle;
-        var validator;
-        var noteInProgress;
-        var number;
-        var addNumber = function () {
-            mobileApp.navigate('#welcome');
-        }
-        var init = function () {
-            notesModel.notes.bind('error', function(resp) {
-                var msg;
-                notesModel.notes.unbind('sync');
-                if(notesModel.notes.hasChanges()) {
-                    notesModel.notes.cancelChanges(noteInProgress);
-                }
-                try {
-                    msg = JSON.parse(resp.xhr.responseText).message;
-                } catch(ex) {
-                    msg = "An unknown error has occurred.";
-                }
-                navigator.notification.alert(msg, function() {}, "Error");
-            });
-            validator = $('#enterNote').kendoValidator().data("kendoValidator");
-            $newNote = $('#newNote');
-            $newNoteTitle = $('#newNoteTitle');
-        };
-        var show = function () {
-            $newNote.val('');
-            validator.hideMessages();
-        };
-        var syncAction = function () {
-            noteInProgress = undefined;
-            mobileApp.navigate('#:back');
-        };
-        var saveNote = function () {
-            if (validator.validate()) {
-                var notes = notesModel.notes;
-                noteInProgress = notes.add();
-                noteInProgress.Text = $newNote.val();
-                noteInProgress.Title = $newNoteTitle.val();
-                noteInProgress.UserId = usersModel.currentUser.get('data').Id;
-                notes.one('sync', syncAction);
-                notes.sync();
-            }
-        };
-
-        return {
-            init: init,
-            show: show,
-            me: usersModel.currentUser,
-            saveNote: saveNote,
-            addNumber: addNumber,
-        };
-    }());     
+      
     
     // add note view model
     var addNoteViewModel = (function () {
@@ -772,30 +776,20 @@ var app = (function () {
             //mobileApp.navigate('views/addNoteView2.html');
         };
         var potter = function () {
-            
-        navigator.notification.confirm('Physics Building.', function (confirmed) {
-            if (confirmed === true || confirmed === 1) {
-                pickPlace = "Physics Building.";
-                
-                mobileApp.navigate('views/menu.html');
-                
-            }
-        }, 'Pickup location:', 'Ok,Cancel');  
-            
-            
-            
+            navigator.notification.confirm('Physics Building.', function (confirmed) {
+                if (confirmed === true || confirmed === 1) {
+                    pickPlace = "Physics Building.";
+                    mobileApp.navigate('views/menu.html'); 
+                }
+            }, 'Pickup location:', 'OK,Cancel');  
         };
         var hawkins = function () {
-            
-        navigator.notification.confirm('Hawkins.', function (confirmed) {
-            if (confirmed === true || confirmed === 1) {
-                pickPlace = "Hawkins.";
-                
-                mobileApp.navigate('views/menu.html');   
-                
-            }
-        }, 'Pickup location:', 'Ok,Cancel');              
-            
+            navigator.notification.confirm('Hawkins.', function (confirmed) {
+                if (confirmed === true || confirmed === 1) {
+                    pickPlace = "Hawkins.";
+                    mobileApp.navigate('views/menu.html');   
+                }
+            }, 'Pickup location:', 'OK,Cancel');
         };
         
         // Just move to activitiesView.html
@@ -814,9 +808,10 @@ var app = (function () {
             // get current time.
             var today = new Date();
             currentTime = today.getHours();
+            var limitTime = 23;
             
             // 10: the server close at 11:00
-            if (cartSum.length > 1 && currentTime <= 10) {
+            if (cartSum.length > 1 && currentTime <= limitTime) {
 
                 // after that, sync.  
                 navigator.notification.confirm(statement1+cartSum+statement3+pickPlace, function (confirmed) {
@@ -927,7 +922,7 @@ var app = (function () {
                 }, 'You cart:', 'Ok,Cancel');   
                         
                     } // if statement
-            else if ((cartSum.length > 1 && currentTime > 10)||(cartSum.length <= 1 && currentTime > 10))  {
+            else if ((cartSum.length > 1 && currentTime > limitTime)||(cartSum.length <= 1 && currentTime > limitTime))  {
                 showAlert("Please order between 00:00 - 11:00 am");
             }
             else {
@@ -1000,6 +995,7 @@ var app = (function () {
             movetoFeedback: movetoFeedback,
             movetoOrder: movetoOrder,
             
+            // Get dota from listsModel.lists
             lists: listsModel.lists,
             listSelected: listSelected,
             addNumber:addNumber,
@@ -1017,10 +1013,9 @@ var app = (function () {
     
     
     
-//////////////
-//////////////
+//////////////////////////
     // Update: 11/14/2013
-/////////////    
+//////////////////////////    
 	// prepare the datasource of comments
     var activitiesModel = (function () {
         var activityModel = {
@@ -1142,88 +1137,6 @@ var app = (function () {
         };
     }());    
     
-//////////////
-//////////////
-    // Update: 12/29/2013
-/////////////    
-	// prepare the datasource of orders
-    var orderListsModel = (function () {
-        var orderListModel = {
-            id: 'Id',
-            fields: {
-                Text: {
-                    field: 'Text',
-                    defaultValue: ''
-                },
-                CreatedAt: {
-                    field: 'CreatedAt',
-                    defaultValue: new Date()
-                },
-                UserId: {
-                    field: 'UserId',
-                    defaultValue: ''
-                },
-                Num: {
-                    field: 'Num',
-                    defaultValue: []
-                },
-            },
-            CreatedAtFormatted2: function () {
-                return AppHelper.formatDate(this.get('CreatedAt'));
-            },           
-            User: function () {
-                var userId = this.get('UserId');
-                var user = $.grep(usersModel.users(), function (e) {
-                    return e.Id === userId;
-                })[0];
-                return {
-                    Username: user ? user.Username : '123',
-                };
-            }
-        };
-        var orderListsDataSource = new kendo.data.DataSource({
-                  type: 'everlive',
-                  transport: {
-                    read: {
-                      url: "https://api.everlive.com/v1/B3HXTR1cpka5ETff/Activities"
-                    }
-                  },
-                  schema: {
-                    model: orderListModel,
-                  },
-                  filter: { 
-                      field: 'currentUser', 
-                      operator: 'eq', 
-                      value: $('#loginUsername').val()
-                  },
-                  sort: {
-                    field: "CreatedAt",
-                    dir: "desc"
-                  },
-                  
-                  serverPaging: true,
-                  serverSorting: true,
-                  pageSize: 10
-                });
-
-        
-        return {
-            orderLists: orderListsDataSource
-        };
-    }());    
-
-    
-    // view some comments model
-    var orderListsViewModel = (function () {
-        var orderListSelected = function (e) {
-            mobileApp.navigate('views/activityView.html?uid=' + e.data.uid);
-        };
-        return {
-            orderLists: orderListsModel.orderLists,
-        };
-    }()); 
-
-
 
 /////////////
     //    Update: 01/02/2014
@@ -1290,10 +1203,8 @@ var app = (function () {
             lists: listsViewModel,
             list: listViewModel,
             addNote: addNoteViewModel,
-            addOrder:addOrderViewModel,
             activities: activitiesViewModel,
             addActivity: addActivityViewModel,
-            orderLists: orderListsViewModel,
             IchibanAddress: IchibanAddressViewModel,            
         }
     };
