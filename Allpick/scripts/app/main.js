@@ -808,7 +808,8 @@ var app = (function () {
             // get current time.
             var today = new Date();
             currentTime = today.getHours();
-            var limitTime = 23;
+            // 10 --> 11:00
+            var limitTime = 10;
             
             // 10: the server close at 11:00
             if (cartSum.length > 1 && currentTime <= limitTime) {
@@ -1143,13 +1144,17 @@ var app = (function () {
 	//    for ichiban
 /////////////    
     var IchibanAddressViewModel = (function () {
+        var getAddressFlag = false;
+        var getPhoneFlag = false;
+     
         var getAddress = function () {
        		// showAlert(IchibanAddress); 
         	// showAlert(IchibanPhone);
             // Address
 			IchibanAddress = localStorage.getItem("allpickAddress");
-            if (IchibanAddress != undefined) {
+            if (IchibanAddress != '') {
                 document.getElementById("yourAddress").innerHTML=IchibanAddress;
+                getAddressFlag = true;
             }
             else {
                 // showAlert("Please enter your address below.");
@@ -1157,37 +1162,420 @@ var app = (function () {
             }
             // Phone
 			IchibanPhone = localStorage.getItem("allpickPhone");
-            if (IchibanPhone != undefined) {
+            if (IchibanPhone != '') {
                 document.getElementById("yourPhone").innerHTML=IchibanPhone;
+                getPhoneFlag = true; 
             }
             else {
                 // showAlert("000-000-0000");
-                document.getElementById("yourPhone").innerHTML = "000-000-0000"
+                document.getElementById("yourPhone").innerHTML = "Please enter your phone number below."
             }            
         };        
 
-        var submit = function () {
-            //showAlert($('#submitIchibanAddress').val());
-            localStorage.setItem("allpickAddress",$('#submitIchibanAddress').val());
-            document.getElementById("yourAddress").innerHTML = $('#submitIchibanAddress').val();
-            IchibanAddress = $('#submitIchibanAddress').val();
-            
-            localStorage.setItem("allpickPhone",$('#submitIchibanPhone').val());
-            document.getElementById("yourPhone").innerHTML = $('#submitIchibanPhone').val();
-            IchibanPhone = $('#submitIchibanAddress').val();
-            
-            window.scrollTo(0, 0);
-            window.scrollTo(0, 0);
-            showAlert('submit successfully');
+        var submitAddress = function () {
+            if ($('#submitIchibanAddress').val() != '') {
+                localStorage.setItem("allpickAddress",$('#submitIchibanAddress').val());
+                //document.getElementById("yourAddress").innerHTML = $('#submitIchibanAddress').val();
+                IchibanAddress = $('#submitIchibanAddress').val();
+                document.getElementById("yourAddress").innerHTML=IchibanAddress;
+                getAddressFlag = true;
+                
+                window.scrollTo(0, 0);
+                window.scrollTo(0, 0);                
+            }
+            else {
+                showAlert("Enter your address");
+            }
         };
         
+        var submitPhone = function () {
+            if ($('#submitIchibanPhone').val() != '') {
+                localStorage.setItem("allpickPhone",$('#submitIchibanPhone').val());
+                //document.getElementById("yourPhone").innerHTML = $('#submitIchibanPhone').val();
+                IchibanPhone = $('#submitIchibanPhone').val();
+                document.getElementById("yourPhone").innerHTML=IchibanPhone;
+                getPhoneFlag = true;   
+                
+                window.scrollTo(0, 0);
+                window.scrollTo(0, 0);
+            }
+            else {
+                showAlert("Enter your phone");
+            }            
+        };
+
+        
+		var moveToIchibanMenu = function () {
+            // clear cartSum
+            if (getAddressFlag == false)
+            {
+                showAlert('Invalid address');
+            }
+            else if (getPhoneFlag == false)
+            {
+                showAlert('Invalid phone');
+            }
+            else
+            {
+                cartSum = '';
+                pickPlace = IchibanAddress;
+                mobileApp.navigate('views/ichibanMenu.html');                
+            }
+        }
+        var moveToIchibanOrder = function () {
+            mobileApp.navigate('views/ichibanOrder.html');                
+        }
         
         return {
             getAddress: getAddress,
-            submit: submit
-
+            submitAddress: submitAddress,
+            submitPhone: submitPhone,
+            moveToIchibanMenu: moveToIchibanMenu,
+            moveToIchibanOrder: moveToIchibanOrder,
         };        
     }());
+
+
+/////////////
+    //    Update: 01/13/2014
+	//    for ichiban
+///////////// 
+    var IchibanlistsModel = (function () {
+        var listModel = {
+            id: 'Id',
+            fields: {
+                Title: {
+                    field: 'Title',
+                    defaultValue: ''
+                },
+                Title: {
+                    field: 'TitleEnglish',
+                    defaultValue: ''
+                },                
+                Introduction: {
+                    field: 'Introduction',
+                    defaultValue: ''
+                },
+                FoodPhoto: {
+                    field: 'FoodPhoto',
+                    defaultValue: ''                   
+                },
+                CreatedAt: {
+                    field: 'CreatedAt',
+                    defaultValue: new Date()
+                },
+                UserId: {
+                    field: 'UserId',
+                    defaultValue: ''
+                },
+                OrderNumber: {
+                    field: 'OrderNumber',
+                    defaultValue: ''
+                },
+                OrderCount: {
+                    field: 'OrderCount',
+                    defaultValue: ''
+                }                 
+            },
+            
+            PictureUrl: function () {
+                return AppHelper.resolveImageUrl(this.get('FoodPhoto'));
+            },            
+            CreatedAtFormatted: function () {
+                return moment(this.get('CreatedAt')).calendar();
+            },
+            User: function () {
+                var userId = this.get('UserId');
+                var user = $.grep(usersModel.users(), function (e) {
+                    return e.Id === userId;
+                })[0];
+                return {
+                    Username: user ? user.Username : 'No Good Name.',
+                };
+            }
+        };
+        var listsDataSource = new kendo.data.DataSource({
+            type: 'everlive',
+            schema: {
+                model: listModel
+            },
+            transport: {
+                typeName: 'IchibanMenu'
+            },
+            change: function (e) {
+                if (e.items && e.items.length > 0) {
+                    $('#no-notes-span').hide();
+                }
+                else {
+                    $('#no-notes-span').show();
+                }
+            },
+            // sorting
+            sort: { field: 'CreatedAt', dir: 'desc' },
+        });
+        return {
+            lists: listsDataSource,
+            listModel: listModel
+        };
+    }());
+
+    var IchibannotesModel = (function () {
+        var noteModel = {
+            id: 'Id',
+            fields: {
+                Title: {
+                    field: 'Title',
+                    defaultValue: ''
+                },
+                Text: {
+                    field: 'Text',
+                    defaultValue: ''
+                },
+                CreatedAt: {
+                    field: 'CreatedAt',
+                    defaultValue: new Date()
+                },
+                UserId: {
+                    field: 'UserId',
+                    defaultValue: ''
+                },
+                Pickup: {
+                    field: 'Pickup',
+                    defaultValue: ''
+                },
+                Phone: {
+                    field: 'Phone',
+                    defaultValue: ''
+                },
+                Num: {
+                    field: 'Num',
+                    defaultValue: ''
+                },                
+            },
+            CreatedAtFormatted: function () {
+                return moment(this.get('CreatedAt')).calendar();
+            },
+            User: function () {
+                var userId = this.get('UserId');
+                var user = $.grep(usersModel.users(), function (e) {
+                    return e.Id === userId;
+                })[0];
+                return {
+                    Username: user ? user.Username : 'Anonymous',
+                };
+            }
+        };
+        // kendo data DataSource
+        var notesDataSource = new kendo.data.DataSource({
+            type: 'everlive',
+            schema: {
+                model: noteModel
+            },
+            // For different Types, just change typeName.
+            transport: {
+                typeName: 'IchibanActivities'
+            },
+            change: function (e) {
+                if (e.items && e.items.length > 0) {
+                    $('#no-notes-span').hide();
+                }
+                else {
+                    $('#no-notes-span').show();
+                }
+            },
+            // sorting according to the create time.
+            sort: { field: 'CreatedAt', dir: 'desc' },
+        });
+        return {
+            notes: notesDataSource
+        };
+    }());
+    
+    // add note view model
+    // take care of note view model.
+    var IchibanMenuViewModel = (function () {
+        // to make a distinction between regular vars and jQuery objects.
+        var $newNote;
+        var $newNoteTitle;
+        
+        var currentUserInfo;
+                
+        var validator;
+        var noteInProgress;
+        var init = function () {
+            IchibannotesModel.notes.bind('error', function(resp) {
+                var msg;
+                IchibannotesModel.notes.unbind('sync');
+                if(IchibannotesModel.notes.hasChanges()) {
+                    IchibannotesModel.notes.cancelChanges(noteInProgress);
+                }
+                try {
+                    msg = JSON.parse(resp.xhr.responseText).message;
+                } catch(ex) {
+                    msg = "An unknown error has occurred.";
+                }
+                navigator.notification.alert(msg, function() {}, "Error");
+            });
+            validator = $('#enterNote').kendoValidator().data("kendoValidator");
+            $newNote = $('#newNote');
+            $newNoteTitle = $('#newNoteTitle');
+            
+        };
+        var show = function () {
+            $newNote.val('');
+            validator.hideMessages();
+        };
+        var syncAction = function () {
+            noteInProgress = undefined;
+            //mobileApp.navigate('views/addNoteView2.html');
+        };
+    
+        var saveNote = function () {
+            makeOrder();
+            // get current time.
+            var today = new Date();
+            currentTime = today.getHours();
+            // 10 --> 11:00
+            var limitTime = 23;
+            
+            // 10: the server close at 11:00
+            if (cartSum.length > 1 && currentTime <= limitTime) {
+
+                // after that, sync.  
+                navigator.notification.confirm(statement1+cartSum+statement3+pickPlace+'..Phone:'+IchibanPhone, function (confirmed) {
+                    if (confirmed === true || confirmed === 1) {
+            
+                    {  
+                        var notes = IchibannotesModel.notes;
+                        noteInProgress = notes.add();
+                        
+                        // add
+                        makeOrder();
+                        noteInProgress.Text = cartSum;
+                        noteInProgress.Pickup = pickPlace;
+                        noteInProgress.Phone = IchibanPhone;
+                        // noteInProgress.UserId = usersModel.currentUser.get('data').Id;
+                        // noteInProgress.currentUser = currentUserName;
+                        noteInProgress.currentUser = window.device.uuid;
+                        
+                        noteInProgress.Date = updateDate().Date;
+                        noteInProgress.Hours = updateDate().Hours;
+                        // not sure about the definition of "Title"
+                        //noteInProgress.Title = $newNoteTitle.val();
+        
+                        var count;
+                        var todayDate = updateDate().Date;
+                     
+                        // Count plus filtering
+                        var filter = {
+                            "Date" : todayDate
+                        };                
+                        // Ajax request using jQuery 
+                        // javascrip SDK didn't work.
+                        // point to IchibanActivities database.
+                        $.ajax({               
+                            async:false,
+                            url: 'https://api.everlive.com/v1/B3HXTR1cpka5ETff/IchibanActivities/_count',
+                            type: "GET",
+                            headers: {"Authorization" : "0QJ0Hrc7POtaGodFTwqOO86Tzn2vPNIF", "X-Everlive-Filter" : JSON.stringify(filter) },
+                            success: function(data){
+                               cartNumber = JSON.stringify(data);
+                                var length = cartNumber.length;
+                                switch(length){
+                                    case 12:
+                                        count = cartNumber[10];
+                                        break;
+                                    case 13:
+                                        count = cartNumber[10]+cartNumber[11];
+                                        break;
+                                    case 14:
+                                        count = cartNumber[10]+cartNumber[11]+cartNumber[12];
+                                        break;    
+                                }
+                            },
+                            error: function(error){
+                                showAlert("it is bad");
+                            },
+                        });                  
+
+    
+                        showAlert(count);
+                        sum = "Your order number is: "+count+", "+cartSum+" Pickup place: "+pickPlace+" Phone: "+IchibanPhone;
+                        document.getElementById("IchibanCart1").innerHTML=statement1+cartSum;
+						// save "sum" into local storage.
+                        // "sum" contains order information.
+						// showAlert(sum);
+                        // localStorage.setItem(currentUserName,sum);
+                        
+                        
+                        // creatTime = usersModel.currentUser.get('data').CreatedAt;
+                        saveCreateTime(sum);
+                        noteInProgress.Num = count;
+                                                
+                        notes.one('sync', function() {
+                            mobileApp.navigate('views/ichibanAddress.html');
+                            document.getElementById("IchibanSum").innerHTML= sum;
+                        });
+                        notes.sync();
+                                                        
+                        document.getElementById("IchibanCart1").innerHTML="Click what you want.";                        
+                        initOrder();
+                        
+                    }                
+                        
+                        
+                    }
+                }, 'You cart:', 'Ok,Cancel');   
+                        
+                    } // if statement
+            else if ((cartSum.length > 1 && currentTime > limitTime)||(cartSum.length <= 1 && currentTime > limitTime))  {
+                showAlert("Please order between 00:00 - 11:00 am");
+            }
+            else {
+                showAlert("Your cart is empty. Please make an order.");
+            }      
+        };
+
+        var addNumber = function (e) {
+            // get the list data !
+            // the specified item
+            var $dataItem = e.data;
+			globalTest = $dataItem.Title; 	
+            clickOrder(globalTest);   
+            makeOrder();
+            document.getElementById("IchibanCart1").innerHTML=statement1+cartSum;
+        };
+        var deleteNumber = function (e) {
+            // get the list data !
+            var $dataItem = e.data;
+			globalTest = $dataItem.Title;
+            deleteclickOrder(globalTest);   
+            makeOrder();
+            document.getElementById("IchibanCart1").innerHTML=statement1+cartSum;
+        };
+        var moveBack = function () {
+            mobileApp.navigate('#:back');
+        };        
+           
+        return {
+            init: init,
+            show: show,
+            me: usersModel.currentUser,
+            saveNote: saveNote,    
+            // Get dota from listsModel.lists
+            // how to view the database !
+            // IchibanlistsModel must be declared first.
+            Ichibanlists: IchibanlistsModel.lists,
+            
+            addNumber:addNumber,            
+            deleteNumber:deleteNumber,  
+            moveBack:moveBack,           
+        };
+    }());    
+
+    
+    
+    
     
     
 /////////////    
@@ -1205,7 +1593,9 @@ var app = (function () {
             addNote: addNoteViewModel,
             activities: activitiesViewModel,
             addActivity: addActivityViewModel,
-            IchibanAddress: IchibanAddressViewModel,            
+            IchibanAddress: IchibanAddressViewModel,
+            IchibanMenu: IchibanMenuViewModel,  
+
         }
     };
 }());

@@ -1,12 +1,27 @@
 <!--WELCOME VIEW -->
-<div data-role="view" data-layout="default" class="welcome-scrn form-view" data-model="app.viewModels.IchibanAddress">
+<div data-role="view" data-layout="default" class="welcome-scrn form-view"
+     data-init="app.viewModels.IchibanMenu.init"
+     data-model="app.viewModels.IchibanAddress">
     
 <header data-role="header">
      <div data-role="navbar" class="navbar navbar-fixed-bottom">
-        Ichiban-Address
+        Ichiban
         <a data-role="touch" class="button is-default" data-align="left" href="index.html" style="text-decoration: none">Back</a>
+        <a class="button is-default" data-align="right" data-role="touch" data-bind="events: { tap: moveToIchibanMenu }">Menu</a> 
     </div>
 </header> 
+<div>
+        <h3 id="IchibanSum" STYLE="color: #000">          
+        </h3>   
+</div>    
+    
+<ol class="group-wrp">    
+    <li>    
+        <span data-role="touch" data-bind="events: { tap: getAddress }">
+            <a class="buttonFixedWidth is-primary"  STYLE="color: #fff">Get Latest Address.</a>
+        </span>
+    </li>    
+</ol>
     
 <div>
         <h3 id="yourAddress" STYLE="color: #000">
@@ -18,39 +33,47 @@
     
 </div>
     
-<ol class="group-wrp">    
-    <li>    
-        <span data-role="touch" data-bind="events: { tap: getAddress }">
-            <a class="buttonFixedWidth is-primary"  STYLE="color: #fff">Get your latest address.</a>
-        </span>
-    </li>    
-</ol>
-    
     <form>
         <ul id="address-form" data-role="listview" data-style="inset">
             <li class="txtarea-wrp">
                 <label for="submitIchibanAddress">Address</label> 
-                <textarea id="submitIchibanAddress" data-bind="value: IchibanAddress"></textarea>
+                <textarea id="submitIchibanAddress" data-bind="value: IchibanAddress" ></textarea>
             </li>            
-            <li>
-                <label for="submitIchibanPhone">Phone</label>
-                <input type="text" id="submitIchibanPhone" data-bind="value: IchibanPhone"/>
-            </li>
-
         </ul>
     </form>
 
     <ol class="group-wrp">
         <li>    
-            <span data-role="touch" data-bind="events: { tap: submit }">
-                <a class="buttonFixedWidth is-primary"  STYLE="color: #fff">Submit your address</a>
+            <span data-role="touch" data-bind="events: { tap: submitAddress }">
+                <a class="buttonFixedWidth is-success"  STYLE="color: #fff">Update Address</a>
             </span>
         </li>
     </ol>
     
+    <form>
+        <ul id="address-form" data-role="listview" data-style="inset">            
+            <li>
+                <label for="submitIchibanPhone">Phone</label>
+                <input type="text" id="submitIchibanPhone" data-bind="value: IchibanPhone" />
+            </li>
+        </ul>
+    </form>
 
+    <ol class="group-wrp">
+        <li>    
+            <span data-role="touch" data-bind="events: { tap: submitPhone }">
+                <a class="buttonFixedWidth is-warning"  STYLE="color: #fff">Update Phone</a>
+            </span>
+        </li>
+    </ol>
     
-
+    <ol class="group-wrp">
+        <li>    
+            <span data-role="touch" data-bind="events: { tap: moveToIchibanOrder }">
+                <a class="buttonFixedWidth is-danger"  STYLE="color: #fff">Ichiban Order History</a>
+            </span>
+        </li>
+    </ol>
           
 
     

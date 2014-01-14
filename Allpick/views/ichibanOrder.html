@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-
 <div class="notes-view" data-role="view">
      <header data-role="header">
        <!-- for ios navbar is here. -->     
          <div data-role="navbar" class="navbar navbar-fixed-bottom">
-           GW Order History
-             <a data-role="button" href="views/addNoteView.html" class="nav-button" data-align="left">Back</a>
+           Ichiban Order History
+             <a data-role="button" href="views/ichibanAddress.html" class="nav-button" data-align="left">Back</a>
         </div> 
          
      </header>
@@ -20,6 +19,7 @@
     <p >  #: Date # #: Hours # </>
     <p>    #: Text #  </p> 
     <p>    Order Number:  #: Num # </p>
+    <p>    Address: #: Pickup # </p>
     <hr>
  
 
@@ -27,7 +27,8 @@
 <!--
         <div class="no-items-msg">                
                 <h5>${Date}  ${Hours}</h5>                                
-                <h5>${Text}Order Number: ${Num}</h5>                
+                <h5>${Text}Order Number: ${Num}</h5>      
+				<h5>${Pickup}</h5>                                 
         </div>
 -->
 
@@ -53,6 +54,14 @@
                     field: 'Num',
                     defaultValue: []
                 },
+                Pickup: {
+                    field: 'Pickup',
+                    defaultValue: ''
+                },
+                Phone: {
+                    field: 'Phone',
+                    defaultValue: ''
+                },                
             },
         
             User: function () {
@@ -71,7 +80,7 @@ var dataSource = new kendo.data.DataSource({
   type: 'everlive',
   transport: {
     read: {
-      url: "https://api.everlive.com/v1/B3HXTR1cpka5ETff/Activities"
+      url: "https://api.everlive.com/v1/B3HXTR1cpka5ETff/IchibanActivities"
     }
   },
   schema: {
@@ -98,3 +107,6 @@ var dataSource = new kendo.data.DataSource({
     //var app1 = new kendo.mobile.Application(document.body, { transition: 'overlay', layout: 'mobile-tabstrip' });  
  
 </script>    
+
+
+

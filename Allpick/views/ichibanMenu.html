@@ -1,21 +1,17 @@
-<!-- notesView.html -->
-<div data-role="view" id="view-all-lists" data-layout="default" class="notes-view" data-model="app.viewModels.addNote">
+<!-- notesView.html copy from menu.html -->
+<div data-role="view" id="view-all-lists" data-layout="default" class="notes-view" 
+     data-model="app.viewModels.IchibanMenu">
     <header data-role="header">
        <!-- for ios navbar is here. -->     
          <div data-role="navbar" class="navbar navbar-fixed-bottom">
            Menu
-             <a class="button is-default" data-align="left" data-role="touch" data-bind="events: { tap: moveBack } ">Back</a>
+             <a class="button is-default" data-align="left" data-role="touch" href="#welcome" style="text-decoration: none">Back</a>
              <a class="button is-default" data-align="right" data-role="touch" data-bind="events: { tap: saveNote }">Order</a>
         </div>   
             
-        <div>
-            <h3 id="myHeader0" STYLE="color: #000">
-                Step 2: When you finish your order, click the button - Place order.
-            </h3>    
-            <h3 id="myHeader2" STYLE="color: #000">
+        <div>   
+            <h3 id="IchibanCart1" STYLE="color: #000">
                  Click what you want.
-            </h3>
-            <h3 id="myHeader" STYLE="color: #000">
             </h3>        
         </div> 
         
@@ -23,7 +19,7 @@
     
   	<!-- Find a bug here. pull to refresh would be dead. I add  "data-fixed-headers="true"". Not sure whether it works or not.-->
     <ul id="lists-listview" data-pull-to-refresh="false" data-fixed-headers="true" data-style="inset" 
-        data-role="listview" data-template="listTemplate" data-bind="source: lists"></ul>
+        data-role="listview" data-template="listTemplate" data-bind="source: Ichibanlists"></ul>
 
 </div>
 
