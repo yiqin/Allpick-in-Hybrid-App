@@ -1181,7 +1181,6 @@ var app = (function () {
                 getAddressFlag = true;
                 
                 window.scrollTo(0, 0);
-                window.scrollTo(0, 0);                
             }
             else {
                 showAlert("Enter your address");
@@ -1196,7 +1195,6 @@ var app = (function () {
                 document.getElementById("yourPhone").innerHTML=IchibanPhone;
                 getPhoneFlag = true;   
                 
-                window.scrollTo(0, 0);
                 window.scrollTo(0, 0);
             }
             else {
@@ -1499,7 +1497,7 @@ var app = (function () {
                         });                  
 
     
-                        showAlert(count);
+                        //showAlert(count);
                         sum = "Your order number is: "+count+", "+cartSum+" Pickup place: "+pickPlace+" Phone: "+IchibanPhone;
                         document.getElementById("IchibanCart1").innerHTML=statement1+cartSum;
 						// save "sum" into local storage.
