@@ -121,25 +121,6 @@ var app = (function () {
      
     }
     
-/////////////////////
-    // I think this function is not used. (01/09/2014)
-	var getLocalStorage = function(e) {
-        var getRemoveVariableNameInput = e,
-        result = document.getElementById("yourOrderLocal1");
-        if (localStorage.getItem(getRemoveVariableNameInput.value) != undefined) {
-            result.value = localStorage.getItem(getRemoveVariableNameInput);
-        }
-        else {
-            showAlert("No such record!");
-            result.value = "No such record!"
-        }
-        showAlert("Get local storage successfully !");
-        // innerHTML is not a good method. HTML must show first. Otherwise it fails to find the id.
-        document.getElementById("yourOrderLocal1").innerHTML = result.value;    
-    }
-
-/////////////////////
-
 /////////////////////    
     // showAlert, showError, window.addEventListener, onBackKeyDown are default functions from sample code.
     // global error handling
@@ -1151,6 +1132,7 @@ var app = (function () {
        		// showAlert(IchibanAddress); 
         	// showAlert(IchibanPhone);
             // Address
+            // iOS and Android are different for IchibanAddress != ''
 			IchibanAddress = localStorage.getItem("allpickAddress");
             if (IchibanAddress != '') {
                 document.getElementById("yourAddress").innerHTML=IchibanAddress;
@@ -1174,13 +1156,12 @@ var app = (function () {
 
         var submitAddress = function () {
             if ($('#submitIchibanAddress').val() != '') {
+                window.scrollTo(0, 0);
                 localStorage.setItem("allpickAddress",$('#submitIchibanAddress').val());
                 //document.getElementById("yourAddress").innerHTML = $('#submitIchibanAddress').val();
                 IchibanAddress = $('#submitIchibanAddress').val();
                 document.getElementById("yourAddress").innerHTML=IchibanAddress;
                 getAddressFlag = true;
-                
-                window.scrollTo(0, 0);
             }
             else {
                 showAlert("Enter your address");
@@ -1189,13 +1170,14 @@ var app = (function () {
         
         var submitPhone = function () {
             if ($('#submitIchibanPhone').val() != '') {
+                // window.scrollTo(0, 0)
+                // This solution doesn't work effectively.
+                window.scrollTo(0, 0);
                 localStorage.setItem("allpickPhone",$('#submitIchibanPhone').val());
                 //document.getElementById("yourPhone").innerHTML = $('#submitIchibanPhone').val();
                 IchibanPhone = $('#submitIchibanPhone').val();
                 document.getElementById("yourPhone").innerHTML=IchibanPhone;
-                getPhoneFlag = true;   
-                
-                window.scrollTo(0, 0);
+                getPhoneFlag = true;                  
             }
             else {
                 showAlert("Enter your phone");
