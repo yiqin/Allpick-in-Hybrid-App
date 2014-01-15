@@ -1133,6 +1133,8 @@ var app = (function () {
         	// showAlert(IchibanPhone);
             // Address
             // iOS and Android are different for IchibanAddress != ''
+            // iOS != ''
+            // Android != undefined
 			IchibanAddress = localStorage.getItem("allpickAddress");
             if (IchibanAddress != '') {
                 document.getElementById("yourAddress").innerHTML=IchibanAddress;
@@ -1383,6 +1385,9 @@ var app = (function () {
         var validator;
         var noteInProgress;
         var init = function () {
+            //showAlert('test');
+            // auto fetch local item.
+            mobileApp.showLoading();
             IchibannotesModel.notes.bind('error', function(resp) {
                 var msg;
                 IchibannotesModel.notes.unbind('sync');
@@ -1399,7 +1404,9 @@ var app = (function () {
             validator = $('#enterNote').kendoValidator().data("kendoValidator");
             $newNote = $('#newNote');
             $newNoteTitle = $('#newNoteTitle');
-            
+            // auto fetch local item.
+            IchibanAddressViewModel.getAddress();
+            mobileApp.hideLoading();
         };
         var show = function () {
             $newNote.val('');
