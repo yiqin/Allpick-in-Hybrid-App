@@ -4,6 +4,7 @@ var app = (function () {
     // Some valurables are not used.
     var IchibanAddress = 'No address now';
     var IchibanPhone = '0000';
+    var IchibanPrice = 0;
         
     var currentUserName = '123';
     
@@ -1257,7 +1258,11 @@ var app = (function () {
                 OrderCount: {
                     field: 'OrderCount',
                     defaultValue: ''
-                }                 
+                },
+                Price: {
+                    field: 'Price',
+                    defaultValue: '0'
+                }
             },
             
             PictureUrl: function () {
@@ -1441,6 +1446,7 @@ var app = (function () {
                         noteInProgress.Text = cartSum;
                         noteInProgress.Pickup = pickPlace;
                         noteInProgress.Phone = IchibanPhone;
+                        noteInProgress.TotalPrice =IchibanPrice;
                         // noteInProgress.UserId = usersModel.currentUser.get('data').Id;
                         // noteInProgress.currentUser = currentUserName;
                         noteInProgress.currentUser = window.device.uuid;
@@ -1487,7 +1493,7 @@ var app = (function () {
 
     
                         //showAlert(count);
-                        sum = "Your order number is: "+count+", "+cartSum+" Pickup place: "+pickPlace+" Phone: "+IchibanPhone;
+                        sum = "Your order number is: "+count+", "+cartSum+" Pickup place: "+pickPlace+" Phone: "+IchibanPhone+ '. Total Price: '+IchibanPrice;
                         document.getElementById("IchibanCart1").innerHTML=statement1+cartSum;
 						// save "sum" into local storage.
                         // "sum" contains order information.
@@ -1530,15 +1536,23 @@ var app = (function () {
 			globalTest = $dataItem.Title; 	
             clickOrder(globalTest);   
             makeOrder();
-            document.getElementById("IchibanCart1").innerHTML=statement1+cartSum;
+            IchibanPrice = (Number(IchibanPrice)+Number($dataItem.Price)).toFixed(2);
+            document.getElementById("IchibanCart1").innerHTML=statement1+cartSum+ '. Total Price: '+IchibanPrice;
         };
         var deleteNumber = function (e) {
             // get the list data !
+            // preview_cartSum is kind of flag.
+            var preview_cartSum = cartSum;
             var $dataItem = e.data;
 			globalTest = $dataItem.Title;
             deleteclickOrder(globalTest);   
             makeOrder();
-            document.getElementById("IchibanCart1").innerHTML=statement1+cartSum;
+            
+            if (preview_cartSum != cartSum)
+            {
+                IchibanPrice  = (Number(IchibanPrice)-Number($dataItem.Price)).toFixed(2);
+            }
+            document.getElementById("IchibanCart1").innerHTML=statement1+cartSum+'. Total Price: '+IchibanPrice;
         };
         var moveBack = function () {
             mobileApp.navigate('#:back');
