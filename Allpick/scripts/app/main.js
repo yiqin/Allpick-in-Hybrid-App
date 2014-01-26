@@ -177,8 +177,8 @@ var app = (function () {
         // https://github.com/yiqin/cordova-plugin-admob.git
         // AdMob doesn't work in Simulation. Only work in device.
         if( window.plugins.AdMob ) {
-            var adIdiOS = 'ca-app-pub-1198168277804687/1437413255';
-            var adIdAndroid = 'ca-app-pub-1198168277804687/9857160451';
+            var adIdiOS = 'ca-app-pub-4647323871476156/1912308024';
+            var adIdAndroid = 'ca-app-pub-4647323871476156/5005375226';
             var adId = (navigator.userAgent.indexOf('Android') >=0) ? adIdAndroid : adIdiOS;
             
         	var am = window.plugins.AdMob;
