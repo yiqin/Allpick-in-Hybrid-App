@@ -349,7 +349,7 @@ var app = (function () {
         };
         
         // If user loginWithoutName, then username is assigned "No Good Name".
-        var loginWithoutName = function () {
+        var loginWithoutName = function () {            
             mobileApp.showLoading();
             var username = 'No Good Name';
             var password = 123456;
@@ -395,21 +395,25 @@ var app = (function () {
         };		
         
         // navigation function. Move to different pages.
+        var moveToLunch = function () {
+            mobileApp.navigate('views/addNoteView.html');
+        };
+        
         var moveToSignUpPage = function () {
             mobileApp.navigate('views/signupView.html');
         };
         
         var moveTolocalstorageTest = function () {
             mobileApp.navigate('views/localstorageTest.html');
-        }
+        };
         
         var opensafari = function () {
 			window.open("http://theallpick.com", "_system");          
-        }
+        };
         
         var movetToichibanAddress = function () {
             mobileApp.navigate('views/ichibanAddress.html');
-        }
+        };
         
         return {
             login: login,
@@ -419,6 +423,7 @@ var app = (function () {
             moveTolocalstorageTest: moveTolocalstorageTest,
             opensafari: opensafari,
             movetToichibanAddress: movetToichibanAddress,
+            moveToLunch: moveToLunch,
         };
     }());
 
