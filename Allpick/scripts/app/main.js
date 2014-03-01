@@ -876,7 +876,7 @@ var app = (function () {
                         //showAlert("create time "+creatTime);
                        
                         //showAlert(previousOrderHistory);
-                        previousOrderHistory = previousOrderHistory+'#'+cartSum +'#'+count;
+                        // previousOrderHistory = previousOrderHistory+'#'+cartSum +'#'+count;
                
                         // Add Order history into users
                         // I don't think it works.
@@ -1433,6 +1433,7 @@ var app = (function () {
             var today = new Date();
             currentTime = today.getHours();
             // 10 --> 11:00
+            // Change limitTime if necessary.
             var limitTime = 23;
             
             // 10: the server close at 11:00
