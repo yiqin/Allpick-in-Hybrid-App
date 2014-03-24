@@ -86,7 +86,7 @@ var app = (function () {
         cartSum = "";
         for (var i=0; i<100; i++) {
             if (cartNum[i] > 0 ) {
-                cartSum = cartSum+cartName[i]+" "+cartNum[i]+" .";
+                cartSum = cartSum+cartName[i]+" "+cartNum[i]+"; ";
             }
         }
     }
@@ -783,6 +783,15 @@ var app = (function () {
                 }
             }, 'Pickup location:', 'OK,Cancel');
         };
+
+        var hawkinsDinner = function () {
+            navigator.notification.confirm('Hawkins.', function (confirmed) {
+                if (confirmed === true || confirmed === 1) {
+                    pickPlace = "Hawkins.";
+                    mobileApp.navigate('views/ichibanMenu.html');   
+                }
+            }, 'Pickup location:', 'OK,Cancel');
+        };        
         
         // Just move to activitiesView.html
         // This is feedback page.
@@ -985,6 +994,7 @@ var app = (function () {
             saveNote: saveNote,
             potter: potter,
             hawkins: hawkins,
+            hawkinsDinner: hawkinsDinner,
             movetoFeedback: movetoFeedback,
             movetoOrder: movetoOrder,
             
@@ -1445,7 +1455,7 @@ var app = (function () {
             if (cartSum.length > 1 && currentTime <= limitTime) {
 
                 // after that, sync.  
-                navigator.notification.confirm(statement1+cartSum+statement3+pickPlace+'..Phone:'+IchibanPhone, function (confirmed) {
+                navigator.notification.confirm(statement1+cartSum+statement3+pickPlace, function (confirmed) {
                     if (confirmed === true || confirmed === 1) {
             
                     {  
@@ -1504,9 +1514,12 @@ var app = (function () {
 
     
                         //showAlert(count);
-                        sum = "Your order number is: "+count+", "+cartSum+" Pickup place: "+pickPlace+" Phone: "+IchibanPhone+ '. Total Price: '+IchibanPrice;
-                        document.getElementById("IchibanCart1").innerHTML=statement1+cartSum;
-						// save "sum" into local storage.
+                        // sum = "Your order number is: "+count+", "+cartSum+" Pickup place: "+pickPlace+" Phone: "+IchibanPhone+ '. Total Price: '+IchibanPrice;
+                        sum = "Your order number is: "+count+", "+cartSum+" Pickup place: "+pickPlace+'   Total Price: '+IchibanPrice;
+                        
+                        // document.getElementById("yourOrderLocal1").innerHTML=statement1+cartSum;
+						
+                        // save "sum" into local storage.
                         // "sum" contains order information.
 						// showAlert(sum);
                         // localStorage.setItem(currentUserName,sum);
@@ -1517,8 +1530,8 @@ var app = (function () {
                         noteInProgress.Num = count;
                                                 
                         notes.one('sync', function() {
-                            mobileApp.navigate('views/ichibanAddress.html');
-                            document.getElementById("IchibanSum").innerHTML= sum;
+                            mobileApp.navigate('views/dinnerAddress.html');
+                            document.getElementById("yourOrderLocal1").innerHTML= sum;
                         });
                         notes.sync();
                                                         
@@ -1548,7 +1561,7 @@ var app = (function () {
             clickOrder(globalTest);   
             makeOrder();
             IchibanPrice = (Number(IchibanPrice)+Number($dataItem.Price)).toFixed(2);
-            document.getElementById("IchibanCart1").innerHTML=statement1+cartSum+ '. Total Price: '+IchibanPrice;
+            document.getElementById("IchibanCart1").innerHTML=statement1+cartSum+ '  Total Price: '+IchibanPrice;
         };
         var deleteNumber = function (e) {
             // get the list data !
@@ -1563,7 +1576,7 @@ var app = (function () {
             {
                 IchibanPrice  = (Number(IchibanPrice)-Number($dataItem.Price)).toFixed(2);
             }
-            document.getElementById("IchibanCart1").innerHTML=statement1+cartSum+'. Total Price: '+IchibanPrice;
+            document.getElementById("IchibanCart1").innerHTML=statement1+cartSum+'  Total Price: '+IchibanPrice;
         };
         var moveBack = function () {
             mobileApp.navigate('#:back');
