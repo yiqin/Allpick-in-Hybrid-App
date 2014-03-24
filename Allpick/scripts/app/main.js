@@ -399,6 +399,10 @@ var app = (function () {
             mobileApp.navigate('views/addNoteView.html');
         };
         
+        var moveToDinner = function () {
+            mobileApp.navigate('views/dinnerAddress.html');
+        };
+        
         var moveToSignUpPage = function () {
             mobileApp.navigate('views/signupView.html');
         };
@@ -424,6 +428,7 @@ var app = (function () {
             opensafari: opensafari,
             movetToichibanAddress: movetToichibanAddress,
             moveToLunch: moveToLunch,
+            moveToDinner:moveToDinner,
         };
     }());
 
@@ -1110,7 +1115,7 @@ var app = (function () {
                 var activities = activitiesModel.activities;
                 var activity = activities.add();
                 activity.Text = $newStatus.val();
-                activity.UserId = usersModel.currentUser.get('data').Id;
+                // activity.UserId = usersModel.currentUser.get('data').Id;
                 activities.one('sync', function () {
                     mobileApp.navigate('#:back');
                 });
