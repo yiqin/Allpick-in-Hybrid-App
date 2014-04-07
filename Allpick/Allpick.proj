@@ -10,15 +10,18 @@
     <DeviceOrientations>Portrait;Landscape</DeviceOrientations>
     <iOSStatusBarStyle>Hidden</iOSStatusBarStyle>
     <AndroidHardwareAcceleration>false</AndroidHardwareAcceleration>
-    <iOSDisplayName>Allpick</iOSDisplayName>
+    <iOSDisplayName>
+    </iOSDisplayName>
     <iOSDeviceFamily>
     </iOSDeviceFamily>
     <iOSBackgroundMode>
     </iOSBackgroundMode>
-    <BundleVersion>1.5.1</BundleVersion>
+    <BundleVersion>1.6</BundleVersion>
     <AndroidVersionCode>15</AndroidVersionCode>
     <FrameworkVersion>3.2.0</FrameworkVersion>
     <CorePlugins>org.apache.cordova.battery-status;org.apache.cordova.camera;org.apache.cordova.media-capture;org.apache.cordova.console;org.apache.cordova.contacts;org.apache.cordova.device;org.apache.cordova.device-motion;org.apache.cordova.device-orientation;org.apache.cordova.file;org.apache.cordova.file-transfer;org.apache.cordova.geolocation;org.apache.cordova.globalization;org.apache.cordova.inappbrowser;org.apache.cordova.network-information;org.apache.cordova.dialogs;org.apache.cordova.splashscreen;org.apache.cordova.vibration</CorePlugins>
+    <DisplayName>Allpick</DisplayName>
+    <Description>Allpick</Description>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Telerik\ICE\Tools\Mobile\MobileTools.targets" />
 </Project>
