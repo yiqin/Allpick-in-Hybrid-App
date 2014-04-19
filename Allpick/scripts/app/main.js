@@ -783,7 +783,15 @@ var app = (function () {
                 }
             }, 'Pickup location:', 'OK,Cancel');
         };
-
+        
+        var potterDinner = function () {
+            navigator.notification.confirm('Physics Building.', function (confirmed) {
+                if (confirmed === true || confirmed === 1) {
+                    pickPlace = "Physics Building.";
+                    mobileApp.navigate('views/ichibanMenu.html'); 
+                }
+            }, 'Pickup location:', 'OK,Cancel');  
+        };
         var hawkinsDinner = function () {
             navigator.notification.confirm('Hawkins.', function (confirmed) {
                 if (confirmed === true || confirmed === 1) {
@@ -993,6 +1001,7 @@ var app = (function () {
             me: usersModel.currentUser,
             saveNote: saveNote,
             potter: potter,
+            potterDinner: potterDinner,
             hawkins: hawkins,
             hawkinsDinner: hawkinsDinner,
             movetoFeedback: movetoFeedback,
@@ -1449,7 +1458,7 @@ var app = (function () {
             currentTime = today.getHours();
             // 10 --> 11:00
             // Change limitTime if necessary.
-            var limitTime = 23;
+            var limitTime = 16;
             
             // 10: the server close at 11:00
             if (cartSum.length > 1 && currentTime <= limitTime) {
@@ -1546,7 +1555,7 @@ var app = (function () {
                         
                     } // if statement
             else if ((cartSum.length > 1 && currentTime > limitTime)||(cartSum.length <= 1 && currentTime > limitTime))  {
-                showAlert("Please order between 00:00 - 11:00 am");
+                showAlert("Please order before 04:00 pm");
             }
             else {
                 showAlert("Your cart is empty. Please make an order.");
