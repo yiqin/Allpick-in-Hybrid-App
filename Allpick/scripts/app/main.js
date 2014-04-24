@@ -835,7 +835,8 @@ var app = (function () {
                         makeOrder();
                         noteInProgress.Text = cartSum;
                         noteInProgress.Pickup = pickPlace;
-                        noteInProgress.UserId = usersModel.currentUser.get('data').Id;
+                        
+                        // noteInProgress.UserId = usersModel.currentUser.get('data').Id;
                         
                         // noteInProgress.currentUser = currentUserName;
                         noteInProgress.currentUser = window.device.uuid;
@@ -845,6 +846,7 @@ var app = (function () {
                         // not sure about the definition of "Title"
                         noteInProgress.Title = $newNoteTitle.val();
         
+						
                         
                         var count;
                         var todayDate = updateDate().Date;
@@ -861,6 +863,7 @@ var app = (function () {
                             type: "GET",
                             headers: {"Authorization" : "0QJ0Hrc7POtaGodFTwqOO86Tzn2vPNIF", "X-Everlive-Filter" : JSON.stringify(filter) },
                             success: function(data){
+                                
                                cartNumber = JSON.stringify(data);
                                 var length = cartNumber.length;
                                 switch(length){
@@ -880,8 +883,8 @@ var app = (function () {
                             },
                         });                  
 
-    
-                        //showAlert(count);
+						// showAlert("hello");    
+                        // showAlert(count);
                         sum = "Your order number is: "+count+", "+cartSum+" Pickup place: "+pickPlace;
                         document.getElementById("myHeader").innerHTML=statement1+cartSum;
                         document.getElementById("myHeader2").innerHTML=statement3+pickPlace;
@@ -892,10 +895,10 @@ var app = (function () {
                         // localStorage.setItem(currentUserName,sum);
                         
                         
-                        creatTime = usersModel.currentUser.get('data').CreatedAt;
-                        saveCreateTime(sum);
+                        // creatTime = usersModel.currentUser.get('data').CreatedAt;
+                        // saveCreateTime(sum);
                         noteInProgress.Num = count;
-                        //showAlert("create time "+creatTime);
+                        // showAlert("create time "+creatTime);
                        
                         //showAlert(previousOrderHistory);
                         // previousOrderHistory = previousOrderHistory+'#'+cartSum +'#'+count;
