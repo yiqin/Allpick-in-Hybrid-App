@@ -1,4 +1,4 @@
-RiceTableFinal
+Allpick in Hybrid App
 ==============
 Update 01/01/2014
 Add local storage.
